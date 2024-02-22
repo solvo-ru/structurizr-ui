@@ -3,7 +3,9 @@
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-embed.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-content${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-ui${structurizrConfiguration.versionSuffix}.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-13.0.1.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.0.0.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-github-alerts.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-deflist.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/katex-0.16.4.min.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/asciidoctor-2.2.6.min.js"></script>
 
@@ -22,7 +24,7 @@
 <div class="row" style="padding-top: 20px; padding-bottom: 0; margin-left: 0; margin-right: 0">
 
     <div class="col-sm-3" style="padding-left: 30px">
-        <div id="documentationNavigationPanel" class="hidden-xs">
+        <div id="documentationNavigationPanel" class="hidden-xs scrollable">
 
             <div id="documentationNavigation"></div>
 
@@ -51,7 +53,7 @@
             </div>
         </div>
 
-        <div id="documentationPanel">
+        <div id="documentationPanel" class="scrollable">
             <div id="decisionLogHeader" style="border-bottom: none">
                 <h1 id="decisionTitle" class="centered"></h1>
                 <div id="decisionDate" class="centered"></div>
@@ -93,12 +95,15 @@
 
     progressMessage.show('<p>Loading workspace...</p>');
 
+    window.addEventListener('resize', structurizr.ui.updateScrollbarVisibility);
+
     function workspaceLoaded() {
         init();
     }
 
     function init() {
         resize();
+        structurizr.ui.updateScrollbarVisibility();
 
         if (structurizr.workspace.hasDecisions()) {
             contentRenderer = new structurizr.ui.ContentRenderer(

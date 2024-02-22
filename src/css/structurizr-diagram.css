@@ -1,5 +1,5 @@
 #diagram {
-    background: gray;
+    background: #7FCECB;
     margin: 0;
     padding: 0;
     border-style: none;
@@ -17,7 +17,7 @@
 }
 
 .diagramThumbnailActive {
-    background: #aaaaaa;
+    background: #175180;
     color: #ffffff;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .joint-link.joint-theme-default .marker-vertex {
-    fill: #1168BD;
+    fill: #EF2127;
     r: 25px;
 }
 

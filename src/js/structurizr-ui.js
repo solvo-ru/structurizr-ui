@@ -596,3 +596,12 @@ structurizr.ui.exitFullScreen = function() {
         document.webkitExitFullscreen();
     }
 };
+
+structurizr.ui.updateScrollbarVisibility = function () {
+    const scrollableDiv = document.querySelector('.scrollable');
+    if (scrollableDiv.scrollHeight > scrollableDiv.clientHeight) {
+        scrollableDiv.classList.remove('hide-scrollbar');
+    } else {
+        scrollableDiv.classList.add('hide-scrollbar');
+    }
+}

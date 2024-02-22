@@ -6,10 +6,10 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, urlSuffix,
     const MAX_HEIGHT_PERCENTAGE = 0.6;
     var images = workspace.documentation.images;
     var embedIndex = 0;
-
     var md = window.markdownit({
         html: !safeMode
-    });
+    }).use(markdownitDeflist).use(githubAlerts);
+
 
     md.renderer.rules.image = function(tokens, idx, options, env, self) {
         var token = tokens[idx];

@@ -4,13 +4,20 @@
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-content${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-documentation${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-ui${structurizrConfiguration.versionSuffix}.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-13.0.1.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.0.0.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-github-alerts.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-deflist.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/katex-0.16.4.min.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/asciidoctor-2.2.6.min.js"></script>
 
 <link href="${structurizrConfiguration.cdnUrl}/css/katex-0.16.4.min.css" rel="stylesheet" media="screen" />
 <link href="${structurizrConfiguration.cdnUrl}/css/structurizr-asciidoctor.css" rel="stylesheet" media="screen" />
 <link href="${structurizrConfiguration.cdnUrl}/css/structurizr-documentation.css" rel="stylesheet" media="screen" />
+<link href="${structurizrConfiguration.cdnUrl}/css/github-base.css" rel="stylesheet" media="screen" />
+<link href="${structurizrConfiguration.cdnUrl}/css/github-colors-dark-media.css" rel="stylesheet" media="screen" />
+<link href="${structurizrConfiguration.cdnUrl}/css/github-colors-light.css" rel="stylesheet" media="screen" />
+
+
 
 <%@ include file="/WEB-INF/fragments/graphviz.jspf" %>
 <%@ include file="/WEB-INF/fragments/progress-message.jspf" %>
@@ -20,7 +27,7 @@
 
 <div class="row" style="padding-top: 20px; padding-bottom: 0; margin-left: 0; margin-right: 0">
     <div class="col-sm-2" style="padding-left: 30px">
-        <div id="documentationNavigationPanel" class="hidden-xs">
+        <div id="documentationNavigationPanel" class="hidden-xs scrollable">
 
             <div id="documentationNavigation"></div>
 
@@ -71,7 +78,7 @@
             </div>
         </div>
 
-        <div id="documentationPanel">
+        <div id="documentationPanel" class="scrollable">
             <div id="documentationHeader">
                 <div class="centered">
                     <img src="" class="brandingLogo hidden" alt="Branding logo" />
@@ -83,7 +90,6 @@
         </div>
     </div>
 </div>
-
 <script nonce="${scriptNonce}">
     const requestedScope = structurizr.util.atob('<c:out value="${scope}" />');
     structurizr.ui.DEFAULT_FONT_NAME = "Open Sans";
@@ -107,12 +113,15 @@
 
     progressMessage.show('<p>Loading workspace...</p>');
 
+    window.addEventListener('resize', structurizr.ui.updateScrollbarVisibility);
+
     function workspaceLoaded() {
         init();
     }
 
     function init() {
         resize();
+        structurizr.ui.updateScrollbarVisibility();
 
         if (structurizr.workspace.hasDocumentation()) {
             contentRenderer = new structurizr.ui.ContentRenderer(

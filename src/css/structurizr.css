@@ -1,8 +1,59 @@
 body {
-    font-family: "Open Sans", sans-serif;
     padding-left: 0;
     padding-right: 0;
     line-height: 1.5;
+}
+
+@font-face{
+    font-family: "PT Bodoni Cyrillic";
+    src: url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.eot");
+    src: url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.svg#PT Bodoni Cyrillic")format("svg");
+    src: local("PT Bodoni Cyrillic"), url("fonts/8682b980e7f3168a4720fc220dc7c896.woff") format("woff");
+    font-weight:normal;
+    font-style:normal;
+    font-display:swap;
+}
+
+@font-face {
+    font-family: "PT Bodoni Italic Cyrillic";
+    src: url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.eot");
+    src: url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.svg#PT Bodoni Italic Cyrillic")format("svg");
+    src: local("PT Bodoni Italic Cyrillic"), url("fonts/35ff306f69e702ac36086d3ed17d8021.woff") format("woff");
+    font-style: italic;
+    font-weight: normal;
+}
+@font-face {
+    font-family: "PT Bodoni Bold Cyrillic";
+    src: url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.eot");
+    src: url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.svg#PT Bodoni Bold Cyrillic")format("svg");
+    font-style: normal;
+    font-weight: bold;
+    src: local("PT Bodoni Bold Cyrillic"), url("fonts/6e5d586e8d5826ac75b1bbb1d4a69c60.woff") format("woff");
+}
+
+@font-face {
+    font-family: "PT Bodoni BoldItalic Cyrillic";
+    src: url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.eot");
+    src: url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.svg#PT Bodoni BoldItalic Cyrillic")format("svg");
+    font-style: italic;
+    font-weight: bold;
+    src: local("PT Bodoni BoldItalic Cyrillic"), url("fonts/e1035de2d8ad2c3a72b6ceb2ab5a70dc.woff") format("woff");
 }
 .centered {
     text-align: center;
@@ -143,11 +194,11 @@ label {
 }
 
 a {
-    color: #1168BD;
+    color: #175180; /*1168BD*/
 }
 
 .structurizrBackgroundGray {
-    background: #777777;
+    background: #7FCECB; /* #777777 */
     color: #ffffff;
 }
 .structurizrBackgroundDarker {
@@ -155,7 +206,7 @@ a {
     color: #ffffff;
 }
 .structurizrBackgroundDark {
-    background: #08427B;
+    background: #EF2127; /* #08427B */
     color: #ffffff;
 }
 .structurizrBackgroundBase {
@@ -175,10 +226,10 @@ a {
 }
 
 .label-primary {
-    background: #1168BD;
+    background: #175180;
 }
 .label-version {
-    background: #999999;
+    background: #7FCECB;
 }
 
 th {
@@ -208,15 +259,15 @@ code {
 }
 
 .dashboardPublicWorkspace {
-    border-color: #d9534f;
+    border-color: #EF2127;
 }
 
 .dashboardPublicWorkspace a {
-    color: #d9534f;
+    color: #EF2127;
 }
 
 .dashboardPrivateWorkspace {
-    border-color: #337ab7;
+    border-color: #175180;
 }
 
 #documentationContent {
@@ -229,14 +280,14 @@ code {
 
 #documentationContent table th, #decisionLogContent table th {
     padding: 5px 10px 5px 10px;
-    border: solid 1px gray;
+    border: solid 1px #777777;
     font-weight: bold;
     background: #eeeeee;
 }
 
 #documentationContent table td, #decisionLogContent table td {
     padding: 5px 10px 5px 10px;
-    border: solid 1px gray;
+    border: solid 1px #777777;
 }
 
 #documentationNavigation {
@@ -277,7 +328,13 @@ code {
     padding-left: 10px;
     padding-right: 30px;
 }
-
+.scrollable.hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+.scrollable.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
 #documentationNavigationPanel {
     overflow-y: scroll;
 }
