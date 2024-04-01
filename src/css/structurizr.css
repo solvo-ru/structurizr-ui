@@ -5,56 +5,33 @@ body {
 }
 
 @font-face{
-    font-family: "PT Bodoni Cyrillic";
-    src: url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.eot");
-    src: url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/8682b980e7f3168a4720fc220dc7c896.svg#PT Bodoni Cyrillic")format("svg");
-    src: local("PT Bodoni Cyrillic"), url("fonts/8682b980e7f3168a4720fc220dc7c896.woff") format("woff");
+    font-family: "Fira Sans";
+    src: local("Fira Sans Regular"), url("fonts/FiraSans-Regular.ttf") format("ttf");
     font-weight:normal;
     font-style:normal;
     font-display:swap;
 }
 
 @font-face {
-    font-family: "PT Bodoni Italic Cyrillic";
-    src: url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.eot");
-    src: url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/35ff306f69e702ac36086d3ed17d8021.svg#PT Bodoni Italic Cyrillic")format("svg");
-    src: local("PT Bodoni Italic Cyrillic"), url("fonts/35ff306f69e702ac36086d3ed17d8021.woff") format("woff");
+    font-family: "Fira Sans";
+    src: local("Fira Sans Italic"), url("fonts/FiraSans-Italic.ttf") format("ttf");
     font-style: italic;
     font-weight: normal;
 }
 @font-face {
-    font-family: "PT Bodoni Bold Cyrillic";
-    src: url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.eot");
-    src: url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/6e5d586e8d5826ac75b1bbb1d4a69c60.svg#PT Bodoni Bold Cyrillic")format("svg");
+    font-family: "Fira Sans";
+    src: local("Fira Sans ExtraBold"), url("fonts/FiraSans-ExtraBold.ttf") format("ttf");
     font-style: normal;
     font-weight: bold;
-    src: local("PT Bodoni Bold Cyrillic"), url("fonts/6e5d586e8d5826ac75b1bbb1d4a69c60.woff") format("woff");
 }
 
 @font-face {
-    font-family: "PT Bodoni BoldItalic Cyrillic";
-    src: url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.eot");
-    src: url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/e1035de2d8ad2c3a72b6ceb2ab5a70dc.svg#PT Bodoni BoldItalic Cyrillic")format("svg");
+    font-family: "Fira Sans";
+    src: local("Fira Sans ExtraBold Italic"), url("fonts/FiraSans-ExtraBoldItalic.ttf") format("ttf");
     font-style: italic;
     font-weight: bold;
-    src: local("PT Bodoni BoldItalic Cyrillic"), url("fonts/e1035de2d8ad2c3a72b6ceb2ab5a70dc.woff") format("woff");
 }
+
 .centered {
     text-align: center;
 }
