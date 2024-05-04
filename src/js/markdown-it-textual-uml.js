@@ -1,6 +1,6 @@
 (function (global, factory) {
-  typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self,
-      global.markdownItTextualUml = factory());
+  typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) :
+      (global = typeof globalThis !== "undefined" ? globalThis : global || self, global.markdownItTextualUml = factory());
 })(this, (function () {
   "use strict";
 
@@ -86,14 +86,11 @@
       switch (langName) {
         case 'mermaid':
           return mermaidFunctions.getMarkup(code)
-          break
         case 'plantuml':
         case 'dot':
           return platumlFunctions.getMarkup(code, 'uml')
-          break
         case 'ditaa':
           return platumlFunctions.getMarkup(code, 'ditaa')
-          break
       }
 
       return defaultRenderer(tokens, idx, options, env, slf)

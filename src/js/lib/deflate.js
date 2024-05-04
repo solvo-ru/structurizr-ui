@@ -141,8 +141,7 @@
   let zip_deflate_pos
 
   /* constant tables */
-  const zip_extra_lbits = new Array(
-      0,
+  const zip_extra_lbits = [0,
       0,
       0,
       0,
@@ -170,10 +169,8 @@
       5,
       5,
       5,
-      0,
-  )
-  const zip_extra_dbits = new Array(
-      0,
+      0]
+  const zip_extra_dbits = [0,
       0,
       0,
       0,
@@ -202,8 +199,7 @@
       12,
       12,
       13,
-      13,
-  )
+      13]
   const zip_extra_blbits = new Array(
       0,
       0,
