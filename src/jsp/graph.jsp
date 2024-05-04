@@ -32,7 +32,7 @@
         </script>
         </c:if>
         <button id="enterFullScreenButton" class="btn btn-default" title="Enter Full Screen [f]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen.svg" class="icon-btn" /></button>
-        <button id="exitFullScreenButton" class="btn btn-default hidden" title="Exit Full Screen [Escape]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
+        <button id="exitFullScreenButton" class="btn btn-default d-none" title="Exit Full Screen [Escape]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#enterFullScreenButton').click(function() { structurizr.ui.enterFullScreen('exploreGraphPanel'); });
@@ -570,11 +570,11 @@
 
     $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange fullscreenChange MSFullscreenChange',function(){
         if (structurizr.ui.isFullScreen()) {
-            $('#enterFullScreenButton').addClass("hidden");
-            $('#exitFullScreenButton').removeClass("hidden");
+            $('#enterFullScreenButton').addClass("d-none");
+            $('#exitFullScreenButton').removeClass("d-none");
         } else {
-            $('#enterFullScreenButton').removeClass("hidden");
-            $('#exitFullScreenButton').addClass("hidden");
+            $('#enterFullScreenButton').removeClass("d-none");
+            $('#exitFullScreenButton').addClass("d-none");
         }
     });
 

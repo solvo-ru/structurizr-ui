@@ -44,10 +44,10 @@
         $('#perspectivesModal').modal('hide');
 
         if ($('#perspectivesList > option').length > 0) {
-            $('#perspectivesOnButton').removeClass('hidden');
+            $('#perspectivesOnButton').removeClass('d-none');
         }
 
-        $('#perspectivesOffButton').addClass('hidden');
+        $('#perspectivesOffButton').addClass('d-none');
         $('#perspectivesOffButton').attr('title', 'Perspectives');
 
         if (render === true) {
@@ -64,8 +64,8 @@
         toggleTooltip();
 
         $('#perspectivesModal').modal('hide');
-        $('#perspectivesOnButton').addClass('hidden');
-        $('#perspectivesOffButton').removeClass('hidden');
+        $('#perspectivesOnButton').addClass('d-none');
+        $('#perspectivesOffButton').removeClass('d-none');
         $('#perspectivesOffButton').attr('title', 'Perspective: ' + perspective);
     }
 
@@ -83,7 +83,7 @@
 
             perspectivesList.attr('size', Math.min(8, perspectiveNames.length));
             perspectivesList.val('');
-            $('#perspectivesOnButton').removeClass('hidden');
+            $('#perspectivesOnButton').removeClass('d-none');
         }
     }
 </script>

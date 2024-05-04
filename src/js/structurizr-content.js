@@ -8,7 +8,7 @@ structurizr.ui.ContentRenderer = function(workspace, host, urlPrefix, urlSuffix,
     var embedIndex = 0;
     var md = window.markdownit({
         html: !safeMode
-    }).use(markdownitDeflist).use(githubAlerts);
+    }).use(markdownitDeflist).use(githubAlerts).use(markdownItTextualUml);
 
 
     md.renderer.rules.image = function(tokens, idx, options, env, self) {

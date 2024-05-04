@@ -17,7 +17,7 @@
             <div class="form-inline">
                 <div id="commentTypeButtons"></div>
 
-                <form id="submitReviewForm" class="hidden" method="post" action="/review/${review.id}">
+                <form id="submitReviewForm" class="d-none" method="post" action="/review/${review.id}">
                     <input type="hidden" id="reviewSessionJson" name="json" />
                 </form>
 
@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<div id="tooltip" class="hidden">
+<div id="tooltip" class="d-none">
     <div id="tooltipDescription"></div>
     <div id="tooltipAuthor"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/person.svg" class="icon-sm icon-white" /> <span id="tooltipAuthorName"></span></div>
 </div>

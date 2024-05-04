@@ -108,13 +108,13 @@
     }
 
     function showOptionsForGraphviz() {
-        $('#autoLayoutVerticesFormGroup').addClass('hidden');
-        $('#autoLayoutEdgeSeparationFormGroup').addClass('hidden');
+        $('#autoLayoutVerticesFormGroup').addClass('d-none');
+        $('#autoLayoutEdgeSeparationFormGroup').addClass('d-none');
     }
 
     function showOptionsForDagre() {
-        $('#autoLayoutVerticesFormGroup').removeClass('hidden');
-        $('#autoLayoutEdgeSeparationFormGroup').removeClass('hidden');
+        $('#autoLayoutVerticesFormGroup').removeClass('d-none');
+        $('#autoLayoutEdgeSeparationFormGroup').removeClass('d-none');
     }
 
     <c:if test="${structurizrConfiguration.graphvizEnabled eq true && workspace.clientEncrypted eq false}">

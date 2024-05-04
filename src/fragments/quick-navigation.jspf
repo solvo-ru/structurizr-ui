@@ -67,7 +67,7 @@
                 } else if (e.which === enterKeyCode) {
                     e.preventDefault();
 
-                    const navigationLinks = $(self.#navigationLinksClass).not('.hidden');
+                    const navigationLinks = $(self.#navigationLinksClass).not('.d-none');
                     if (navigationLinks.length > 0) {
                         navigationLinks[self.#selectedIndex].click();
                     }
@@ -101,14 +101,14 @@
                 if ($(this).text().toLowerCase().indexOf(filter) > -1) {
                     count++;
                     if (count <= self.#maxItems) {
-                        $(this).removeClass('hidden');
+                        $(this).removeClass('d-none');
                         $(this).removeClass('selected');
                     } else {
-                        $(this).addClass('hidden');
+                        $(this).addClass('d-none');
                         $(this).removeClass('selected');
                     }
                 } else {
-                    $(this).addClass('hidden');
+                    $(this).addClass('d-none');
                     $(this).removeClass('selected');
                 }
             });
@@ -117,7 +117,7 @@
         }
 
         #selectItem(index) {
-            const items = $(this.#navigationLinksClass).not('.hidden');
+            const items = $(this.#navigationLinksClass).not('.d-none');
             if (items.length > 0) {
                 this.#selectedIndex = index;
                 items.removeClass('selected');
@@ -126,14 +126,14 @@
         }
 
         #selectNextItem() {
-            const items = $(this.#navigationLinksClass).not('.hidden');
+            const items = $(this.#navigationLinksClass).not('.d-none');
             if (items.length > (this.#selectedIndex + 1)) {
                 this.#selectItem(this.#selectedIndex + 1);
             }
         }
 
         #selectPreviousItem() {
-            const items = $(this.#navigationLinksClass).not('.hidden');
+            const items = $(this.#navigationLinksClass).not('.d-none');
             if (items.length > 0 && this.#selectedIndex > 0) {
                 this.#selectItem(this.#selectedIndex - 1);
             }
@@ -174,7 +174,7 @@
         addHandler(display, handler) {
             const quickFindModalItems = $('#quickFindModalItems');
             const div = document.createElement('div');
-            div.className = 'quickNavigationItem hidden';
+            div.className = 'quickNavigationItem d-none';
             div.innerHTML = display;
 
             quickFindModalItems.append(div);

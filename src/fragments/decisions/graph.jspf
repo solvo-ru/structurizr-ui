@@ -271,7 +271,7 @@
             return undefined;
         }
 
-        $('#graphButton').removeClass('hidden');
+        $('#graphButton').removeClass('d-none');
 
         var rootNodeName = 'Decisions';
         var graph = { nodes: [

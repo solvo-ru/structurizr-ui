@@ -20,7 +20,7 @@
 
                 <form id="createReviewForm" method="post" action="/user/review/create" target="_blank">
                     <input type="hidden" name="workspaceId" value="${workspace.id}" />
-                    <div id="createReviewFormFiles" class="hidden"></div>
+                    <div id="createReviewFormFiles" class="d-none"></div>
 
                     <div class="form-group">
                         <select multiple class="form-control" id="reviewViewList" size="10">

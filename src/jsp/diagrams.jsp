@@ -64,7 +64,7 @@
 </c:choose>
 
 <div class="row" style="padding: 0; margin: 0">
-    <div id="diagramNavigationPanel" class="col-sm-2 hidden-xs hidden-sm <c:if test="${embed eq true}">hidden</c:if>">
+    <div id="diagramNavigationPanel" class="col-sm-2 d-none d-sm-block <c:if test="${embed eq true}">d-none</c:if>">
         <c:if test="${not empty param.version}">
         <div class="centered" style="margin-top: 10px;">
             <span class="label label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
@@ -88,7 +88,7 @@
 <div id="embeddedControls" style="text-align: right; position: absolute; bottom: 10px; right: 10px; opacity: 0.1; z-index: 100;">
     <div class="btn-group">
         <button id="zoomOutButton" class="btn btn-default" title="Zoom out [-]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/zoom-out.svg" class="icon-btn" /></button>
-        <button id="enterPresentationModeButton" class="btn btn-default hidden" title="Enter Presentation Mode [p]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/easel.svg" class="icon-btn" /></button>
+        <button id="enterPresentationModeButton" class="btn btn-default d-none" title="Enter Presentation Mode [p]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/easel.svg" class="icon-btn" /></button>
         <button id="zoomInButton" class="btn btn-default" title="Zoom in [+]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/zoom-in.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
@@ -98,10 +98,10 @@
     </script>
 
     <div class="btn-group">
-        <button id="stepBackwardInAnimationButton" class="btn btn-default hidden dynamicDiagramButton stepBackwardAnimationButton" title="Step backward [,]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-backward.svg" class="icon-btn" /></button>
-        <button id="startAnimationButton" class="btn btn-default hidden dynamicDiagramButton startAnimationButton" title="Play animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/play.svg" class="icon-btn" /></button>
-        <button id="stopAnimationButton" class="btn btn-default hidden dynamicDiagramButton stopAnimationButton" title="Stop animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/stop.svg" class="icon-btn" /></button>
-        <button id="stepForwardInAnimationButton" class="btn btn-default hidden dynamicDiagramButton stepForwardAnimationButton" title="Step forward [.]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-forward.svg" class="icon-btn" /></button>
+        <button id="stepBackwardInAnimationButton" class="btn btn-default d-none dynamicDiagramButton stepBackwardAnimationButton" title="Step backward [,]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-backward.svg" class="icon-btn" /></button>
+        <button id="startAnimationButton" class="btn btn-default d-none dynamicDiagramButton startAnimationButton" title="Play animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/play.svg" class="icon-btn" /></button>
+        <button id="stopAnimationButton" class="btn btn-default d-none dynamicDiagramButton stopAnimationButton" title="Stop animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/stop.svg" class="icon-btn" /></button>
+        <button id="stepForwardInAnimationButton" class="btn btn-default d-none dynamicDiagramButton stepForwardAnimationButton" title="Step forward [.]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-forward.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#stepBackwardInAnimationButton').click(function() { stepBackwardInAnimation(); });
@@ -322,7 +322,7 @@
 
         const view = structurizr.workspace.findViewByKey(key);
 
-        $('#diagramControls').removeClass('hidden');
+        $('#diagramControls').removeClass('d-none');
         $('#undoButton').prop('disabled', true);
 
         if (viewsVisited.peek() !== key) {
@@ -337,12 +337,12 @@
 
         if (view.type === structurizr.constants.IMAGE_VIEW_TYPE) {
             if (embed) {
-                $('#diagramControls').addClass('hidden');
+                $('#diagramControls').addClass('d-none');
             }
-            $('#diagramEditButtons').addClass('hidden');
-            $('#diagramNotEditableMessage').addClass('hidden');
-            $('#editDiagramButton').addClass('hidden');
-            $('.modelViewButtons').addClass('hidden');
+            $('#diagramEditButtons').addClass('d-none');
+            $('#diagramNotEditableMessage').addClass('d-none');
+            $('#editDiagramButton').addClass('d-none');
+            $('.modelViewButtons').addClass('d-none');
 
             structurizr.diagram.resize();
             structurizr.diagram.zoomToWidthOrHeight();
@@ -350,15 +350,15 @@
             return;
         }
 
-         $('.modelViewButtons').removeClass('hidden');
+         $('.modelViewButtons').removeClass('d-none');
 
         if (editable) {
-            $('#diagramEditButtons').removeClass('hidden');
+            $('#diagramEditButtons').removeClass('d-none');
         } else {
-            $('#diagramEditButtons').addClass('hidden');
+            $('#diagramEditButtons').addClass('d-none');
 
             if (embed && !diagramSelector) {
-                $('#diagramControls').addClass('hidden');
+                $('#diagramControls').addClass('d-none');
             }
         }
 
@@ -375,11 +375,11 @@
             (view.type === structurizr.constants.DYNAMIC_VIEW_TYPE && view.elementId !== undefined) ||
             (view.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE && view.softwareSystemId !== undefined)
         ) {
-            $('#showDiagramScopeOnButton').removeClass('hidden');
-            $('#showDiagramScopeOffButton').addClass('hidden');
+            $('#showDiagramScopeOnButton').removeClass('d-none');
+            $('#showDiagramScopeOffButton').addClass('d-none');
         } else {
-            $('#showDiagramScopeOnButton').addClass('hidden');
-            $('#showDiagramScopeOffButton').addClass('hidden');
+            $('#showDiagramScopeOnButton').addClass('d-none');
+            $('#showDiagramScopeOffButton').addClass('d-none');
         }
 
         if (view.type === "Dynamic" || (view.animations && view.animations.length > 1)) {
@@ -404,11 +404,11 @@
         }
 
         if (elementsHaveHealthChecks) {
-            $('#healthOnButton').removeClass('hidden');
-            $('#healthOffButton').addClass('hidden');
+            $('#healthOnButton').removeClass('d-none');
+            $('#healthOffButton').addClass('d-none');
         } else {
-            $('#healthOnButton').addClass('hidden');
-            $('#healthOffButton').addClass('hidden');
+            $('#healthOnButton').addClass('d-none');
+            $('#healthOffButton').addClass('d-none');
         }
 
         const explorationsButton = document.getElementById('explorationsButton');
@@ -420,7 +420,7 @@
                     window.open(urlPrefix + '/explore/graph' + urlSuffix + '#' + encodeURIComponent(view.key));
                 };
 
-                $('#explorationsButton').removeClass('hidden');
+                $('#explorationsButton').removeClass('d-none');
             } else if (view.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE) {
                 explorationsButton.onclick = function () {
                     const urlPrefix = '<c:out value="${urlPrefix}" />';
@@ -428,20 +428,20 @@
                     window.open(urlPrefix + '/explore/tree' + urlSuffix + '#' + encodeURIComponent(view.key));
                 };
 
-                $('#explorationsButton').removeClass('hidden');
+                $('#explorationsButton').removeClass('d-none');
             } else {
-                $('#explorationsButton').addClass('hidden');
+                $('#explorationsButton').addClass('d-none');
             }
         }
 
         configureTooltip(view);
 
         if (structurizr.diagram.getCurrentView().automaticLayout !== undefined) {
-            $('#editDiagramButton').addClass('hidden');
-            $('#diagramNotEditableMessage').removeClass('hidden');
+            $('#editDiagramButton').addClass('d-none');
+            $('#diagramNotEditableMessage').removeClass('d-none');
         } else {
-            $('#editDiagramButton').removeClass('hidden');
-            $('#diagramNotEditableMessage').addClass('hidden');
+            $('#editDiagramButton').removeClass('d-none');
+            $('#diagramNotEditableMessage').addClass('d-none');
         }
 
         structurizr.diagram.resize();
@@ -653,14 +653,14 @@
     function initControls() {
         $('#editorButton').prop('disabled', !${workspace.editable});
         if (!structurizr.workspace.hasDocumentation()) {
-            $('#documentationButton').addClass('hidden');
+            $('#documentationButton').addClass('d-none');
         }
         if (!structurizr.workspace.hasDecisions()) {
-            $('#decisionLogButton').addClass('hidden');
+            $('#decisionLogButton').addClass('d-none');
         }
 
         if (structurizr.ui.isFullScreenEnabled()) {
-            $('#enterPresentationModeButton').removeClass('hidden');
+            $('#enterPresentationModeButton').removeClass('d-none');
         }
     }
 
@@ -672,13 +672,13 @@
         if (bool) {
             structurizr.diagram.setDarkMode(true);
             document.cookie = DARK_MODE_COOKIE_NAME + '=true; expires=31 Dec 2029 23:59:59 UTC; path=/';
-            $('#darkModeOnButton').addClass('hidden');
-            $('#darkModeOffButton').removeClass('hidden');
+            $('#darkModeOnButton').addClass('d-none');
+            $('#darkModeOffButton').removeClass('d-none');
         } else {
             structurizr.diagram.setDarkMode(false);
             document.cookie = DARK_MODE_COOKIE_NAME + '=; expires=01 Jan 1970 00:00:00 UTC; path=/';
-            $('#darkModeOnButton').removeClass('hidden');
-            $('#darkModeOffButton').addClass('hidden');
+            $('#darkModeOnButton').removeClass('d-none');
+            $('#darkModeOffButton').addClass('d-none');
         }
     }
 
@@ -1321,19 +1321,19 @@
             structurizr.ui.enterFullScreen('diagram');
         }
 
-        $('#diagramNavigationPanel').addClass('hidden');
-        $('#enterPresentationModeButton').addClass('hidden');
+        $('#diagramNavigationPanel').addClass('d-none');
+        $('#enterPresentationModeButton').addClass('d-none');
         $('.structurizrDiagramViewport').css('background', '#000000');
         structurizr.diagram.resize();
         structurizr.diagram.zoomToWidthOrHeight();
     }
 
     function exitPresentationMode() {
-        $('#enterPresentationModeButton').removeClass('hidden');
+        $('#enterPresentationModeButton').removeClass('d-none');
         $('.structurizrDiagramViewport').css('background', '');
 
         if (!structurizr.diagram.isEmbedded()) {
-            $('#diagramNavigationPanel').removeClass('hidden');
+            $('#diagramNavigationPanel').removeClass('d-none');
         }
 
         presentationMode = false;
@@ -1342,12 +1342,12 @@
     function toggleTooltip() {
         if (tooltip.isEnabled()) {
             tooltip.disable();
-            $('.diagramTooltipOnButton').removeClass('hidden');
-            $('.diagramTooltipOffButton').addClass('hidden');
+            $('.diagramTooltipOnButton').removeClass('d-none');
+            $('.diagramTooltipOffButton').addClass('d-none');
         } else {
             tooltip.enable();
-            $('.diagramTooltipOnButton').addClass('hidden');
-            $('.diagramTooltipOffButton').removeClass('hidden');
+            $('.diagramTooltipOnButton').addClass('d-none');
+            $('.diagramTooltipOffButton').removeClass('d-none');
         }
     }
 
@@ -1428,25 +1428,25 @@
 
     function showDiagramScope(bool) {
         if (bool) {
-            $('#showDiagramScopeOnButton').addClass('hidden');
-            $('#showDiagramScopeOffButton').removeClass('hidden');
+            $('#showDiagramScopeOnButton').addClass('d-none');
+            $('#showDiagramScopeOffButton').removeClass('d-none');
             structurizr.diagram.showDiagramScope(true);
         } else {
-            $('#showDiagramScopeOnButton').removeClass('hidden');
-            $('#showDiagramScopeOffButton').addClass('hidden');
+            $('#showDiagramScopeOnButton').removeClass('d-none');
+            $('#showDiagramScopeOffButton').addClass('d-none');
             structurizr.diagram.showDiagramScope(false);
         }
     }
 
     function showHealth(bool) {
         if (bool) {
-            $('#healthOnButton').addClass('hidden');
-            $('#healthOffButton').removeClass('hidden');
+            $('#healthOnButton').addClass('d-none');
+            $('#healthOffButton').removeClass('d-none');
 
             healthCheck.start();
         } else {
-            $('#healthOnButton').removeClass('hidden');
-            $('#healthOffButton').addClass('hidden');
+            $('#healthOnButton').removeClass('d-none');
+            $('#healthOffButton').addClass('d-none');
 
             healthCheck.stop();
         }

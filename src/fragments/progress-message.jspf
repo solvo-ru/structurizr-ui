@@ -1,4 +1,4 @@
-<div id="progressMessage" class="structurizrBackgroundBase hidden"></div>
+<div id="progressMessage" class="structurizrBackgroundBase d-none"></div>
 
 <script nonce="${scriptNonce}">
     structurizr.ui.ProgressMessage = class ProgressMessage {
@@ -7,11 +7,11 @@
 
         show(html) {
             this.#progressMessage.html(html);
-            this.#progressMessage.removeClass('hidden');
+            this.#progressMessage.removeClass('d-none');
         }
 
         hide() {
-            this.#progressMessage.addClass('hidden');
+            this.#progressMessage.addClass('d-none');
         }
     }
 

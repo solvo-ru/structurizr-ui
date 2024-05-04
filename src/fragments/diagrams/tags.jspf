@@ -53,8 +53,8 @@
         structurizr.diagram.clearTags();
 
         $('#tagsModal').modal('hide');
-        $('#tagsOnButton').removeClass('hidden');
-        $('#tagsOffButton').addClass('hidden');
+        $('#tagsOnButton').removeClass('d-none');
+        $('#tagsOffButton').addClass('d-none');
         $('#tagsOffButton').attr('title', 'Tags');
 
         if (render === true) {
@@ -69,8 +69,8 @@
         structurizr.diagram.renderPerspectiveOrTagsFilter();
 
         $('#tagsModal').modal('hide');
-        $('#tagsOnButton').addClass('hidden');
-        $('#tagsOffButton').removeClass('hidden');
+        $('#tagsOnButton').addClass('d-none');
+        $('#tagsOffButton').removeClass('d-none');
         $('#tagsOffButton').attr('title', 'Tags (' + tags + ')');
     }
 </script>
