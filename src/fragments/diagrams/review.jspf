@@ -27,7 +27,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group form-inline centered">
+                    <div class="form-group form-inline d-flex justify-content-center">
                         <select class="form-control" style="display: inline-block" name="review">
                             <option value="General">General review</option>
                             <option value="Risk">Risk review</option>

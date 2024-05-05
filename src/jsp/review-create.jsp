@@ -8,7 +8,7 @@
     </div>
 </c:forEach>
 
-<div id="diagramControls" class="centered">
+<div id="diagramControls" class="d-flex justify-content-center">
     <div class="row">
         <div class="col-sm-2" style="padding: 18px 30px 10px 30px">
             <a href="/"><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner.png" alt="Structurizr" class="structurizrBannerLight img-responsive brandingLogo" /><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner-dark.png" alt="Structurizr" class="structurizrBannerDark img-responsive brandingLogo" /></a>
@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<div class="small centered" style="margin-top: 20px;">
+<div class="small d-flex justify-content-center" style="margin-top: 20px;">
     Choose the diagram(s) that you would like to include in the review. Refresh the page to start again.
 </div>
 

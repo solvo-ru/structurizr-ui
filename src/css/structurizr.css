@@ -170,16 +170,13 @@ label {
     font-size: 11px;
 }
 
-a {
-    color: #175180; /*1168BD*/
-}
 
 .structurizrBackgroundGray {
-    background: #7FCECB; /* #777777 */
+    background: #8D98A7; /* #777777 */
     color: #ffffff;
 }
 .structurizrBackgroundDarker {
-    background: #02172C;
+    background: #18162D;
     color: #ffffff;
 }
 .structurizrBackgroundDark {
@@ -187,15 +184,15 @@ a {
     color: #ffffff;
 }
 .structurizrBackgroundBase {
-    background: #1168BD;
+    background: #0b5889;
     color: #ffffff;
 }
 .structurizrBackgroundLight {
-    background: #438DD5;
+    background: #3995D1;
     color: #ffffff;
 }
 .structurizrBackgroundLighter {
-    background: #85BBF0;
+    background: #62B1E7;
     color: #ffffff;
 }
 .structurizrBackgroundDarker a, .structurizrBackgroundDark a, .structurizrBackgroundBase a, .structurizrBackgroundLight a {
@@ -203,10 +200,10 @@ a {
 }
 
 .label-primary {
-    background: #175180;
+    background: #0b5889;
 }
 .label-version {
-    background: #7FCECB;
+    background: #62B1E7;
 }
 
 th {

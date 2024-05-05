@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div id="graphContent" class="modal-body">
                 <%@ include file="/WEB-INF/fragments/tooltip.jspf" %>
-                <div class="centered">
+                <div class="d-flex justify-content-center">
                     <div id="exploreGraph" style="width: 100%"></div>
                 </div>
             </div>

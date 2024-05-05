@@ -14,10 +14,10 @@
                 </p>
 
                 <div class="row">
-                    <div class="col-sm-4 centered small">
+                    <div class="col-sm-4 d-flex justify-content-center small">
                         <h3>Structurizr Lite</h3>
-                        <p class="centered">
-                            <span class="label label-success">Recommended</span>
+                        <p class="d-flex justify-content-center">
+                            <span class="badge bg-success">Recommended</span>
                         </p>
                         <p>
                             <a href="https://docs.structurizr.com/lite" target="_blank">Structurizr Lite</a> provides a way to quickly work with a single workspace.
@@ -28,10 +28,10 @@
                         </p>
                     </div>
 
-                    <div class="col-sm-4 centered small">
+                    <div class="col-sm-4 d-flex justify-content-center small">
                         <h3>Structurizr CLI</h3>
-                        <p class="centered">
-                            <span class="label label-success">Recommended</span>
+                        <p class="d-flex justify-content-center">
+                            <span class="badge bg-success">Recommended</span>
                         </p>
                         <p>
                             The <a href="https://docs.structurizr.com/cli" target="_blank">Structurizr CLI</a> is a command line utility, designed to be used in conjunction with the Structurizr DSL.
@@ -40,10 +40,10 @@
                         </p>
                     </div>
 
-                    <div class="col-sm-4 centered small">
+                    <div class="col-sm-4 d-flex justify-content-center small">
                         <h3>DSL editor</h3>
-                        <p class="centered">
-                            <span class="label label-warning">Not recommended</span>
+                        <p class="d-flex justify-content-center">
+                            <span class="badge bg-warning">Not recommended</span>
                         </p>
                         <p>
                             If you'd rather not use Structurizr Lite or the Structurizr CLI, the Structurizr cloud service/on-premises installation provides a basic online DSL editor.

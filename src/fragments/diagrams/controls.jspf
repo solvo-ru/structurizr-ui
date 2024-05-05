@@ -1,6 +1,6 @@
-<div class="form-inline <c:if test="${embed eq true}">d-none</c:if>" style="margin-bottom: 8px">
-    <div class="form-group">
-        <div class="btn-group">
+<div class="form-inline <c:if test="${embed eq true}">d-none</c:if>">
+    <div class="form-group d-flex">
+        <div class="btn-group m-1">
             <c:if test="${structurizrConfiguration.type ne 'lite'}">
             <c:choose>
                 <c:when test="${authenticated eq true}">
@@ -29,7 +29,7 @@
             $('#backButton').click(function() { back(); });
         </script>
 
-        <div class="modelViewButtons btn-group">
+        <div class="modelViewButtons btn-group  m-1">
             <button id="diagramKeyButton" class="btn btn-default" title="Diagram key [i]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-btn" /></button>
             <button id="diagramTooltipOnButton" class="btn btn-default diagramTooltipOnButton" title="Diagram tooltips on [t]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/chat-square-text.svg" class="icon-btn" /></button>
             <button id="diagramTooltipOffButton" class="btn btn-default d-none diagramTooltipOffButton" title="Diagram tooltips off [t]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/chat-square-text-fill.svg" class="icon-btn" /></button>
@@ -61,7 +61,7 @@
             $('#darkModeOffButton').click(function() { toggleDarkMode(); });
         </script>
 
-        <div class="btn-group">
+        <div class="btn-group  m-1">
             <button id="exportToPNGButton" class="btn btn-default" title="Export diagram and key/legend to PNG"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/filetype-png.svg" class="icon-btn" /></button>
             <button id="exportToSVGButton" class="btn btn-default" title="Export diagram and key to SVG"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/filetype-svg.svg" class="icon-btn" /></button>
 
@@ -87,14 +87,14 @@
         </script>
 
         <c:if test="${workspace.editable}">
-        <div class="btn-group">
+        <div class="btn-group m-1">
             <button id="saveButton" class="btn btn-default" title="Save workspace" disabled="true" style="text-shadow: none"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/folder-check.svg" class="icon-btn icon-white" /></button>
         </div>
         <script nonce="${scriptNonce}">$('#saveButton').click(function() { saveWorkspace(); });</script>
         </c:if>
 
         <c:if test="${includeEditButton eq true}">
-        <div id="editDiagramButton" class="btn-group">
+        <div id="editDiagramButton" class="btn-group m-1">
             <button class="btn btn-primary" title="Edit diagram"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/pencil.svg" class="icon-btn icon-white" /></button>
         </div>
         <script nonce="${scriptNonce}">$('#editDiagramButton').click(function() { window.location.href='/workspace/${workspace.id}/diagram-editor<c:out value="${urlSuffix}" />#' + window.location.hash.substring(1); });</script>
@@ -103,18 +103,18 @@
 </div>
 
 <c:if test="${workspace.editable}">
-<div class="form-inline" style="margin-top: 8px;">
+<div class="form-inline">
     <div class="form-group">
-        <span id="diagramEditButtons">
+        <span id="diagramEditButtons" class="d-flex">
 
-        <select id="pageSize" class="form-control" style="font-size: 12px;">
+        <select id="pageSize" class="form-control m-1" style="font-size: 12px;">
             <option id="none" value="none">Canvas size - Custom</option>
             <c:forEach var="paperSize" items="${paperSizes}">
             <option id="${paperSize}" value="${paperSize.width}x${paperSize.height} %>">${paperSize.name} - ${paperSize.orientation}</option>
             </c:forEach>
         </select>
 
-        <div class="btn-group">
+        <div class="btn-group m-1">
             <button id="pageSizeDecreaseButton" class="btn btn-default" title="Decrease canvas size"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/file-earmark-minus.svg" class="icon-btn" /></button>
             <button id="pageSizeAutoButton" class="btn btn-default" title="Auto canvas size"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/file-earmark-diff.svg" class="icon-btn" /></button>
             <button id="pageSizeIncreaseButton" class="btn btn-default" title="Increase canvas size"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/file-earmark-plus.svg" class="icon-btn" /></button>
@@ -125,7 +125,7 @@
             $('#pageSizeIncreaseButton').click(function(event) { structurizr.diagram.increasePageSize(event); });
         </script>
 
-        <div class="btn-group">
+        <div class="btn-group m-1">
             <button id="alignSelectedElementsLeftButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align left"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/align-start.svg" class="icon-btn" /></button>
             <button id="alignSelectedElementsVerticalCentreButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align centre"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/align-center.svg" class="icon-btn" /></button>
             <button id="alignSelectedElementsRightButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align right"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/align-end.svg" class="icon-btn" /></button>
@@ -138,7 +138,7 @@
             $('#distributeSelectedElementsHorizontallyButton').click(function() { structurizr.diagram.distributeSelectedElementsHorizontally(); });
         </script>
 
-        <div class="btn-group">
+        <div class="btn-group m-1">
             <button id="alignSelectedElementsTopButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align top"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/align-top.svg" class="icon-btn" /></button>
             <button id="alignSelectedElementsHorizontalCentreButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align middle"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/align-middle.svg" class="icon-btn" /></button>
             <button id="alignSelectedElementsBottomButton" class="btn btn-default multipleElementsSelectedButton" disabled="disabled" title="Align bottom"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/align-bottom.svg" class="icon-btn" /></button>
@@ -151,7 +151,7 @@
             $('#distributeSelectedElementsVerticallyButton').click(function() { structurizr.diagram.distributeSelectedElementsVertically(); });
         </script>
 
-        <div class="btn-group">
+        <div class="btn-group m-1">
             <button id="centreDiagramOrSelectedElementsButton" class="btn btn-default" title="Centre diagram or selected elements"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/grid.svg" class="icon-btn" /></button>
             <button id="openAutoLayoutModalButton" class="btn btn-default" id="autoLayoutButton" title="Auto-layout"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/magic.svg" class="icon-btn" /></button>
             <button id="undoButton" class="btn btn-default" id="undoButton" disabled="disabled" title="Undo layout changes [u]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/arrow-counterclockwise.svg" class="icon-btn" /></button>

@@ -42,7 +42,7 @@
                 </div>
 
                 <c:if test="${not workspace.open}">
-                    <div class="centered">
+                    <div class="d-flex justify-content-center">
                         <h3><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/exclamation-triangle.svg" class="icon-md" /> Warning</h3>
                         This workspace is private, so the above embed code includes your workspace API key or sharing token
                         - <b>it is not recommended to use the above embed code on the Internet</b>.
@@ -50,7 +50,7 @@
                 </c:if>
 
                 <c:if test="${workspace.clientEncrypted}">
-                    <div class="centered">
+                    <div class="d-flex justify-content-center">
                         <h3><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-md" /> Information</h3>
                         This is a client-side encrypted workspace, so viewers will be prompted for the password when diagrams from this workspace are embedded in web pages.
                     </div>

@@ -8,7 +8,7 @@
     </div>
 </c:forEach>
 
-<div id="diagramControls" class="centered">
+<div id="diagramControls" class="d-flex justify-content-center">
     <div class="row">
         <div class="col-sm-2" style="padding: 18px 30px 10px 30px">
             <a href="/"><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner.png" alt="Structurizr" class="structurizrBannerLight img-responsive brandingLogo" /><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner-dark.png" alt="Structurizr" class="structurizrBannerDark img-responsive brandingLogo" /></a>
@@ -85,7 +85,7 @@
     </div>
 </div>
 
-<div class="small centered" style="margin-top: 20px;">
+<div class="small d-flex justify-content-center" style="margin-top: 20px;">
     <c:if test="${not review.locked}">
     Click on a diagram to add a comment. Comments can be moved by dragging, and edited by clicking on them.
     To delete a comment, just remove its text.

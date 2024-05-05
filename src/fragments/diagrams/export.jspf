@@ -11,7 +11,7 @@
                     </select>
                 </div>
 
-                <div class="centered" id="exportPNGOptions">
+                <div class="d-flex justify-content-center" id="exportPNGOptions">
                     <label style="margin-right: 20px">
                         <input type="checkbox" id="exportPNGDiagramMetadata" checked="checked" />
                         Include diagram title, description, and metadata
@@ -33,7 +33,7 @@
                     </label>
                 </div>
 
-                <div class="centered" id="exportSVGOptions">
+                <div class="d-flex justify-content-center" id="exportSVGOptions">
                     <label style="margin-right: 20px">
                         <input type="checkbox" id="exportSVGDiagramMetadata" checked="checked" />
                         Include diagram title, description, and metadata
@@ -45,14 +45,14 @@
                     </label>
                 </div>
 
-                <div class="centered">
+                <div class="d-flex justify-content-center">
                     <button id="exportCurrentViewButton" type="button" class="btn btn-default">Export current diagram</button>
                     <button id="exportSelectedViewsButton" type="button" class="btn btn-default">Export selected diagrams</button>
                     <button id="exportAllViewsButton" type="button" class="btn btn-default">Export all diagrams</button>
                     <button id="publishAllViewsButton" type="button" class="btn btn-default d-none">Publish all diagrams</button>
                 </div>
 
-                <div id="exportAnimation" class="centered d-none" style="margin-top: 5px">
+                <div id="exportAnimation" class="d-flex justify-content-center d-none" style="margin-top: 5px">
                     <label>
                         Animated GIF frame duration (seconds)
                     </label>
@@ -60,7 +60,7 @@
                     <button id="exportAnimatedGIFButton" type="button" class="btn btn-default">Create animated GIF</button>
                 </div>
 
-                <div id="exportedDiagrams" class="centered" style="margin-top: 40px"></div>
+                <div id="exportedDiagrams" class="d-flex justify-content-center" style="margin-top: 40px"></div>
             </div>
         </div>
     </div>

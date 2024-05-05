@@ -168,7 +168,7 @@
             registerRelationship(element.id, element.id); // this prevents the nodes in the graph linking to themselves
 
             const elementType = structurizr.workspace.getTerminologyFor(element);
-            const html = '<span class="label smaller" style="background: ' + elementStyle.background + '; color: ' + elementStyle.color + '"> ' + structurizr.util.escapeHtml(elementType) + '</span> ' + structurizr.util.escapeHtml(element.name);
+            const html = '<span class="badge smaller" style="background: ' + elementStyle.background + '; color: ' + elementStyle.color + '"> ' + structurizr.util.escapeHtml(elementType) + '</span> ' + structurizr.util.escapeHtml(element.name);
             quickNavigation.addHandler(html, function() {
                 highlightNode(element.id);
             });

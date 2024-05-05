@@ -28,7 +28,7 @@
 <c:choose>
     <c:when test="${workspace.editable eq false && embed eq true && showDiagramSelector eq true}">
         <%-- embedded mode, with the diagram selector --%>
-        <div id="diagramControls" class="form-group centered" style="margin-bottom: 0px;">
+        <div id="diagramControls" class="form-group d-flex justify-content-center" style="margin-bottom: 0px;">
             <div class="btn-group">
                 <select id="viewType" class="form-control" style="font-size: 12px;"></select>
             </div>
@@ -41,7 +41,7 @@
         <div id="diagramControls">
             <c:choose>
                 <c:when test="${embed eq true}">
-                    <div class="centered">
+                    <div class="d-flex justify-content-center">
                         <%@ include file="/WEB-INF/fragments/diagrams/controls.jspf" %>
                     </div>
                 </c:when>
@@ -51,8 +51,8 @@
                         <div class="col-sm-2" style="padding: 18px 20px 10px 20px">
                             <a href="<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" />"><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner.png" alt="Structurizr" class="structurizrBannerLight img-responsive brandingLogo" /><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner-dark.png" alt="Structurizr" class="structurizrBannerDark img-responsive brandingLogo" /></a>
                         </div>
-                        <div class="col-sm-10 centered" style="padding: 20px 30px 0px 30px">
-                            <div class="centered">
+                        <div class="col-sm-10 d-flex justify-content-center" style="padding: 20px 30px 0px 30px">
+                            <div class="d-flex flex-column align-items-center">
                                 <%@ include file="/WEB-INF/fragments/diagrams/controls.jspf" %>
                             </div>
                         </div>
@@ -66,8 +66,8 @@
 <div class="row" style="padding: 0; margin: 0">
     <div id="diagramNavigationPanel" class="col-sm-2 d-none d-sm-block <c:if test="${embed eq true}">d-none</c:if>">
         <c:if test="${not empty param.version}">
-        <div class="centered" style="margin-top: 10px;">
-            <span class="label label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
+        <div class="d-flex" style="margin-top: 10px;">
+            <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
         </div>
         </c:if>
 
@@ -554,7 +554,7 @@
             var id = 'diagram' + index;
             var title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
 
-            html += '<div id="' + id + 'Thumbnail" class="diagramThumbnail centered small">';
+            html += '<div id="' + id + 'Thumbnail" class="diagramThumbnail d-flex flex-column align-items-center small">';
 
             if (view.type === structurizr.constants.IMAGE_VIEW_TYPE) {
                 html += '  <img src="' + view.content + '" class="img-thumbnail viewThumbnail" style="margin-bottom: 10px;" /><br />';
@@ -569,8 +569,8 @@
             </c:choose>
             }
 
-            html += title;
-            html += '<br /><span class="small">#' + structurizr.util.escapeHtml(view.key) + '</span>';
+            html += '<span class="small mb-2">' + title + '</span>' ;
+            html += '<span class="small mb-2">#' + structurizr.util.escapeHtml(view.key) + '</span>';
             html += '</div>';
 
             index++;

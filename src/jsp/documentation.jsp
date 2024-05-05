@@ -63,7 +63,7 @@
             <div id="documentationMetadata">
                 <c:if test="${not empty param.version}">
                 <div style="margin-bottom: 10px">
-                    <span class="label label-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
+                    <span class="badge label-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
                 </div>
                 </c:if>
                 <span id="lastModifiedDate"></span>
@@ -76,7 +76,7 @@
     </div>
 
     <div class="col-sm-10" style="margin-top: 0; margin-bottom: 0">
-        <div id="documentationNavigationDropDownPanel" class="form-group d-block d-sm-none centered" style="margin-top: 0; margin-bottom: 20px">
+        <div id="documentationNavigationDropDownPanel" class="form-group d-block d-sm-none d-flex justify-content-center" style="margin-top: 0; margin-bottom: 20px">
             <div class="btn-group">
                 <select id="documentationNavigationDropDown" class="form-control"></select>
             </div>
@@ -84,7 +84,7 @@
 
         <div id="documentationPanel" class="scrollable">
             <div id="documentationHeader">
-                <div class="centered">
+                <div class="d-flex justify-content-center">
                     <img src="" class="brandingLogo d-none" alt="Branding logo" />
                 </div>
                 <h1><span id="documentationScopeName"></span></h1>
@@ -299,7 +299,7 @@
     function showNoDocumentationPage() {
         const documentationContent = $('#documentationContent');
         $('#documentationScopeName').html(structurizr.util.escapeHtml(structurizr.workspace.name));
-        documentationContent.addClass('centered');
+        documentationContent.addClass('d-flex justify-content-center');
         documentationContent.css('margin-top', '100px');
         documentationContent.css('margin-bottom', '100px');
 
