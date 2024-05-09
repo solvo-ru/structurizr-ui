@@ -86,7 +86,8 @@
 
             var decryptedWorkspace = structurizrEncryptionStrategy.decrypt(workspace);
 
-            modal.modal('hide');
+            (new bootstrap.Modal(modal)).hide();
+            //modal.modal('hide');
             callback(decryptedWorkspace);
         } catch (e) {
             console.error("Could not decrypt the workspace with the given passphrase");

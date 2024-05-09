@@ -51,7 +51,7 @@
 
     <div class="col-sm-9" style="margin-top: 0px; margin-bottom: 0px">
         <div class="d-flex justify-content-center d-block d-sm-none">
-            <div class="form-inline" style="margin-top: 20px">
+            <div class="d-inline-flex" style="margin-top: 20px">
                 <select id="decisionLogNavigationDropDown" class="form-control">
                 </select>
             </div>
@@ -63,7 +63,7 @@
                 <div id="decisionDate" class="d-flex justify-content-center"></div>
                 <div class="d-flex justify-content-center" style="margin-top: 10px">
                     <span id="decisionStatus" class="d-flex justify-content-center d-none" style="font-size: 30px"></span>
-                    <button id="graphButton" type="button" class="btn btn-default d-none" style="height: 42px; margin-bottom: 8px;"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/diagram-2.svg" class="icon-btn" /> Decision explorer</button>
+                    <button id="graphButton" type="button" class="btn btn-primary d-none" style="height: 42px; margin-bottom: 8px;"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/diagram-2.svg" class="icon-btn" /> Decision explorer</button>
                 </div>
             </div>
 

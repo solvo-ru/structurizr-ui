@@ -25,14 +25,19 @@
 
             navigationList.attr('size', Math.min(8, options.length));
             navigationList.val(options[0].url);
-
-            $('#navigationModal').modal();
+            var modalElement = document.getElementById('navigationModal');
+            var modal = new bootstrap.Modal(modalElement);
+            modal.show();
+            //$('#navigationModal').modal();
         }
     }
 
     function navigate() {
         var url = $('#navigationList').val();
-        $('#navigationModal').modal('hide');
+        var modalElement = document.getElementById('navigationModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.hide();
+        //$('#navigationModal').modal('hide');
         navigateTo(url);
     }
 

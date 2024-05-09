@@ -158,7 +158,10 @@
         }
 
         close() {
-            this.#modal.modal('hide');
+            //var modalElement = document.getElementById('reviewModal');
+            var modal = new bootstrap.Modal(this.#modal);
+            modal.hide();
+            //this.#modal.modal('hide');
         }
 
         onClose(callback) {

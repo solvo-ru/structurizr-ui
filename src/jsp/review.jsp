@@ -3,7 +3,7 @@
 
 <c:forEach var="message" items="${messages.unreadMessages}">
     <div class="alert alert-${message.type} alert-dismissible" role="alert" style="margin-bottom: 0">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             ${message.text}
     </div>
 </c:forEach>
@@ -14,7 +14,7 @@
             <a href="/"><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner.png" alt="Structurizr" class="structurizrBannerLight img-responsive brandingLogo" /><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner-dark.png" alt="Structurizr" class="structurizrBannerDark img-responsive brandingLogo" /></a>
         </div>
         <div class="col-sm-10" style="padding: 18px 30px 10px 30px">
-            <div class="form-inline">
+            <div class="d-inline-flex">
                 <div id="commentTypeButtons"></div>
 
                 <form id="submitReviewForm" class="d-none" method="post" action="/review/${review.id}">
@@ -23,13 +23,13 @@
 
                 <div class="btn-group">
                     <c:if test="${review.locked eq true && admin eq true}">
-                    <button id="unlockButton" class="btn btn-default" title="Unlock review" ><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/unlock.svg" class="icon-btn" /></button>
+                    <button id="unlockButton" class="btn btn-primary" title="Unlock review" ><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/unlock.svg" class="icon-btn" /></button>
                     </c:if>
                     <c:if test="${review.locked eq false && admin eq true}">
-                    <button id="lockButton" class="btn btn-default" title="Lock review"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/lock.svg" class="icon-btn" /></button>
+                    <button id="lockButton" class="btn btn-primary" title="Lock review"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/lock.svg" class="icon-btn" /></button>
                     </c:if>
                     <c:if test="${review.locked eq false or admin eq true}">
-                    <button id="helpButton" class="btn btn-default" title="Help"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/question-circle.svg" class="icon-btn" /></button>
+                    <button id="helpButton" class="btn btn-primary" title="Help"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/question-circle.svg" class="icon-btn" /></button>
                     </c:if>
                 </div>
                 <script nonce="${scriptNonce}">
@@ -44,7 +44,7 @@
                             <span style="margin-left: 10px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/lock.svg" class="icon-xs" /> This review is locked</span>
                         </c:when>
                         <c:otherwise>
-                            <button id="submitReviewButton" disabled class="btn btn-default"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/check-circle.svg" class="icon-btn icon-white" /> Submit comment(s)</button>
+                            <button id="submitReviewButton" disabled class="btn btn-primary"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/check-circle.svg" class="icon-btn icon-white" /> Submit comment(s)</button>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -59,7 +59,7 @@
 </div>
 
 <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-dialog-centered">
         <div id="commentModalContent" class="modal-content">
             <div class="modal-body">
                 <div>

@@ -87,9 +87,9 @@
 
 <div id="embeddedControls" style="text-align: right; position: absolute; bottom: 10px; right: 10px; opacity: 0.1; z-index: 100;">
     <div class="btn-group">
-        <button id="zoomOutButton" class="btn btn-default" title="Zoom out [-]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/zoom-out.svg" class="icon-btn" /></button>
-        <button id="enterPresentationModeButton" class="btn btn-default d-none" title="Enter Presentation Mode [p]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/easel.svg" class="icon-btn" /></button>
-        <button id="zoomInButton" class="btn btn-default" title="Zoom in [+]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/zoom-in.svg" class="icon-btn" /></button>
+        <button id="zoomOutButton" class="btn btn-primary" title="Zoom out [-]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/zoom-out.svg" class="icon-btn" /></button>
+        <button id="enterPresentationModeButton" class="btn btn-primary d-none" title="Enter Presentation Mode [p]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/easel.svg" class="icon-btn" /></button>
+        <button id="zoomInButton" class="btn btn-primary" title="Zoom in [+]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/zoom-in.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#zoomOutButton').click(function() { structurizr.diagram.zoomOut(); });
@@ -98,10 +98,10 @@
     </script>
 
     <div class="btn-group">
-        <button id="stepBackwardInAnimationButton" class="btn btn-default d-none dynamicDiagramButton stepBackwardAnimationButton" title="Step backward [,]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-backward.svg" class="icon-btn" /></button>
-        <button id="startAnimationButton" class="btn btn-default d-none dynamicDiagramButton startAnimationButton" title="Play animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/play.svg" class="icon-btn" /></button>
-        <button id="stopAnimationButton" class="btn btn-default d-none dynamicDiagramButton stopAnimationButton" title="Stop animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/stop.svg" class="icon-btn" /></button>
-        <button id="stepForwardInAnimationButton" class="btn btn-default d-none dynamicDiagramButton stepForwardAnimationButton" title="Step forward [.]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-forward.svg" class="icon-btn" /></button>
+        <button id="stepBackwardInAnimationButton" class="btn btn-primary d-none dynamicDiagramButton stepBackwardAnimationButton" title="Step backward [,]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-backward.svg" class="icon-btn" /></button>
+        <button id="startAnimationButton" class="btn btn-primary d-none dynamicDiagramButton startAnimationButton" title="Play animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/play.svg" class="icon-btn" /></button>
+        <button id="stopAnimationButton" class="btn btn-primary d-none dynamicDiagramButton stopAnimationButton" title="Stop animation"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/stop.svg" class="icon-btn" /></button>
+        <button id="stepForwardInAnimationButton" class="btn btn-primary d-none dynamicDiagramButton stepForwardAnimationButton" title="Step forward [.]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/skip-forward.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#stepBackwardInAnimationButton').click(function() { stepBackwardInAnimation(); });
@@ -112,19 +112,19 @@
 
     <c:if test="${embed eq true}">
     <div class="modelViewButtons btn-group">
-        <button id="embeddedShowKeyButton" class="btn btn-default" title="Diagram key [i]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-btn" /></button>
+        <button id="embeddedShowKeyButton" class="btn btn-primary" title="Diagram key [i]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#embeddedShowKeyButton').click(function() { showKey(); });
     </script>
 
     <div class="btn-group">
-        <button id="backEmbeddedButton" class="btn btn-default backButton" title="Go back to previous diagram"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/arrow-90deg-left.svg" class="icon-btn" /></button>
+        <button id="backEmbeddedButton" class="btn btn-primary backButton" title="Go back to previous diagram"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/arrow-90deg-left.svg" class="icon-btn" /></button>
 
         <c:if test="${workspace.id > 0 && (embed eq true && workspace.editable eq false)}">
-        <button id="openCurrentDiagramInNewWindowEmbeddedButton" class="btn btn-default" title="Link to this diagram"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/link.svg" class="icon-btn" /></button>
+        <button id="openCurrentDiagramInNewWindowEmbeddedButton" class="btn btn-primary" title="Link to this diagram"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/link.svg" class="icon-btn" /></button>
         </c:if>
-        <button id="exportToPNGEmbeddedButton" class="btn btn-default" title="Export diagram and key/legend to PNG"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/filetype-png.svg" class="icon-btn" /></button>
+        <button id="exportToPNGEmbeddedButton" class="btn btn-primary" title="Export diagram and key/legend to PNG"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/filetype-png.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#backEmbeddedButton').click(function() { back(); });
@@ -315,7 +315,10 @@
     }
 
     function viewChanged(key) {
-        $('#keyModal').modal('hide');
+        //$('#keyModal').modal('hide');
+        var modalElement = document.getElementById('keyModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.hide();
 
         // set the view key in the embed code modal
         $('.diagramEmbedDiagramId').text(key);
@@ -1004,7 +1007,10 @@
     function createReview() {
         $('#reviewSelectedViewsButton').prop('disabled', false);
         $('#reviewViewList').val(structurizr.diagram.getCurrentViewOrFilter().key);
-        $('#reviewModal').modal();
+        var modalElement = document.getElementById('reviewModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        //$('#reviewModal').modal();
     }
 
     function processWorkspaceLink(url) {

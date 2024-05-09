@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h2 class="modal-title">iframe embed</h2>
             </div>
 
@@ -68,7 +68,7 @@
                 </c:if>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -100,6 +100,9 @@
     }
 
     function openEmbedModal() {
-        $('#embedModal').modal();
+        var modalElement = document.getElementById('embedModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        //$('#embedModal').modal();
     }
 </script>

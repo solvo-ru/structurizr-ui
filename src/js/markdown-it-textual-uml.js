@@ -86,6 +86,8 @@
       switch (langName) {
         case 'mermaid':
           return mermaidFunctions.getMarkup(code)
+        case 'mermaidjs':
+          return mermaidFunctions.getMarkup(code)
         case 'plantuml':
         case 'dot':
           return platumlFunctions.getMarkup(code, 'uml')

@@ -12,13 +12,13 @@
 
     <div id="embeddedControls" style="overflow: scroll; text-align: right; position: fixed; bottom: 10px; right: 10px; opacity: 0.1; z-index: 100;">
         <c:if test="${workspace.id > 0 && (embed eq true && workspace.editable eq false)}">
-        <button id="openTreeInNewWindowButton" class="btn btn-default" title="Open graph in new window"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/link.svg" class="icon-btn" /></button>
+        <button id="openTreeInNewWindowButton" class="btn btn-primary" title="Open graph in new window"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/link.svg" class="icon-btn" /></button>
         <script nonce="${scriptNonce}">
             $('#openTreeInNewWindowButton').click(function() { openTreeInNewWindow(); });
         </script>
         </c:if>
-        <button id="enterFullScreenButton" class="btn btn-default" title="Enter Full Screen [f]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen.svg" class="icon-btn" /></button>
-        <button id="exitFullScreenButton" class="btn btn-default d-none" title="Exit Full Screen [Escape]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
+        <button id="enterFullScreenButton" class="btn btn-primary" title="Enter Full Screen [f]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen.svg" class="icon-btn" /></button>
+        <button id="exitFullScreenButton" class="btn btn-primary d-none" title="Exit Full Screen [Escape]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#enterFullScreenButton').click(function() { structurizr.ui.enterFullScreen('exploreTreePanel'); });

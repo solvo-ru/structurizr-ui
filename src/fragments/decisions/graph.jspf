@@ -87,7 +87,10 @@
     function dblclick(event, d) {
         if (d.id > 0) {
             window.location.hash = '#' + d.id;
-            $('#graphModal').modal('hide');
+            var modalElement = document.getElementById('graphModal');
+            var modal = new bootstrap.Modal(modalElement);
+            modal.hide();
+            //$('#graphModal').modal('hide');
         }
     }
 
