@@ -33,10 +33,10 @@
             <button id="diagramKeyButton" class="btn btn-primary" title="Diagram key [i]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-btn" /></button>
             <button id="diagramTooltipOnButton" class="btn btn-primary diagramTooltipOnButton" title="Diagram tooltips on [t]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/chat-square-text.svg" class="icon-btn" /></button>
             <button id="diagramTooltipOffButton" class="btn btn-primary d-none diagramTooltipOffButton" title="Diagram tooltips off [t]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/chat-square-text-fill.svg" class="icon-btn" /></button>
-            <button id="tagsOnButton" class="btn btn-primary"  title="Tags"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/tags.svg" class="icon-btn" /></button>
-            <button id="tagsOffButton" class="btn btn-primary d-none" title="Tags"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/tags-fill.svg" class="icon-btn" /></button>
-            <button id="perspectivesOnButton" class="btn btn-primary d-none" title="Perspectives"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/binoculars.svg" class="icon-btn" /></button>
-            <button id="perspectivesOffButton" class="btn btn-primary d-none" title="Perspectives"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/binoculars-fill.svg" class="icon-btn" /></button>
+            <button id="tagsOnButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagsModal" title="Tags"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/tags.svg" class="icon-btn" /></button>
+            <button id="tagsOffButton" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#tagsModal" title="Tags"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/tags-fill.svg" class="icon-btn" /></button>
+            <button id="perspectivesOnButton" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#perspectivesModal" title="Perspectives"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/binoculars.svg" class="icon-btn" /></button>
+            <button id="perspectivesOffButton" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#perspectivesModal" title="Perspectives"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/binoculars-fill.svg" class="icon-btn" /></button>
             <button id="showDiagramScopeOnButton" class="btn btn-primary d-none" title="Toggle diagram scope on"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/pin-map.svg" class="icon-btn" /></button>
             <button id="showDiagramScopeOffButton" class="btn btn-primary d-none" title="Toggle diagram scope off"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/pin-map-fill.svg" class="icon-btn" /></button>
             <button id="healthOnButton" class="btn btn-primary d-none" title="Health checks"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/heart-pulse.svg" class="icon-btn" /></button>
@@ -49,10 +49,6 @@
             $('#diagramKeyButton').click(function() { showKey(); });
             $('#diagramTooltipOnButton').click(function() { toggleTooltip(); });
             $('#diagramTooltipOffButton').click(function() { toggleTooltip(); });
-            $('#tagsOnButton').click(function() { openTagsModal(); });
-            $('#tagsOffButton').click(function() { openTagsModal(); });
-            $('#perspectivesOnButton').click(function() { openPerspectivesModal(); });
-            $('#perspectivesOffButton').click(function() { openPerspectivesModal(); });
             $('#showDiagramScopeOnButton').click(function() { showDiagramScope(true); });
             $('#showDiagramScopeOffButton').click(function() { showDiagramScope(false); });
             $('#healthOnButton').click(function() { showHealth(true); });
@@ -158,7 +154,6 @@
         </div>
         <script nonce="${scriptNonce}">
             $('#centreDiagramOrSelectedElementsButton').click(function() { structurizr.diagram.centreDiagramOrSelectedElements(); });
-            $('#openAutoLayoutModalButton').click(function() { openAutoLayoutModal(); });
             $('#undoButton').click(function() { structurizr.diagram.undo(); });
         </script>
 

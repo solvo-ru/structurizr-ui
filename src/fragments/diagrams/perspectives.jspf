@@ -1,9 +1,9 @@
-<div class="modal fade" id="perspectivesModal" tabindex="-1" role="dialog" aria-labelledby="perspectivesModalLabel" aria-hidden="true">
+<div class="modal fade" id="perspectivesModal" tabindex="-1" aria-labelledby="perspectivesModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title">Perspectives</h2>
+                <h5 class="modal-title" id="perspectivesModalLabel">Perspectives</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="clearPerspectiveButton" type="button" class="btn btn-primary">Clear perspective</button>
+                <button id="clearPerspectiveButton" type="button" class="btn btn-primary" data-bs-dismiss="modal" >Clear perspective</button>
             </div>
         </div>
     </div>
@@ -31,22 +31,13 @@
         showPerspective();
     });
 
-    function openPerspectivesModal() {
-        var modalElement = document.getElementById('perspectivesModal');
-        var modal = new bootstrap.Modal(modalElement);
-        modal.show();
-        //$('#perspectivesModal').modal();
-    }
 
     function clearPerspective(render) {
         $('#perspectivesList').val('');
         structurizr.diagram.clearPerspective();
         tooltip.enable();
         toggleTooltip();
-        var modalElement = document.getElementById('perspectivesModal');
-        var modal = new bootstrap.Modal(modalElement);
-        modal.hide();
-        //$('#perspectivesModal').modal('hide');
+
 
         if ($('#perspectivesList > option').length > 0) {
             $('#perspectivesOnButton').removeClass('d-none');
@@ -67,10 +58,7 @@
         structurizr.diagram.renderPerspectiveOrTagsFilter();
         tooltip.disable();
         toggleTooltip();
-        var modalElement = document.getElementById('perspectivesModal');
-        var modal = new bootstrap.Modal(modalElement);
-        modal.hide();
-        //$('#perspectivesModal').modal('hide');
+
         $('#perspectivesOnButton').addClass('d-none');
         $('#perspectivesOffButton').removeClass('d-none');
         $('#perspectivesOffButton').attr('title', 'Perspective: ' + perspective);
