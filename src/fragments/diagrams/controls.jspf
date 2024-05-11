@@ -153,8 +153,8 @@
 
         <div class="btn-group m-1">
             <button id="centreDiagramOrSelectedElementsButton" class="btn btn-primary" title="Centre diagram or selected elements"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/grid.svg" class="icon-btn" /></button>
-            <button id="openAutoLayoutModalButton" class="btn btn-primary" id="autoLayoutButton" title="Auto-layout"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/magic.svg" class="icon-btn" /></button>
-            <button id="undoButton" class="btn btn-primary" id="undoButton" disabled="disabled" title="Undo layout changes [u]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/arrow-counterclockwise.svg" class="icon-btn" /></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#autoLayoutModal" title="Auto-layout"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/magic.svg" class="icon-btn" /></button>
+            <button id="undoButton" class="btn btn-primary"  disabled="disabled" title="Undo layout changes [u]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/arrow-counterclockwise.svg" class="icon-btn" /></button>
         </div>
         <script nonce="${scriptNonce}">
             $('#centreDiagramOrSelectedElementsButton').click(function() { structurizr.diagram.centreDiagramOrSelectedElements(); });

@@ -1,10 +1,9 @@
-<div class="modal fade" id="autoLayoutModal" tabindex="-1" role="dialog" aria-labelledby="autoLayoutModalLabel" aria-hidden="true">
+<div class="modal fade" id="autoLayoutModal" tabindex="-1" aria-labelledby="autoLayoutModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-light">
-                <span class="modal-title h3">Auto-layout</span>
+                <h3 class="modal-title" id="autoLayoutModalLabel">Auto-layout</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -60,18 +59,18 @@
                 </div>
 
                 <div class="d-flex justify-content-center" style="margin-top: 20px">
-                    <button id="gatherElementsButton" class="btn btn-light col" title="Bring elements back onto the diagram" style="margin: 10px">
+                    <button id="gatherElementsButton" class="btn btn-light col" title="Bring elements back onto the diagram" style="margin: 10px"  data-bs-dismiss="modal">
                         <img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/magnet.svg" class="icon-btn" /> Bring elements back onto canvas
                     </button>
-                    <button id="removeAllVerticesButton" class="btn btn-light col" title="Remove all vertices" style="margin: 10px">
+                    <button id="removeAllVerticesButton" class="btn btn-light col" title="Remove all vertices" style="margin: 10px"  data-bs-dismiss="modal">
                         <img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/slash-lg.svg" class="icon-btn" /> Remove all vertices
                     </button>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button id="closeAutoLayoutModalButton" type="button" class="btn btn-primary">Cancel</button>
-                <button id="runAutoLayoutButton" type="button" class="btn btn-primary">Auto-layout</button>
+                <button  type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button> <%--id="closeAutoLayoutModalButton"--%>
+                <button id="runAutoLayoutButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Auto-layout</button>
             </div>
         </div>
     </div>
@@ -79,9 +78,8 @@
 
 <script nonce="${scriptNonce}">
 
-    $('#gatherElementsButton').click(function() { structurizr.diagram.gatherElementsOnCanvas(); closeAutoLayoutModal(); });
-    $('#removeAllVerticesButton').click(function() { structurizr.diagram.removeAllVertices(); closeAutoLayoutModal(); });
-    $('#closeAutoLayoutModalButton').click(function() { closeAutoLayoutModal(); });
+    $('#gatherElementsButton').click(function() { structurizr.diagram.gatherElementsOnCanvas();  });
+    $('#removeAllVerticesButton').click(function() { structurizr.diagram.removeAllVertices();  });
     $('#runAutoLayoutButton').click(function() { runAutoLayout(); });
 
     function initAutoLayout() {
@@ -110,23 +108,8 @@
         showOptionsForGraphviz();
     </c:if>
 
-    function openAutoLayoutModal() {
-        var modalElement = document.getElementById('autoLayoutModal');
-        var modal = new bootstrap.Modal(modalElement);
-        modal.show();
-       // $('#autoLayoutModal').modal();
-    }
-
-    function closeAutoLayoutModal() {
-        var modalElement = document.getElementById('autoLayoutModal');
-        var modal = new bootstrap.Modal(modalElement);
-        modalElement.addClass("d-none");
-
-       // $('#autoLayoutModal').modal('hide');
-    }
 
     function runAutoLayout() {
-        closeAutoLayoutModal();
 
         const implementation = $('#autoLayoutImplementation').val();
 
