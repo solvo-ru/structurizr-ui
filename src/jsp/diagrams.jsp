@@ -4,9 +4,13 @@
 <link href="${structurizrConfiguration.cdnUrl}/css/joint-3.6.5.css" rel="stylesheet" media="screen" />
 <script src="${structurizrConfiguration.cdnUrl}/js/lodash-4.17.21.js"></script>
 <script src="${structurizrConfiguration.cdnUrl}/js/backbone-1.4.1.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/joint-3.6.5.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/dagre-0.7.3.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/joint-4.0.3.min.js"></script>
+<%--<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/dagre-0.7.3.min.js"></script>--%>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/graphlib-2.1.3.min.js"></script>
+
+
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/dagre-1.0.4.min.js"></script>
+
 
 <%-- PNG export --%>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/rgbcolor.js"></script>
@@ -64,7 +68,7 @@
 </c:choose>
 
 <div class="row" style="padding: 0; margin: 0">
-    <div id="diagramNavigationPanel" class="col-sm-2 d-none d-sm-block <c:if test="${embed eq true}">d-none</c:if>">
+    <div id="diagramNavigationPanel" class="col-sm-2 <c:if test="${embed eq true}">d-none</c:if>">
         <c:if test="${not empty param.version}">
         <div class="d-flex" style="margin-top: 10px;">
             <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
@@ -1328,6 +1332,7 @@
         }
 
         $('#diagramNavigationPanel').addClass('d-none');
+        $('#diagramNavigationPanel').removeClass('d-sm-block');
         $('#enterPresentationModeButton').addClass('d-none');
         $('.structurizrDiagramViewport').css('background', '#000000');
         structurizr.diagram.resize();
@@ -1339,7 +1344,7 @@
         $('.structurizrDiagramViewport').css('background', '');
 
         if (!structurizr.diagram.isEmbedded()) {
-            $('#diagramNavigationPanel').removeClass('d-none');
+            $('#diagramNavigationPanel').addClass('d-sm-block');
         }
 
         presentationMode = false;

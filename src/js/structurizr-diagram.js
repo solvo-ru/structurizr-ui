@@ -1,3 +1,6 @@
+import {$} from "./backbone-1.6.0.min";
+import * as joint from "./joint-4.0.3.min";
+
 structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCallback) {
 
     const self = this;
@@ -186,7 +189,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         });
 
         tags.forEach(function(tag) {
-            var icon = undefined;
+            let icon = undefined;
 
             structurizr.ui.themes.forEach(function(theme) {
                 theme.elements.forEach(function(elementStyle) {
@@ -773,7 +776,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     }
                 }
 
-                var cellView = paper.findViewByModel(box);
+                let cellView = paper.findViewByModel(box);
                 const domElement = $('#' + cellView.id);
 
                 if (editable === true) {
@@ -1189,11 +1192,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function addDoubleClickHandlerForElement(cellView, element) {
-        var domElement = $('#' + cellView.id);
-        var views = [];
-        var documentation = false;
-        var decisions = false;
-        var url = element.url;
+        const domElement = $('#' + cellView.id);
+        let views = [];
+        let documentation = false;
+        let decisions = false;
+        const url = element.url;
         const elementDoubleClicked = element;
 
         if (element.type === structurizr.constants.SOFTWARE_SYSTEM_INSTANCE_ELEMENT_TYPE) {
@@ -1221,11 +1224,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             domElement.attr('style', 'cursor: pointer !important');
         }
 
-        var translateX = 5;
-        var translateXDelta = 25;
+        let translateX = 0;
+        const translateXDelta = (element.width-120)/3;
+        const svgOpener = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 30 30">'
         if (views.length > 0) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg = svgOpener +
                 '<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>' +
                 '<path d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z"/>' +
                 '<path fill-rule="evenodd" d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z"/>' +
@@ -1233,23 +1236,22 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             $('#' + cellView.id + " .structurizrZoom").html(svg);
             $('#' + cellView.id + " .structurizrZoom").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
+
         }
+        translateX += translateXDelta;
 
         if (documentation) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg = svgOpener +
                 '<path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>' +
                 '</svg>';
 
             $('#' + cellView.id + " .structurizrDocumentation").html(svg);
             $('#' + cellView.id + " .structurizrDocumentation").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
         }
+        translateX += translateXDelta;
 
         if (decisions) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg =svgOpener +
                 '<path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>' +
                 '<path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>' +
                 '<path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>' +
@@ -1257,27 +1259,26 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             $('#' + cellView.id + " .structurizrDecisions").html(svg);
             $('#' + cellView.id + " .structurizrDecisions").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
         }
+        translateX += translateXDelta;
 
         if (url) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg =svgOpener +
                 '<path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>' +
                 '<path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>' +
                 '</svg>';
 
             $('#' + cellView.id + " .structurizrLink").html(svg);
             $('#' + cellView.id + " .structurizrLink").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
         }
+        translateX += translateXDelta;
 
         if (views.length > 0 || documentation || decisions) {
             domElement.attr('style', 'cursor: zoom-in !important');
         }
 
         const width = cellView.model._computedStyle.width;
-        const navigationRefX = (((width - translateX) / 2) / width);
+        const navigationRefX = (width - translateX) / width;
         cellView.model.attr('.structurizrNavigation/ref-x', navigationRefX);
 
         domElement.dblclick(function(event) {
@@ -1294,7 +1295,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             const domElement = $('#' + linkView.id);
 
             const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="structurizrNavigation" viewBox="0 0 16 16">' +
+                '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="structurizrNavigation" viewBox="0 0 30 30">' +
                 '<path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>' +
                 '<path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>' +
                 '</svg>';
@@ -1321,7 +1322,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function getPerspectiveForElement(element) {
-        var p = undefined;
+        let p = undefined;
 
         if (element.perspectives) {
             element.perspectives.forEach(function(perspective) {
@@ -1333,7 +1334,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         if (p === undefined) {
             if (element.type === structurizr.constants.SOFTWARE_SYSTEM_INSTANCE_ELEMENT_TYPE) {
-                var softwareSystem = structurizr.workspace.findElementById(element.softwareSystemId);
+                const softwareSystem = structurizr.workspace.findElementById(element.softwareSystemId);
                 if (softwareSystem.perspectives) {
                     softwareSystem.perspectives.forEach(function (perspective) {
                         if (perspective.name === currentPerspective) {
@@ -1342,7 +1343,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     });
                 }
             } else if (element.type === structurizr.constants.CONTAINER_INSTANCE_ELEMENT_TYPE) {
-                var container = structurizr.workspace.findElementById(element.containerId);
+                const container = structurizr.workspace.findElementById(element.containerId);
                 if (container.perspectives) {
                     container.perspectives.forEach(function (perspective) {
                         if (perspective.name === currentPerspective) {
@@ -1357,7 +1358,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function relationshipHasPerspective(relationship) {
-        var result = false;
+        let result = false;
 
         if (relationship.perspectives) {
             relationship.perspectives.forEach(function(perspective) {
@@ -1715,16 +1716,16 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             console.log('The height of the element named "' + element.name + '" is too small to fit the content (' + Math.ceil(totalY) + 'px)');
         }
 
-        var nameRefY =          (nameY + offset) / height;
-        var metaDataRefY =      (metadataY + offset) / height;
-        var descriptionRefY =   (descriptionY + offset) / height;
-        var iconRefY =          (iconY + offset) / height;
-        var navigationRefY =    (height - 32) / height;
+        const nameRefY =          (nameY + offset) / height;
+        const metaDataRefY =      (metadataY + offset) / height;
+        const descriptionRefY =   (descriptionY + offset) / height;
+        const iconRefY =            (height  - 0.5*heightOfIcon -ICON_PADDING) / height;
+        const navigationRefY =    (height-50) / height;
 
         if (configuration.icon) {
-            var iconRatio = getImageRatio(configuration.icon);
-            var widthOfIcon = ((heightOfIcon-ICON_PADDING) * iconRatio);
-            var iconRefX = (((width - widthOfIcon) / 2) / width);
+            const iconRatio = getImageRatio(configuration.icon);
+            const widthOfIcon = ((heightOfIcon-ICON_PADDING) * iconRatio);
+            const iconRefX =  (((width - widthOfIcon) / 2) / width);
 
             cell.attributes.attrs['.structurizrIcon']['xlink:href'] = configuration.icon;
             cell.attributes.attrs['.structurizrIcon']['width'] = widthOfIcon;
@@ -1802,7 +1803,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrBox']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2008,7 +2009,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrPersonLeftArm']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2148,7 +2149,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrCylinderPath']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 15);
+        renderElementInternals(element, cell, configuration, width, width * 0.12, height, 15);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2336,7 +2337,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrComponentBlockBottom']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.12, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2419,7 +2420,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrWebBrowser']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, webBrowserPanelWidth, webBrowserPanelWidth * 0.1, webBrowserPanelHeight, 0);
+        renderElementInternals(element, cell, configuration, webBrowserPanelWidth, webBrowserPanelWidth * 0.15, webBrowserPanelHeight, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2493,7 +2494,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrWindow']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, windowPanelWidth, windowPanelWidth * 0.1, windowPanelHeight, 0);
+        renderElementInternals(element, cell, configuration, windowPanelWidth, windowPanelWidth * 0.15, windowPanelHeight, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2560,7 +2561,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrMobileDevice']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2627,7 +2628,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrMobileDevice']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -4599,10 +4600,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         $(".structurizrNavigation").attr('display', 'none');
 
-        var svgMarkup = getSvgOfCurrentDiagram();
+        let svgMarkup = getSvgOfCurrentDiagram();
         svgMarkup = svgMarkup.substring(svgMarkup.indexOf(">") +1 );
 
-        var font = '';
+        let font = '';
         if (includeFont === true) {
             const branding = structurizr.ui.getBranding();
             if (branding.font.url) {
@@ -4618,7 +4619,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         svgMarkup = svgMarkup.replace(/class="[\w -]*"/g, '');
         svgMarkup = svgMarkup.replace(/data-type="[\w.]*"/g, '');
-        svgMarkup = svgMarkup.replace(/model-id="[\w\d-]*"/g, '');
+        svgMarkup = svgMarkup.replace(/model-id="[\w-]*"/g, '');
 
         svgMarkup = svgMarkup.replace(/cursor: default !important/g, '');
         svgMarkup = svgMarkup.replace(/cursor: pointer !important/g, '');
@@ -5209,7 +5210,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 var currentDistance = labels[0].position.distance;
                 var newDistance = Math.min(1, Math.max(0, currentDistance + delta));
 
-                for (i = 0; i < labels.length; i++) {
+                for (let i = 0; i < labels.length; i++) {
                     var position = labels[i].position;
                     highlightedLink.model.label(i, {
                         position: {
@@ -6282,7 +6283,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 structurizr.shapes = {};
 
 structurizr.shapes.Box = joint.dia.Element.extend({
-    markup: '<g class="structurizrElement"><rect class="structurizrBox structurizrHighlightableElement"/><text class="structurizrName"/><text class="structurizrMetaData"/><text class="structurizrDescription"/><g class="structurizrNavigation"><g class="structurizrZoom" /><g class="structurizrDocumentation" /><g class="structurizrDecisions" /><g class="structurizrLink" /></g><image class="structurizrIcon" /></g>',
+    markup: '<g class="structurizrElement"><rect class="structurizrBox structurizrHighlightableElement"/><text class="structurizrName"/><text class="structurizrMetaData"/><text class="structurizrDescription"/><image class="structurizrIcon" /><g class="structurizrNavigation"><g class="structurizrZoom" /><g class="structurizrDocumentation" /><g class="structurizrDecisions" /><g class="structurizrLink" /></g></g>',
     defaults: joint.util.deepSupplement({
         type: 'structurizr.box',
         attrs: {
@@ -6506,20 +6507,20 @@ structurizr.shapes.Person = joint.dia.Element.extend({
                 'font-weight': 'bold',
                 ref: '.structurizrPersonBody',
                 'ref-x': 0.5,
-                'ref-y': 0.25,
+                'ref-y': 0.20,
                 'text-anchor': 'middle',
                 'pointer-events': 'visible'
             },
             '.structurizrMetaData': {
                 ref: '.structurizrPersonBody',
                 'ref-x': 0.5,
-                'ref-y': 0.40,
+                'ref-y': 0.35,
                 'text-anchor': 'middle'
             },
             '.structurizrDescription': {
                 ref: '.structurizrPersonBody',
                 'ref-x': 0.5,
-                'ref-y': 0.60,
+                'ref-y': 0.55,
                 'text-anchor': 'middle'
             },
             '.structurizrNavigation': {

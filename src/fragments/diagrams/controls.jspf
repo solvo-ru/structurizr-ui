@@ -30,7 +30,7 @@
         </script>
 
         <div class="modelViewButtons btn-group  m-1">
-            <button id="diagramKeyButton" class="btn btn-primary" title="Diagram key [i]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-btn" /></button>
+            <button id="diagramKeyButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#keyModal" title="Diagram key [i]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-btn" /></button>
             <button id="diagramTooltipOnButton" class="btn btn-primary diagramTooltipOnButton" title="Diagram tooltips on [t]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/chat-square-text.svg" class="icon-btn" /></button>
             <button id="diagramTooltipOffButton" class="btn btn-primary d-none diagramTooltipOffButton" title="Diagram tooltips off [t]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/chat-square-text-fill.svg" class="icon-btn" /></button>
             <button id="tagsOnButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagsModal" title="Tags"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/tags.svg" class="icon-btn" /></button>
