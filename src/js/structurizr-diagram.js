@@ -1,5 +1,3 @@
-import {$} from "./backbone-1.6.0.min";
-import * as joint from "./joint-4.0.3.min";
 
 structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCallback) {
 
@@ -598,18 +596,18 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         removeIllegalElements();
 
         if (view.elements) {
-            for (var i = 0; i < view.elements.length; i++) {
-                var positionX;
-                var positionY;
-                var element = structurizr.workspace.findElementById(view.elements[i].id);
+            for (let i = 0; i < view.elements.length; i++) {
+                let positionX;
+                let positionY;
+                let element = structurizr.workspace.findElementById(view.elements[i].id);
 
                 if (!includeElementOnDiagram(element) || element.type === structurizr.constants.DEPLOYMENT_NODE_ELEMENT_TYPE) {
                     continue;
                 }
 
-                var elementStyle = structurizr.ui.findElementStyle(element);
+                let elementStyle = structurizr.ui.findElementStyle(element);
 
-                var box;
+                let box;
 
                 if (view.elements[i].x !== undefined) {
                     positionX = Math.floor(view.elements[i].x);
@@ -793,15 +791,15 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         }
 
         if (view.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE) {
-            var unusedDeploymentNodeCells = [];
+            let unusedDeploymentNodeCells = [];
 
             // this first loop creates deployment nodes, nesting any software system/container instances and infrastructure nodes that have already been created
             if (view.elements) {
                 view.elements.forEach(function (elementView) {
-                    var element = structurizr.workspace.findElementById(elementView.id);
+                    const element = structurizr.workspace.findElementById(elementView.id);
 
                     if (element.type === structurizr.constants.DEPLOYMENT_NODE_ELEMENT_TYPE) {
-                        var deploymentNodeCell = createDeploymentNode(element);
+                        let deploymentNodeCell = createDeploymentNode(element);
                         deploymentNodeCell.elementInView = elementView;
                         deploymentNodeCell.positionCalculated = true;
                         unusedDeploymentNodeCells.push(deploymentNodeCell);
@@ -822,7 +820,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         if (element.softwareSystemInstances && element.softwareSystemInstances.length > 0) {
                             element.softwareSystemInstances.forEach(function(softwareSystemInstance) {
                                 // find the software system on the diagram
-                                var softwareSystemBox = cellsByElementId[softwareSystemInstance.id];
+                                let softwareSystemBox = cellsByElementId[softwareSystemInstance.id];
                                 if (softwareSystemBox !== undefined) {
                                     if (softwareSystemInstance.group !== undefined) {
                                         const rootGroup = findRootGroup(softwareSystemInstance.group, softwareSystemInstance.parentId);
@@ -841,7 +839,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         if (element.containerInstances && element.containerInstances.length > 0) {
                             element.containerInstances.forEach(function(containerInstance) {
                                 // find the container on the diagram
-                                var containerBox = cellsByElementId[containerInstance.id];
+                                let containerBox = cellsByElementId[containerInstance.id];
                                 if (containerBox !== undefined) {
                                     if (containerInstance.group !== undefined) {
                                         const rootGroup = findRootGroup(containerInstance.group, containerInstance.parentId);
@@ -860,7 +858,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         if (element.infrastructureNodes && element.infrastructureNodes.length > 0) {
                             element.infrastructureNodes.forEach(function(infrastructureNode) {
                                 // find the infrastructure node on the diagram
-                                var infrastructureBox = cellsByElementId[infrastructureNode.id];
+                                let infrastructureBox = cellsByElementId[infrastructureNode.id];
                                 if (infrastructureBox !== undefined) {
                                     if (infrastructureNode.group !== undefined) {
                                         const rootGroup = findRootGroup(infrastructureNode.group, infrastructureNode.parentId);
@@ -879,43 +877,34 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 });
 
                 // this second loop ensures that all deployment nodes are correctly embedded (because deployment nodes are created out of order)
-                view.elements.forEach(function (elementView) {
-                    var element = structurizr.workspace.findElementById(elementView.id);
-                    var cell = cellsByElementId[element.id];
+                view.elements.forEach(elementView => {
+                    const element = structurizr.workspace.findElementById(elementView.id);
+                    let cell = cellsByElementId[element.id];
 
                     if (element.type === structurizr.constants.DEPLOYMENT_NODE_ELEMENT_TYPE) {
-                        if (element.parentId !== undefined) {
-                            var parentBox = cellsByElementId[element.parentId];
+                        const parentBox = element.parentId && cellsByElementId[element.parentId];
 
-                            if (element.group !== undefined) {
-                                var scope = element.parentId;
-                                if (scope === undefined) {
-                                    scope = element.environment;
-                                }
-                                const rootGroup = findRootGroup(element.group, scope);
-                                if (rootGroup) {
-                                    parentBox.embed(rootGroup);
-                                } else {
-                                    parentBox.embed(cell);
-                                }
-                            } else {
-                                parentBox.embed(cell);
-                            }
+                        if (element.group) {
+                            const scope = element.parentId || element.environment;
+                            const rootGroup = findRootGroup(element.group, scope);
+                            parentBox?.embed(rootGroup || cell);
+                        } else {
+                            parentBox?.embed(cell);
                         }
                     }
                 });
 
                 // and this third loop ensures that empty deployment nodes are identified and removed from the diagram
                 view.elements.forEach(function(elementView) {
-                    var element = structurizr.workspace.findElementById(elementView.id);
-                    var cell = cellsByElementId[element.id];
+                    const element = structurizr.workspace.findElementById(elementView.id);
+                    let cell = cellsByElementId[element.id];
 
                     if (element.type === structurizr.constants.SOFTWARE_SYSTEM_INSTANCE_ELEMENT_TYPE || element.type === structurizr.constants.CONTAINER_INSTANCE_ELEMENT_TYPE || element.type === structurizr.constants.INFRASTRUCTURE_NODE_ELEMENT_TYPE) {
-                        var parentId = cell.get('parent');
+                        let parentId = cell.get('parent');
                         while (parentId) {
-                            var parentCell = graph.getCell(parentId);
+                            const parentCell = graph.getCell(parentId);
 
-                            var index = unusedDeploymentNodeCells.indexOf(parentCell);
+                            const index = unusedDeploymentNodeCells.indexOf(parentCell);
                             if (index > -1) {
                                 unusedDeploymentNodeCells.splice(index, 1);
                             }
@@ -933,27 +922,22 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
         }
 
-        var relationships = view.relationships;
-        if (relationships === undefined) {
-            relationships = [];
-        }
+        const relationships = view.relationships || [];
 
-        for (var i = 0; i < relationships.length; i++) {
-            var line = createArrow(relationships[i]);
+        for (const relationship of relationships) {
+            const line = createArrow(relationship);
             if (line !== undefined) {
                 lines.push(line);
-                linesByRelationshipId[relationships[i].id] = line;
+                linesByRelationshipId[relationship.id] = line;
             }
         }
 
         if (!editable) {
-            $('.connection-wrap').css(
-                {
-                    'pointer-events': 'visiblePainted',
-                    'cursor': 'auto'
-                }
-            );
-            $('.marker-vertices').css('display', 'none');
+            $('.connection-wrap').css({
+                'pointer-events': 'visiblePainted',
+                'cursor': 'auto'
+            });
+            $('.marker-vertices').hide();
         }
 
         diagramKey = createDiagramKey();
@@ -961,11 +945,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         repositionAllParentCells();
 
         // ensure all elements are stacked properly, front to back
-        graph.getElements().forEach(function(element) {
-            if (element.get('parent') === undefined) {
+        graph.getElements().forEach(element => {
+            if (!element.get('parent')) {
                 element.toFront();
-                const embeddedCells = element.getEmbeddedCells({ deep: true, breadthFirst: true});
-                embeddedCells.forEach(function(embeddedCell) {
+                element.getEmbeddedCells({ deep: true, breadthFirst: true }).forEach(embeddedCell => {
                     embeddedCell.toFront();
                 });
             }
@@ -982,8 +965,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         self.renderPerspectiveOrTagsFilter();
 
-        // adjust any overlapping vertices, and bring all relationships to the front
-        lines.forEach(function(line) {
+        lines.forEach(line => {
             try {
                 adjustVertices(graph, line);
                 line.toFront();
@@ -992,18 +974,17 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
         });
 
-        if (callback !== undefined) {
+        if (callback) {
             callback();
         }
-
         diagramRendered = true;
     }
 
     function repositionAllParentCells() {
         // ensure that all elements are repositioned properly (e.g. groups and deployment nodes are made large enough to fit their content)
         currentView.elements.forEach(function(elementView) {
-            var element = structurizr.workspace.findElementById(elementView.id);
-            var cell = cellsByElementId[element.id];
+            const element = structurizr.workspace.findElementById(elementView.id);
+            let cell = cellsByElementId[element.id];
 
             if (
                 element.type === structurizr.constants.CUSTOM_ELEMENT_TYPE ||
@@ -1022,7 +1003,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     function repositionParentCells(cell) {
         if (cell) {
-            var parentId = cell.get('parent');
+            let parentId = cell.get('parent');
             while (parentId) {
                 const parentCell = graph.getCell(parentId);
                 reposition(parentCell);
@@ -1040,7 +1021,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         // - component diagram: components
         // - dynamic diagram: depends on scope
         // - deployment diagram: deployment nodes, infrastructure nodes, software system instances, container instances
-        var renderGroupForElement = false;
+        let renderGroupForElement = false;
 
         // have groups been forced off?
         if (view.properties && view.properties['structurizr.groups'] === 'false') {
@@ -1058,7 +1039,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             if (view.elementId === undefined) {
                 renderGroupForElement = (element.type === structurizr.constants.PERSON_ELEMENT_TYPE || element.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE || element.type === structurizr.constants.CUSTOM_ELEMENT_TYPE);
             } else {
-                var scopedElement = structurizr.workspace.findElementById(view.elementId);
+                const scopedElement = structurizr.workspace.findElementById(view.elementId);
                 if (scopedElement.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE) {
                     renderGroupForElement = element.type === structurizr.constants.CONTAINER_ELEMENT_TYPE;
                 } else if (scopedElement.type === structurizr.constants.CONTAINER_ELEMENT_TYPE) {
@@ -1078,9 +1059,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function addElementToBoundary(element, cell, includeParentBoundary) {
-        var boundary = boundariesByElementId[element.parentId];
+        let boundary = boundariesByElementId[element.parentId];
         if (boundary === undefined) {
-            var boundaryElement = structurizr.workspace.findElementById(element.parentId);
+            const boundaryElement = structurizr.workspace.findElementById(element.parentId);
             if (boundaryElement) {
                 boundary = createBoundary(boundaryElement.name, structurizr.ui.getMetadataForElement(boundaryElement), undefined, boundaryElement);
                 boundary.elementInView = boundaryElement;
@@ -1088,17 +1069,15 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
 
             if (includeParentBoundary && boundaryElement.parentId) {
-                var parentBoundary = boundariesByElementId[boundaryElement.parentId];
-                var parentBoundary = boundariesByElementId[boundaryElement.parentId];
+                let parentBoundary = boundariesByElementId[boundaryElement.parentId];
                 if (parentBoundary === undefined) {
-                    var parentBoundaryElement = structurizr.workspace.findElementById(boundaryElement.parentId);
+                    const parentBoundaryElement = structurizr.workspace.findElementById(boundaryElement.parentId);
                     if (parentBoundaryElement) {
                         parentBoundary = createBoundary(parentBoundaryElement.name, structurizr.ui.getMetadataForElement(parentBoundaryElement), undefined, parentBoundaryElement);
                         parentBoundary.elementInView = parentBoundaryElement;
                         boundariesByElementId[boundaryElement.parentId] = parentBoundary;
                     }
                 }
-
                 parentBoundary.embed(boundary);
             }
         }
@@ -1106,15 +1085,15 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         if (element.group !== undefined) {
             const rootGroup = findRootGroup(element.group, element.parentId);
             if (rootGroup) {
-                boundary.embed(rootGroup);
+                boundary?.embed(rootGroup);
             } else {
-                boundary.embed(cell);
+                boundary?.embed(cell);
             }
         } else {
-            boundary.embed(cell);
+            boundary?.embed(cell);
         }
 
-        boundary.toFront({ deep: true });
+        boundary?.toFront({ deep: true });
     }
 
     function findRootGroup(name, scope) {
@@ -1160,12 +1139,12 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     function findOrCreateGroup(name, scope) {
         if (useNestedGroups()) {
             const separator = getGroupSeparator();
-            var group = findGroup(name, scope);
+            let group = findGroup(name, scope);
             if (group === undefined) {
                 if (name.indexOf(separator) > -1) {
-                    var parentGroupName = name.substring(0, name.lastIndexOf(separator));
-                    var groupName = name.substring(name.lastIndexOf(separator) + separator.length);
-                    var parentGroup = findOrCreateGroup(parentGroupName, scope);
+                    const parentGroupName = name.substring(0, name.lastIndexOf(separator));
+                    const groupName = name.substring(name.lastIndexOf(separator) + separator.length);
+                    let parentGroup = findOrCreateGroup(parentGroupName, scope);
 
                     group = createBoundaryForGroup(name);
                     parentGroup.embed(group);
@@ -1180,7 +1159,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             return group;
         } else {
-            var group = findGroup(name, scope);
+            let group = findGroup(name, scope);
             if (group === undefined) {
                 group = createBoundaryForGroup(name);
                 group._name = name;
@@ -1224,9 +1203,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             domElement.attr('style', 'cursor: pointer !important');
         }
 
-        let translateX = 0;
-        const translateXDelta = (element.width-120)/3;
-        const svgOpener = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 30 30">'
+        let translateX = 20;
+        const translateXDelta = (cellView.model._computedStyle.width-80)/3;
+        const svgOpener = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 20 20">'
         if (views.length > 0) {
             const svg = svgOpener +
                 '<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>' +
@@ -1236,7 +1215,6 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             $('#' + cellView.id + " .structurizrZoom").html(svg);
             $('#' + cellView.id + " .structurizrZoom").attr('transform', 'translate(' + translateX + ' 0)');
-
         }
         translateX += translateXDelta;
 
@@ -1378,7 +1356,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function hasTags(tags) {
-        var result = false;
+        let result = false;
 
         currentTags.forEach(function(tag) {
             result = (result || tags.indexOf(tag) > -1);
@@ -1417,7 +1395,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     showElement(element.id);
 
                     // and potentially change the background/foreground
-                    var elementStyleForPerspective = undefined;
+                    let elementStyleForPerspective = undefined;
                     const elementStyleTagForPerspective = 'Perspective:' + currentPerspective;
                     const elementStyles = structurizr.workspace.views.configuration.styles.elements;
 
@@ -1452,9 +1430,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     });
 
                     if (elementStyleForPerspective !== undefined) {
-                        var background = elementStyleForPerspective.background;
-                        var color = elementStyleForPerspective.color;
-                        var stroke = elementStyleForPerspective.stroke;
+                        let background = elementStyleForPerspective.background;
+                        let color = elementStyleForPerspective.color;
+                        let stroke = elementStyleForPerspective.stroke;
 
                         if (background === undefined) {
                             background = cell._computedStyle.background;
@@ -3511,26 +3489,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function createDeploymentNode(element) {
-        var configuration = structurizr.ui.findElementStyle(element, darkMode);
+        const configuration = structurizr.ui.findElementStyle(element, darkMode);
 
-        var textColor = structurizr.util.shadeColor(configuration.color, 100-configuration.opacity, darkMode);
-        var stroke = structurizr.util.shadeColor(configuration.stroke, 100-configuration.opacity, darkMode);
-        var strokeWidth = configuration.strokeWidth;
-
-        var instanceCount = '';
-        if (element.instances && element.instances !== '1') {
-            instanceCount = 'x' + element.instances;
-        }
-
-        var metadata = '';
-        var heightOfIcon = configuration.fontSize;
-
-        if (configuration.metadata !== undefined && configuration.metadata === false) {
-            metadata = ''
-        } else {
-            metadata = structurizr.ui.getMetadataForElement(element, true);
-            heightOfIcon = heightOfIcon * 2;
-        }
+        const textColor = structurizr.util.shadeColor(configuration.color, 100-configuration.opacity, darkMode);
+        const stroke = structurizr.util.shadeColor(configuration.stroke, 100-configuration.opacity, darkMode);
+        const strokeWidth = configuration.strokeWidth;
+        const instanceCount = element.instances && element.instances !== '1' ? `x${element.instances}` : '';
+        const metadata = configuration.metadata === undefined || configuration.metadata ? structurizr.ui.getMetadataForElement(element, true) : '';
+        const heightOfIcon = configuration.fontSize * (configuration.metadata === undefined || configuration.metadata ? 2 : 1);
 
         var cell = new structurizr.shapes.DeploymentNode({
             attrs: {
@@ -3578,17 +3544,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         cell._computedStyle.opacity = configuration.opacity;
 
         if (configuration.icon) {
-            var iconRatio = getImageRatio(configuration.icon);
-            var widthOfIcon = (heightOfIcon * iconRatio);
-
             cell.attributes.attrs['.structurizrIcon']['xlink:href'] = configuration.icon;
-            cell.attributes.attrs['.structurizrIcon']['width'] = widthOfIcon;
+            cell.attributes.attrs['.structurizrIcon']['width'] = (heightOfIcon * getImageRatio(configuration.icon));
             cell.attributes.attrs['.structurizrIcon']['height'] = heightOfIcon;
             cell.attributes.attrs['.structurizrIcon']['opacity'] = (configuration.opacity/100);
             cell._computedStyle.icon = configuration.icon;
         }
 
-        var cellView = paper.findViewByModel(cell);
+        let cellView = paper.findViewByModel(cell);
         const domElement = $('#' + cellView.id);
         domElement.attr('style', 'cursor: ' + (editable === true ? 'move' : 'default') + ' !important');
 
@@ -3691,53 +3654,46 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 padding.bottom = padding.bottom + fontSize;
             }
 
-            var minX = Number.MAX_VALUE;
-            var maxX = Number.MIN_VALUE;
-            var minY = Number.MAX_VALUE;
-            var maxY = Number.MIN_VALUE;
+            let minX = Number.MAX_VALUE;
+            let maxX = Number.MIN_VALUE;
+            let minY = Number.MAX_VALUE;
+            let maxY = Number.MIN_VALUE;
 
-            var embeddedCells = parentCell.getEmbeddedCells();
-            for (var i = 0; i < embeddedCells.length; i++) {
-                var cell = embeddedCells[i];
-                var x = cell.get('position').x;
-                var y = cell.get('position').y;
-                var width = cell.get('size').width;
-                var height = cell.get('size').height;
+            const embeddedCells = parentCell.getEmbeddedCells();
+            for (const cell of embeddedCells) {
+                const { x, y, width, height } = cell.get('position');
 
-                // if (cell.elementInView) {
-                    minX = Math.min(minX, x);
-                    maxX = Math.max(maxX, x + width);
-                    minY = Math.min(minY, y);
-                    maxY = Math.max(maxY, y + height);
-                // }
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x + width);
+                minY = Math.min(minY, y);
+                maxY = Math.max(maxY, y + height);
             }
 
-            padding = {
-                top: padding.top,
-                right: padding.right,
-                bottom: padding.bottom,
-                left: padding.left
-            };
+            const iconWidth = parentCell._computedStyle.icon ? parentCell.attr('.structurizrIcon')['width'] : 0;
+            //const nameWidth = parentCell.attr('.structurizrName')['width'];
+            //const metaDataWidth = parentCell.attr('.structurizrMetaData')['width'];
+            //const titleWidth = Math.max(nameWidth, metaDataWidth)+ padding.left + iconWidth;
+            const titleWidth =0;
 
-            var newWidth = maxX - minX + padding.left + padding.right;
-            var newHeight = maxY - minY + padding.top + padding.bottom;
-            var newX = minX - padding.left;
-            var newY = minY - padding.top;
+            const newWidth = Math.max(titleWidth?titleWidth:0, maxX - minX) + padding.left + padding.right;
+            const newHeight = maxY - minY + padding.top + padding.bottom;
+            const newX = minX - padding.left;
+            const newY = minY - padding.top;
 
-            var margin = 15;
-            var refX = (margin / newWidth);
+            const margin = 15;
+            let refX = margin / newWidth;
 
-            if (parentCell._computedStyle.icon !== undefined) {
-                var iconWidth = parentCell.attr('.structurizrIcon')['width'];
-                var iconHeight = parentCell.attr('.structurizrIcon')['height'];
+            // Only need to calculate iconHeight if there's an icon
+            if (iconWidth > 0) {
+                const iconHeight = parentCell.attr('.structurizrIcon')['height'];
                 parentCell.attr({
                     '.structurizrIcon': {
-                        'x': margin,
-                        'y': newHeight - iconHeight - 10
+                        x: margin,
+                        y: newHeight - iconHeight - 10
                     }
                 });
 
-                refX = ((margin + 10 + iconWidth) / newWidth);
+                refX = (margin + 10 + iconWidth) / newWidth;
             }
 
             parentCell.position(newX, newY);
