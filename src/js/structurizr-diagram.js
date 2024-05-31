@@ -676,7 +676,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                             cell.elementInView.y = newPosition.y;
                         } else {
                             // an element has been dragged
-                            var cellViewMoved = paper.findViewByModel(cell);
+                            const cellViewMoved = paper.findViewByModel(cell);
                             if (cellViewMoved.selected === true && selectedElements.length > 1) {
                                 const dx = newPosition.x - cell.elementInView.x;
                                 const dy = newPosition.y - cell.elementInView.y;
@@ -712,33 +712,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     }
                 }
 
-                // enterprise boundaries need to be drawn for: system landscape, system context, and (high-level) dynamic diagrams
-                // - the "enterprise" concept has been removed, so this is only here to support older workspaces
-                if (view.type === structurizr.constants.SYSTEM_LANDSCAPE_VIEW_TYPE || view.type === structurizr.constants.SYSTEM_CONTEXT_VIEW_TYPE || (view.type === structurizr.constants.DYNAMIC_VIEW_TYPE && view.elementId === undefined)) {
-                    var includeEnterpriseBoundary = (view.enterpriseBoundaryVisible === true);
-                    if (view.properties && view.properties['structurizr.enterpriseBoundary']) {
-                        includeEnterpriseBoundary = (view.properties['structurizr.enterpriseBoundary'] === 'true');
-                    }
-                    if (element.location && element.location === 'Internal' && includeEnterpriseBoundary) {
-                        if (!enterpriseBoundary) {
-                            var enterprise = structurizr.workspace.model.enterprise;
-                            var boundaryName = (enterprise && enterprise.name) ? enterprise.name : 'Enterprise';
 
-                            enterpriseBoundary = createBoundary(boundaryName, structurizr.ui.getMetadataForElement({ type: 'Enterprise' }), 'Enterprise');
-                        }
-
-                        if (element.group !== undefined) {
-                            const rootGroup = findRootGroup(element.group, 'Internal');
-                            if (rootGroup) {
-                                enterpriseBoundary.embed(rootGroup);
-                            } else {
-                                enterpriseBoundary.embed(box);
-                            }
-                        } else {
-                            enterpriseBoundary.embed(box);
-                        }
-                    }
-                }
 
                 if (view.type === structurizr.constants.SYSTEM_CONTEXT_VIEW_TYPE && element.id === view.softwareSystemId) {
                     if (!view.elements[i].x) {
@@ -759,7 +733,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 }
 
                 if (view.type === structurizr.constants.DYNAMIC_VIEW_TYPE && view.elementId) {
-                    var scopedElement = structurizr.workspace.findElementById(view.elementId);
+                    const scopedElement = structurizr.workspace.findElementById(view.elementId);
 
                     if (
                         scopedElement.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE && element.type === structurizr.constants.CONTAINER_ELEMENT_TYPE ||
@@ -3427,15 +3401,21 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             stroke = structurizr.util.shadeColor(stroke, 100 - elementStyle.opacity, darkMode);
         }
 
-        var heightOfIcon = elementStyle.fontSize;
-        if (metadata !== undefined) {
-            heightOfIcon = heightOfIcon * 2;
-            if (elementStyle !== undefined && elementStyle.metadata !== undefined && elementStyle.metadata === false) {
-                metadata = '';
-            }
-        } else {
-            metadata = '';
-        }
+        // let heightOfIcon = parseFloat(elementStyle.fontSize);
+        // if (metadata !== undefined) {
+        //     heightOfIcon = heightOfIcon * 2;
+        //     if (elementStyle !== undefined && elementStyle.metadata !== undefined && elementStyle.metadata === false) {
+        //         metadata = '';
+        //     }
+        // } else {
+        //     metadata = '';
+        // }
+
+        let heightOfIcon = parseFloat(elementStyle.fontSize);
+        let isMetadataFalse = elementStyle && elementStyle.metadata === false;
+
+        heightOfIcon *= (metadata !== undefined) ? 2 : 1;
+        metadata = (metadata !== undefined && !isMetadataFalse) ? metadata : '';
 
         var boundary = new structurizr.shapes.Boundary({
             attrs: {
@@ -3624,14 +3604,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         currentView.paperSize = paperSize;
         $('#pageSize option#' + paperSize).prop('selected', true);
 
-        var dimensions = new structurizr.ui.PaperSizes().getDimensions(paperSize);
+        const dimensions = new structurizr.ui.PaperSizes().getDimensions(paperSize);
         this.setPageSize(dimensions.width, dimensions.height);
     };
 
     function reposition(parentCell) {
-        var padding;
-        var metadataText;
-        var fontSize;
+        let padding;
+        let metadataText;
+        let fontSize;
 
         if (parentCell && parentCell.getEmbeddedCells().length > 0) {
             metadataText = parentCell.attr('.structurizrMetaData').text;
@@ -3639,7 +3619,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             if (parentCell.elementInView && parentCell.positionCalculated === false) {
                 // this is an element from the model
-                var element = structurizr.workspace.findElementById(parentCell.elementInView.id);
+                const element = structurizr.workspace.findElementById(parentCell.elementInView.id);
                 if (element.type === 'DeploymentNode') {
                     padding = { top: 50, right: 50, bottom: 50, left: 50 };
                 }
@@ -3647,8 +3627,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 // this is a boundary box
                 padding = { top: 20, right: 20, bottom: 50, left: 20 };
             }
-
+            let metaDataWidth=0;
             if (metadataText && metadataText.length > 0) {
+                metaDataWidth = calculateWidth(metadataText, fontSize);
                 padding.bottom = padding.bottom + fontSize + fontSize + metaDataFontSizeDifference;
             } else {
                 padding.bottom = padding.bottom + fontSize;
@@ -3661,7 +3642,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             const embeddedCells = parentCell.getEmbeddedCells();
             for (const cell of embeddedCells) {
-                const { x, y, width, height } = cell.get('position');
+                const { x, y } = cell.get('position');
+                const { width, height } = cell.get('size');
 
                 minX = Math.min(minX, x);
                 maxX = Math.max(maxX, x + width);
@@ -3670,12 +3652,18 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
 
             const iconWidth = parentCell._computedStyle.icon ? parentCell.attr('.structurizrIcon')['width'] : 0;
-            //const nameWidth = parentCell.attr('.structurizrName')['width'];
-            //const metaDataWidth = parentCell.attr('.structurizrMetaData')['width'];
-            //const titleWidth = Math.max(nameWidth, metaDataWidth)+ padding.left + iconWidth;
-            const titleWidth =0;
+            const nameWidth =  calculateWidth(parentCell.attr('.structurizrName').text,fontSize);
+            const titleWidth = Math.max(nameWidth, metaDataWidth) + iconWidth;
+            const childrenWidth = maxX - minX
+            let newWidth=padding.left + padding.right;
 
-            const newWidth = Math.max(titleWidth?titleWidth:0, maxX - minX) + padding.left + padding.right;
+            if (titleWidth > childrenWidth) {
+                newWidth += titleWidth;
+                minX = minX - (titleWidth - childrenWidth)/2
+            } else {
+                newWidth+= childrenWidth;
+            }
+
             const newHeight = maxY - minY + padding.top + padding.bottom;
             const newX = minX - padding.left;
             const newY = minY - padding.top;
