@@ -1,9 +1,9 @@
-<div class="modal fade" id="embedModal" tabindex="-1" role="dialog" aria-labelledby="embedModalLabel" aria-hidden="true">
+<div class="modal fade" id="embedModal" tabindex="-1" aria-labelledby="embedModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title">iframe embed</h2>
+                <h5 class="modal-title" id="embedModalLabel">iframe embed</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div id="diagramEmbed" class="modal-body">
@@ -42,7 +42,7 @@
                 </div>
 
                 <c:if test="${not workspace.open}">
-                    <div class="centered">
+                    <div class="d-flex justify-content-center">
                         <h3><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/exclamation-triangle.svg" class="icon-md" /> Warning</h3>
                         This workspace is private, so the above embed code includes your workspace API key or sharing token
                         - <b>it is not recommended to use the above embed code on the Internet</b>.
@@ -50,7 +50,7 @@
                 </c:if>
 
                 <c:if test="${workspace.clientEncrypted}">
-                    <div class="centered">
+                    <div class="d-flex justify-content-center">
                         <h3><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/info-circle.svg" class="icon-md" /> Information</h3>
                         This is a client-side encrypted workspace, so viewers will be prompted for the password when diagrams from this workspace are embedded in web pages.
                     </div>
@@ -68,7 +68,7 @@
                 </c:if>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -100,6 +100,9 @@
     }
 
     function openEmbedModal() {
-        $('#embedModal').modal();
+        var modalElement = document.getElementById('embedModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        //$('#embedModal').modal();
     }
 </script>

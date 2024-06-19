@@ -1,9 +1,9 @@
-<div class="modal fade" id="dslEditorIntroductionModal" tabindex="-1" role="dialog" aria-labelledby="dslEditorIntroductionModalLabel" aria-hidden="true">
+<div class="modal fade" id="dslEditorIntroductionModal" tabindex="-1"  aria-labelledby="dslEditorIntroductionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title">DSL editor</h2>
+                <h5 class="modal-title" id="dslEditorIntroductionModalLabel">DSL editor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>
@@ -14,10 +14,10 @@
                 </p>
 
                 <div class="row">
-                    <div class="col-sm-4 centered small">
+                    <div class="col-sm-4 d-flex justify-content-center small">
                         <h3>Structurizr Lite</h3>
-                        <p class="centered">
-                            <span class="label label-success">Recommended</span>
+                        <p class="d-flex justify-content-center">
+                            <span class="badge bg-success">Recommended</span>
                         </p>
                         <p>
                             <a href="https://docs.structurizr.com/lite" target="_blank">Structurizr Lite</a> provides a way to quickly work with a single workspace.
@@ -28,10 +28,10 @@
                         </p>
                     </div>
 
-                    <div class="col-sm-4 centered small">
+                    <div class="col-sm-4 d-flex justify-content-center small">
                         <h3>Structurizr CLI</h3>
-                        <p class="centered">
-                            <span class="label label-success">Recommended</span>
+                        <p class="d-flex justify-content-center">
+                            <span class="badge bg-success">Recommended</span>
                         </p>
                         <p>
                             The <a href="https://docs.structurizr.com/cli" target="_blank">Structurizr CLI</a> is a command line utility, designed to be used in conjunction with the Structurizr DSL.
@@ -40,10 +40,10 @@
                         </p>
                     </div>
 
-                    <div class="col-sm-4 centered small">
+                    <div class="col-sm-4 d-flex justify-content-center small">
                         <h3>DSL editor</h3>
-                        <p class="centered">
-                            <span class="label label-warning">Not recommended</span>
+                        <p class="d-flex justify-content-center">
+                            <span class="badge bg-warning">Not recommended</span>
                         </p>
                         <p>
                             If you'd rather not use Structurizr Lite or the Structurizr CLI, the Structurizr cloud service/on-premises installation provides a basic online DSL editor.
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

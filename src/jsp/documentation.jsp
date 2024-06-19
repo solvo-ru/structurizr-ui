@@ -4,9 +4,13 @@
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-content${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-documentation${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-ui${structurizrConfiguration.versionSuffix}.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.0.0.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/mermaid-10.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.1.0.min.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-github-alerts.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-deflist.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/lib/deflate.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-textual-uml.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/katex-0.16.4.min.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/asciidoctor-2.2.6.min.js"></script>
 
@@ -27,7 +31,7 @@
 
 <div class="row" style="padding-top: 20px; padding-bottom: 0; margin-left: 0; margin-right: 0">
     <div class="col-sm-2" style="padding-left: 30px">
-        <div id="documentationNavigationPanel" class="hidden-xs scrollable">
+        <div id="documentationNavigationPanel" class="d-none d-sm-block scrollable">
 
             <div id="documentationNavigation"></div>
 
@@ -35,7 +39,7 @@
 
             <c:if test="${not empty sharingUrlPrefix}">
             <div class="navigationItem">
-                <a id="shareLink" href="" class="hidden"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/share-fill.svg" class="icon-sm" /> Share</a>
+                <a id="shareLink" href="" class="d-none"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/share-fill.svg" class="icon-sm" /> Share</a>
             </div>
 
             <script nonce="${scriptNonce}">
@@ -53,13 +57,13 @@
             </c:if>
 
             <div class="navigationItem">
-                <a id="exportLink" href="" class="hidden"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/filetype-html.svg" class="icon-sm" /> Export to offline HTML page</a>
+                <a id="exportLink" href="" class="d-none"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/filetype-html.svg" class="icon-sm" /> Export to offline HTML page</a>
             </div>
 
             <div id="documentationMetadata">
                 <c:if test="${not empty param.version}">
                 <div style="margin-bottom: 10px">
-                    <span class="label label-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
+                    <span class="badge label-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
                 </div>
                 </c:if>
                 <span id="lastModifiedDate"></span>
@@ -72,7 +76,7 @@
     </div>
 
     <div class="col-sm-10" style="margin-top: 0; margin-bottom: 0">
-        <div id="documentationNavigationDropDownPanel" class="form-group visible-xs centered" style="margin-top: 0; margin-bottom: 20px">
+        <div id="documentationNavigationDropDownPanel" class="form-group d-block d-sm-none d-flex justify-content-center" style="margin-top: 0; margin-bottom: 20px">
             <div class="btn-group">
                 <select id="documentationNavigationDropDown" class="form-control"></select>
             </div>
@@ -80,8 +84,8 @@
 
         <div id="documentationPanel" class="scrollable">
             <div id="documentationHeader">
-                <div class="centered">
-                    <img src="" class="brandingLogo hidden" alt="Branding logo" />
+                <div class="d-flex justify-content-center">
+                    <img src="" class="brandingLogo d-none" alt="Branding logo" />
                 </div>
                 <h1><span id="documentationScopeName"></span></h1>
             </div>
@@ -188,7 +192,7 @@
                 }
             ));
 
-            $('#shareLink').removeClass('hidden');
+            $('#shareLink').removeClass('d-none');
         } else {
             showNoDocumentationPage();
         }
@@ -295,7 +299,7 @@
     function showNoDocumentationPage() {
         const documentationContent = $('#documentationContent');
         $('#documentationScopeName').html(structurizr.util.escapeHtml(structurizr.workspace.name));
-        documentationContent.addClass('centered');
+        documentationContent.addClass('d-flex justify-content-center');
         documentationContent.css('margin-top', '100px');
         documentationContent.css('margin-bottom', '100px');
 
@@ -494,7 +498,7 @@
             setTimeout(checkDiagramsRendered, 500);
         } else {
             rendered = true;
-            $('#exportLink').removeClass('hidden');
+            $('#exportLink').removeClass('d-none');
         }
     }
 
@@ -575,7 +579,7 @@
             }
         });
 
-        $('.sectionSelector').addClass('hidden');
+        $('.sectionSelector').addClass('d-none');
     }
 
     function changeDocumentation(evt) {

@@ -1,9 +1,9 @@
-<div class="modal fade" id="perspectivesModal" tabindex="-1" role="dialog" aria-labelledby="perspectivesModalLabel" aria-hidden="true">
+<div class="modal fade" id="perspectivesModal" tabindex="-1" aria-labelledby="perspectivesModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title">Perspectives</h2>
+                <h5 class="modal-title" id="perspectivesModalLabel">Perspectives</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="clearPerspectiveButton" type="button" class="btn btn-default">Clear perspective</button>
+                <button id="clearPerspectiveButton" type="button" class="btn btn-primary" data-bs-dismiss="modal" >Clear perspective</button>
             </div>
         </div>
     </div>
@@ -31,9 +31,6 @@
         showPerspective();
     });
 
-    function openPerspectivesModal() {
-        $('#perspectivesModal').modal();
-    }
 
     function clearPerspective(render) {
         $('#perspectivesList').val('');
@@ -41,13 +38,12 @@
         tooltip.enable();
         toggleTooltip();
 
-        $('#perspectivesModal').modal('hide');
 
         if ($('#perspectivesList > option').length > 0) {
-            $('#perspectivesOnButton').removeClass('hidden');
+            $('#perspectivesOnButton').removeClass('d-none');
         }
 
-        $('#perspectivesOffButton').addClass('hidden');
+        $('#perspectivesOffButton').addClass('d-none');
         $('#perspectivesOffButton').attr('title', 'Perspectives');
 
         if (render === true) {
@@ -63,9 +59,8 @@
         tooltip.disable();
         toggleTooltip();
 
-        $('#perspectivesModal').modal('hide');
-        $('#perspectivesOnButton').addClass('hidden');
-        $('#perspectivesOffButton').removeClass('hidden');
+        $('#perspectivesOnButton').addClass('d-none');
+        $('#perspectivesOffButton').removeClass('d-none');
         $('#perspectivesOffButton').attr('title', 'Perspective: ' + perspective);
     }
 
@@ -83,7 +78,7 @@
 
             perspectivesList.attr('size', Math.min(8, perspectiveNames.length));
             perspectivesList.val('');
-            $('#perspectivesOnButton').removeClass('hidden');
+            $('#perspectivesOnButton').removeClass('d-none');
         }
     }
 </script>

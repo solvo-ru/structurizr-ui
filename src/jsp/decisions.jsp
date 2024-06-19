@@ -3,9 +3,13 @@
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-embed.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-content${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-ui${structurizrConfiguration.versionSuffix}.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.0.0.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/mermaid-10.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.1.0.min.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-github-alerts.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-deflist.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/lib/deflate.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-textual-uml.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/katex-0.16.4.min.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/asciidoctor-2.2.6.min.js"></script>
 
@@ -17,14 +21,14 @@
 <%@ include file="/WEB-INF/fragments/progress-message.jspf" %>
 <%@ include file="/WEB-INF/fragments/quick-navigation.jspf" %>
 
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/d3-7.8.2.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/d3-7.9.0.min.js"></script>
 
 <style id="brandingStyles"></style>
 
 <div class="row" style="padding-top: 20px; padding-bottom: 0; margin-left: 0; margin-right: 0">
 
     <div class="col-sm-3" style="padding-left: 30px">
-        <div id="documentationNavigationPanel" class="hidden-xs scrollable">
+        <div id="documentationNavigationPanel" class="d-none d-sm-block scrollable">
 
             <div id="documentationNavigation"></div>
 
@@ -33,7 +37,7 @@
             <div id="documentationMetadata">
                 <c:if test="${not empty param.version}">
                     <div style="margin-bottom: 10px">
-                        <span class="label label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
+                        <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
                     </div>
                 </c:if>
                 <span id="lastModifiedDate"></span>
@@ -46,8 +50,8 @@
     </div>
 
     <div class="col-sm-9" style="margin-top: 0px; margin-bottom: 0px">
-        <div class="centered visible-xs">
-            <div class="form-inline" style="margin-top: 20px">
+        <div class="d-flex justify-content-center d-block d-sm-none">
+            <div class="d-inline-flex" style="margin-top: 20px">
                 <select id="decisionLogNavigationDropDown" class="form-control">
                 </select>
             </div>
@@ -55,11 +59,11 @@
 
         <div id="documentationPanel" class="scrollable">
             <div id="decisionLogHeader" style="border-bottom: none">
-                <h1 id="decisionTitle" class="centered"></h1>
-                <div id="decisionDate" class="centered"></div>
-                <div class="centered" style="margin-top: 10px">
-                    <span id="decisionStatus" class="centered hidden" style="font-size: 30px"></span>
-                    <button id="graphButton" type="button" class="btn btn-default hidden" style="height: 42px; margin-bottom: 8px;"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/diagram-2.svg" class="icon-btn" /> Decision explorer</button>
+                <h1 id="decisionTitle" class="d-flex justify-content-center"></h1>
+                <div id="decisionDate" class="d-flex justify-content-center"></div>
+                <div class="d-flex justify-content-center" style="margin-top: 10px">
+                    <span id="decisionStatus" class="d-flex justify-content-center d-none" style="font-size: 30px"></span>
+                    <button id="graphButton" type="button" class="btn btn-primary d-none" style="height: 42px; margin-bottom: 8px;"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/diagram-2.svg" class="icon-btn" /> Decision explorer</button>
                 </div>
             </div>
 
@@ -301,11 +305,11 @@
 
     function showNoDecisionsPage() {
         const decisionLogContent = $('#decisionLogContent');
-        $('#decisionTitle').addClass('hidden');
-        $('#decisionDate').addClass('hidden');
-        $('#decisionStatus').addClass('hidden');
+        $('#decisionTitle').addClass('d-none');
+        $('#decisionDate').addClass('d-none');
+        $('#decisionStatus').addClass('d-none');
 
-        decisionLogContent.addClass('centered');
+        decisionLogContent.addClass('d-flex justify-content-center');
         decisionLogContent.css('margin-top', '100px');
         decisionLogContent.css('margin-bottom', '100px');
 
@@ -343,8 +347,8 @@
 
     function showDecisionSummary() {
         const decisionLogContent = $('#decisionLogContent');
-        $('#decisionDate').addClass('hidden');
-        $('#decisionStatus').addClass('hidden');
+        $('#decisionDate').addClass('d-none');
+        $('#decisionStatus').addClass('d-none');
 
         var html = '';
         html += '<div class="section">';
@@ -420,7 +424,7 @@
     function createStatusLabel(decision, includeText) {
         const style = getDecisionStyle(decision);
 
-        return '<span class="label" style="background: ' + style.background + '; color: ' + style.color + '">' + (includeText ? ' ' + structurizr.util.escapeHtml(decision.status) : '') + '</span>';
+        return '<span class="badge" style="background: ' + style.background + '; color: ' + style.color + '">' + (includeText ? ' ' + structurizr.util.escapeHtml(decision.status) : '') + '</span>';
     }
 
     function showDecision(decisionId) {
@@ -428,9 +432,9 @@
         if (decision) {
             $('#decisionTitle').html(decision.id + ". " + structurizr.util.escapeHtml(decision.title));
             $('#decisionDate').html(formatDate(decision.date));
-            $('#decisionDate').removeClass('hidden');
+            $('#decisionDate').removeClass('d-none');
             $('#decisionStatus').html(createStatusLabel(decision, true));
-            $('#decisionStatus').removeClass('hidden');
+            $('#decisionStatus').removeClass('d-none');
 
             const decisionLogContent = $('#decisionLogContent');
             const result = contentRenderer.render(decision);

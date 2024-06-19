@@ -1,9 +1,10 @@
-<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
+<div class="modal fade" id="exportModal" tabindex="-1"  aria-labelledby="exportModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title">Export</h2>
+                <h5 class="modal-title" id="exportModalLabel">Export</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -11,7 +12,7 @@
                     </select>
                 </div>
 
-                <div class="centered" id="exportPNGOptions">
+                <div class="d-flex justify-content-center" id="exportPNGOptions">
                     <label style="margin-right: 20px">
                         <input type="checkbox" id="exportPNGDiagramMetadata" checked="checked" />
                         Include diagram title, description, and metadata
@@ -33,7 +34,7 @@
                     </label>
                 </div>
 
-                <div class="centered" id="exportSVGOptions">
+                <div class="d-flex justify-content-center" id="exportSVGOptions">
                     <label style="margin-right: 20px">
                         <input type="checkbox" id="exportSVGDiagramMetadata" checked="checked" />
                         Include diagram title, description, and metadata
@@ -45,22 +46,22 @@
                     </label>
                 </div>
 
-                <div class="centered">
-                    <button id="exportCurrentViewButton" type="button" class="btn btn-default">Export current diagram</button>
-                    <button id="exportSelectedViewsButton" type="button" class="btn btn-default">Export selected diagrams</button>
-                    <button id="exportAllViewsButton" type="button" class="btn btn-default">Export all diagrams</button>
-                    <button id="publishAllViewsButton" type="button" class="btn btn-default hidden">Publish all diagrams</button>
+                <div class="d-flex justify-content-center">
+                    <button id="exportCurrentViewButton" type="button" class="btn btn-primary">Export current diagram</button>
+                    <button id="exportSelectedViewsButton" type="button" class="btn btn-primary">Export selected diagrams</button>
+                    <button id="exportAllViewsButton" type="button" class="btn btn-primary">Export all diagrams</button>
+                    <button id="publishAllViewsButton" type="button" class="btn btn-primary d-none">Publish all diagrams</button>
                 </div>
 
-                <div id="exportAnimation" class="centered hidden" style="margin-top: 5px">
+                <div id="exportAnimation" class="d-flex justify-content-center d-none" style="margin-top: 5px">
                     <label>
                         Animated GIF frame duration (seconds)
                     </label>
                     <input type="number" id="animatedGIFInterval" value="3" style="width: 50px" />
-                    <button id="exportAnimatedGIFButton" type="button" class="btn btn-default">Create animated GIF</button>
+                    <button id="exportAnimatedGIFButton" type="button" class="btn btn-primary">Create animated GIF</button>
                 </div>
 
-                <div id="exportedDiagrams" class="centered" style="margin-top: 40px"></div>
+                <div id="exportedDiagrams" class="d-flex justify-content-center" style="margin-top: 40px"></div>
             </div>
         </div>
     </div>
@@ -104,13 +105,13 @@
         });
 
         <c:if test="${embed eq true && showDiagramSelector eq false}">
-        $('#exportViewList').addClass('hidden');
-        $('#exportSelectedViewsButton').addClass('hidden');
-        $('#exportAllViewsButton').addClass('hidden');
+        $('#exportViewList').addClass('d-none');
+        $('#exportSelectedViewsButton').addClass('d-none');
+        $('#exportAllViewsButton').addClass('d-none');
         </c:if>
 
         <c:if test="${embed ne true && fn:startsWith(urlPrefix, '/workspace') && (workspace.open || workspace.shareable) && not workspace.clientEncrypted && structurizrConfiguration.product ne 'lite'}">
-        $('#publishAllViewsButton').removeClass('hidden');
+        $('#publishAllViewsButton').removeClass('d-none');
         </c:if>
     }
 
@@ -127,9 +128,9 @@
             const includeMetadata = $('#exportPNGDiagramMetadata').is(':checked') === true;
             const includeAnimationSteps = $('#exportPNGAnimationSteps').is(':checked') === true;
             if (includeAnimationSteps === true) {
-                $('#exportAnimation').removeClass('hidden');
+                $('#exportAnimation').removeClass('d-none');
             } else {
-                $('#exportAnimation').addClass('hidden');
+                $('#exportAnimation').addClass('d-none');
             }
             const crop = $('#exportPNGCropDiagrams').is(':checked') === true;
             const download = $('#exportPNGDownload').is(':checked') === true;
@@ -140,7 +141,7 @@
 
     function exportSelectedViews() {
         $('#exportedDiagrams').empty();
-        $('#exportAnimation').addClass('hidden');
+        $('#exportAnimation').addClass('d-none');
         const currentView = structurizr.diagram.getCurrentViewOrFilter();
 
         var viewList = $('#exportViewList');
@@ -155,9 +156,9 @@
                 const includeMetadata = $('#exportPNGDiagramMetadata').is(':checked') === true;
                 const includeAnimationSteps = $('#exportPNGAnimationSteps').is(':checked') === true;
                 if (includeAnimationSteps === true) {
-                    $('#exportAnimation').removeClass('hidden');
+                    $('#exportAnimation').removeClass('d-none');
                 } else {
-                    $('#exportAnimation').addClass('hidden');
+                    $('#exportAnimation').addClass('d-none');
                 }
                 const crop = $('#exportPNGCropDiagrams').is(':checked') === true;
                 const download = $('#exportPNGDownload').is(':checked') === true;
@@ -169,7 +170,7 @@
 
     function exportAllViews() {
         $('#exportedDiagrams').empty();
-        $('#exportAnimation').addClass('hidden');
+        $('#exportAnimation').addClass('d-none');
         const currentView = structurizr.diagram.getCurrentViewOrFilter();
 
         var selectedValues = $("#exportViewList option").map(function() {return $(this).val();}).get();
@@ -183,9 +184,9 @@
                 const includeMetadata = $('#exportPNGDiagramMetadata').is(':checked') === true;
                 const includeAnimationSteps = $('#exportPNGAnimationSteps').is(':checked') === true;
                 if (includeAnimationSteps === true) {
-                    $('#exportAnimation').removeClass('hidden');
+                    $('#exportAnimation').removeClass('d-none');
                 } else {
-                    $('#exportAnimation').addClass('hidden');
+                    $('#exportAnimation').addClass('d-none');
                 }
                 const crop = $('#exportPNGCropDiagrams').is(':checked') === true;
                 const download = $('#exportPNGDownload').is(':checked') === true;
@@ -451,21 +452,27 @@
     function exportToPNG() {
         $('#exportModal .modal-title').html('Export to PNG');
         exportFormat = 'png';
-        $('#exportPNGOptions').removeClass('hidden');
-        $('#exportSVGOptions').addClass('hidden');
-        $('#exportAnimation').addClass('hidden');
+        $('#exportPNGOptions').removeClass('d-none');
+        $('#exportSVGOptions').addClass('d-none');
+        $('#exportAnimation').addClass('d-none');
         $('#exportedDiagrams').empty();
-        $('#exportModal').modal();
+        //$('#exportModal').modal();
+        var modalElement = document.getElementById('exportModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
     }
 
     function exportToSVG() {
         $('#exportModal .modal-title').html('Export to SVG');
         exportFormat = 'svg';
-        $('#exportPNGOptions').addClass('hidden');
-        $('#exportSVGOptions').removeClass('hidden');
-        $('#exportAnimation').addClass('hidden');
+        $('#exportPNGOptions').addClass('d-none');
+        $('#exportSVGOptions').removeClass('d-none');
+        $('#exportAnimation').addClass('d-none');
         $('#exportedDiagrams').empty();
-        $('#exportModal').modal();
+        //$('#exportModal').modal();
+        var modalElement = document.getElementById('exportModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
     }
 
 </script>

@@ -4,12 +4,12 @@
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-ui${structurizrConfiguration.versionSuffix}.js"></script>
 
 <div class="section">
-    <div class="container centered">
+    <div class="container d-flex justify-content-center">
         <h1>Explore</h1>
 
         <br />
 
-        <div id="views" class="centered">
+        <div id="views" class="d-flex justify-content-center">
         </div>
     </div>
 </div>
@@ -52,7 +52,7 @@
                 if (graphUrl !== undefined || treeUrl !== undefined) {
                     const title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
 
-                    html += '<div class="centered" style="display: inline-block; margin: 10px 10px 40px 10px; width: ' + thumbnailSize + 'px;">';
+                    html += '<div class="d-flex justify-content-center" style="display: inline-block; margin: 10px 10px 40px 10px; width: ' + thumbnailSize + 'px;">';
 
                     <c:choose>
                     <c:when test="${not empty param.version}">
@@ -82,7 +82,7 @@
                 }
             });
 
-            viewsDiv.addClass('centered');
+            viewsDiv.addClass('d-flex justify-content-center');
             viewsDiv.append(html);
 
             $('.viewThumbnail').on('error', function() {

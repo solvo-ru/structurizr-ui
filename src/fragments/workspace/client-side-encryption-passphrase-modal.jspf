@@ -1,8 +1,8 @@
-<div class="modal fade" id="clientSideEncryptedWorkspacePassphraseModal" tabindex="-1" role="dialog" aria-labelledby="keyModalLabel" aria-hidden="true">
+<div class="modal fade" id="clientSideEncryptedWorkspacePassphraseModal" tabindex="-1"  aria-labelledby="keyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-               <h2 class="modal-title">Client-side encrypted workspace</h2>
+               <h5 class="modal-title" id="keyModalLabel">Client-side encrypted workspace</h5>
             </div>
             <div class="modal-body">
                 <p>
@@ -10,7 +10,7 @@
                 </p>
 
                 <div class="form-group">
-                    <input id="passphrase" type="password" class="form-control" placeholder="Passphrase" required="true" />
+                    <input id="passphrase" type="password" class="form-control" placeholder="Passphrase" required="required" />
                 </div>
                 <div class="checkbox">
                     <label>
@@ -86,7 +86,8 @@
 
             var decryptedWorkspace = structurizrEncryptionStrategy.decrypt(workspace);
 
-            modal.modal('hide');
+            (new bootstrap.Modal(modal)).hide();
+            //modal.modal('hide');
             callback(decryptedWorkspace);
         } catch (e) {
             console.error("Could not decrypt the workspace with the given passphrase");

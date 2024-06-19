@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/fragments/workspace/javascript.jspf" %>
 <%@ include file="/WEB-INF/fragments/progress-message.jspf" %>
 
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/d3-7.8.2.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/d3-7.9.0.min.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-ui${structurizrConfiguration.versionSuffix}.js"></script>
 
 <div id="exploreGraphPanel">
@@ -26,13 +26,13 @@
 
     <div id="embeddedControls" style="text-align: right; position: absolute; bottom: 10px; right: 10px; opacity: 0.1; z-index: 100;">
         <c:if test="${workspace.id > 0 && (embed eq true && workspace.editable eq false)}">
-        <button id="openGraphInNewWindowButton" class="btn btn-default" title="Open graph in new window"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/link.svg" class="icon-btn" /></button>
+        <button id="openGraphInNewWindowButton" class="btn btn-primary" title="Open graph in new window"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/link.svg" class="icon-btn" /></button>
         <script nonce="${scriptNonce}">
             $('#openGraphInNewWindowButton').click(function() { openGraphInNewWindow(); });
         </script>
         </c:if>
-        <button id="enterFullScreenButton" class="btn btn-default" title="Enter Full Screen [f]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen.svg" class="icon-btn" /></button>
-        <button id="exitFullScreenButton" class="btn btn-default hidden" title="Exit Full Screen [Escape]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
+        <button id="enterFullScreenButton" class="btn btn-primary" title="Enter Full Screen [f]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen.svg" class="icon-btn" /></button>
+        <button id="exitFullScreenButton" class="btn btn-primary d-none" title="Exit Full Screen [Escape]"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/fullscreen-exit.svg" class="icon-btn" /></button>
     </div>
     <script nonce="${scriptNonce}">
         $('#enterFullScreenButton').click(function() { structurizr.ui.enterFullScreen('exploreGraphPanel'); });
@@ -168,7 +168,7 @@
             registerRelationship(element.id, element.id); // this prevents the nodes in the graph linking to themselves
 
             const elementType = structurizr.workspace.getTerminologyFor(element);
-            const html = '<span class="label smaller" style="background: ' + elementStyle.background + '; color: ' + elementStyle.color + '"> ' + structurizr.util.escapeHtml(elementType) + '</span> ' + structurizr.util.escapeHtml(element.name);
+            const html = '<span class="badge smaller" style="background: ' + elementStyle.background + '; color: ' + elementStyle.color + '"> ' + structurizr.util.escapeHtml(elementType) + '</span> ' + structurizr.util.escapeHtml(element.name);
             quickNavigation.addHandler(html, function() {
                 highlightNode(element.id);
             });
@@ -570,11 +570,11 @@
 
     $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange fullscreenChange MSFullscreenChange',function(){
         if (structurizr.ui.isFullScreen()) {
-            $('#enterFullScreenButton').addClass("hidden");
-            $('#exitFullScreenButton').removeClass("hidden");
+            $('#enterFullScreenButton').addClass("d-none");
+            $('#exitFullScreenButton').removeClass("d-none");
         } else {
-            $('#enterFullScreenButton').removeClass("hidden");
-            $('#exitFullScreenButton').addClass("hidden");
+            $('#enterFullScreenButton').removeClass("d-none");
+            $('#exitFullScreenButton').addClass("d-none");
         }
     });
 

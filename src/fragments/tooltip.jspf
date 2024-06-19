@@ -60,7 +60,7 @@
     }
 </style>
 
-<div id="tooltip" class="hidden">
+<div id="tooltip" class="d-none">
     <div id="tooltipName"></div>
     <div id="tooltipParent"></div>
     <div id="tooltipMetadata"></div>
@@ -123,12 +123,12 @@
         }
 
         this.hide = function() {
-            tooltip.addClass("hidden");
+            tooltip.addClass("d-none");
             visible = false;
         };
 
         function show() {
-            tooltip.removeClass("hidden");
+            tooltip.removeClass("d-none");
             visible = true;
         }
 

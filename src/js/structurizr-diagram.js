@@ -1,3 +1,4 @@
+
 structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCallback) {
 
     const self = this;
@@ -187,7 +188,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         });
 
         tags.forEach(function(tag) {
-            var icon = undefined;
+            let icon = undefined;
 
             structurizr.ui.themes.forEach(function(theme) {
                 theme.elements.forEach(function(elementStyle) {
@@ -596,18 +597,18 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         removeIllegalElements();
 
         if (view.elements) {
-            for (var i = 0; i < view.elements.length; i++) {
-                var positionX;
-                var positionY;
-                var element = structurizr.workspace.findElementById(view.elements[i].id);
+            for (let i = 0; i < view.elements.length; i++) {
+                let positionX;
+                let positionY;
+                let element = structurizr.workspace.findElementById(view.elements[i].id);
 
                 if (!includeElementOnDiagram(element) || element.type === structurizr.constants.DEPLOYMENT_NODE_ELEMENT_TYPE) {
                     continue;
                 }
 
-                var elementStyle = structurizr.ui.findElementStyle(element);
+                let elementStyle = structurizr.ui.findElementStyle(element);
 
-                var box;
+                let box;
 
                 if (view.elements[i].x !== undefined) {
                     positionX = Math.floor(view.elements[i].x);
@@ -676,7 +677,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                             cell.elementInView.y = newPosition.y;
                         } else {
                             // an element has been dragged
-                            var cellViewMoved = paper.findViewByModel(cell);
+                            const cellViewMoved = paper.findViewByModel(cell);
                             if (cellViewMoved.selected === true && selectedElements.length > 1) {
                                 const dx = newPosition.x - cell.elementInView.x;
                                 const dy = newPosition.y - cell.elementInView.y;
@@ -712,33 +713,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     }
                 }
 
-                // enterprise boundaries need to be drawn for: system landscape, system context, and (high-level) dynamic diagrams
-                // - the "enterprise" concept has been removed, so this is only here to support older workspaces
-                if (view.type === structurizr.constants.SYSTEM_LANDSCAPE_VIEW_TYPE || view.type === structurizr.constants.SYSTEM_CONTEXT_VIEW_TYPE || (view.type === structurizr.constants.DYNAMIC_VIEW_TYPE && view.elementId === undefined)) {
-                    var includeEnterpriseBoundary = (view.enterpriseBoundaryVisible === true);
-                    if (view.properties && view.properties['structurizr.enterpriseBoundary']) {
-                        includeEnterpriseBoundary = (view.properties['structurizr.enterpriseBoundary'] === 'true');
-                    }
-                    if (element.location && element.location === 'Internal' && includeEnterpriseBoundary) {
-                        if (!enterpriseBoundary) {
-                            var enterprise = structurizr.workspace.model.enterprise;
-                            var boundaryName = (enterprise && enterprise.name) ? enterprise.name : 'Enterprise';
 
-                            enterpriseBoundary = createBoundary(boundaryName, structurizr.ui.getMetadataForElement({ type: 'Enterprise' }), 'Enterprise');
-                        }
-
-                        if (element.group !== undefined) {
-                            const rootGroup = findRootGroup(element.group, 'Internal');
-                            if (rootGroup) {
-                                enterpriseBoundary.embed(rootGroup);
-                            } else {
-                                enterpriseBoundary.embed(box);
-                            }
-                        } else {
-                            enterpriseBoundary.embed(box);
-                        }
-                    }
-                }
 
                 if (view.type === structurizr.constants.SYSTEM_CONTEXT_VIEW_TYPE && element.id === view.softwareSystemId) {
                     if (!view.elements[i].x) {
@@ -759,7 +734,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 }
 
                 if (view.type === structurizr.constants.DYNAMIC_VIEW_TYPE && view.elementId) {
-                    var scopedElement = structurizr.workspace.findElementById(view.elementId);
+                    const scopedElement = structurizr.workspace.findElementById(view.elementId);
 
                     if (
                         scopedElement.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE && element.type === structurizr.constants.CONTAINER_ELEMENT_TYPE ||
@@ -774,7 +749,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     }
                 }
 
-                var cellView = paper.findViewByModel(box);
+                let cellView = paper.findViewByModel(box);
                 const domElement = $('#' + cellView.id);
 
                 if (editable === true) {
@@ -791,15 +766,15 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         }
 
         if (view.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE) {
-            var unusedDeploymentNodeCells = [];
+            let unusedDeploymentNodeCells = [];
 
             // this first loop creates deployment nodes, nesting any software system/container instances and infrastructure nodes that have already been created
             if (view.elements) {
                 view.elements.forEach(function (elementView) {
-                    var element = structurizr.workspace.findElementById(elementView.id);
+                    const element = structurizr.workspace.findElementById(elementView.id);
 
                     if (element.type === structurizr.constants.DEPLOYMENT_NODE_ELEMENT_TYPE) {
-                        var deploymentNodeCell = createDeploymentNode(element);
+                        let deploymentNodeCell = createDeploymentNode(element);
                         deploymentNodeCell.elementInView = elementView;
                         deploymentNodeCell.positionCalculated = true;
                         unusedDeploymentNodeCells.push(deploymentNodeCell);
@@ -820,7 +795,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         if (element.softwareSystemInstances && element.softwareSystemInstances.length > 0) {
                             element.softwareSystemInstances.forEach(function(softwareSystemInstance) {
                                 // find the software system on the diagram
-                                var softwareSystemBox = cellsByElementId[softwareSystemInstance.id];
+                                let softwareSystemBox = cellsByElementId[softwareSystemInstance.id];
                                 if (softwareSystemBox !== undefined) {
                                     if (softwareSystemInstance.group !== undefined) {
                                         const rootGroup = findRootGroup(softwareSystemInstance.group, softwareSystemInstance.parentId);
@@ -839,7 +814,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         if (element.containerInstances && element.containerInstances.length > 0) {
                             element.containerInstances.forEach(function(containerInstance) {
                                 // find the container on the diagram
-                                var containerBox = cellsByElementId[containerInstance.id];
+                                let containerBox = cellsByElementId[containerInstance.id];
                                 if (containerBox !== undefined) {
                                     if (containerInstance.group !== undefined) {
                                         const rootGroup = findRootGroup(containerInstance.group, containerInstance.parentId);
@@ -858,7 +833,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                         if (element.infrastructureNodes && element.infrastructureNodes.length > 0) {
                             element.infrastructureNodes.forEach(function(infrastructureNode) {
                                 // find the infrastructure node on the diagram
-                                var infrastructureBox = cellsByElementId[infrastructureNode.id];
+                                let infrastructureBox = cellsByElementId[infrastructureNode.id];
                                 if (infrastructureBox !== undefined) {
                                     if (infrastructureNode.group !== undefined) {
                                         const rootGroup = findRootGroup(infrastructureNode.group, infrastructureNode.parentId);
@@ -877,43 +852,34 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 });
 
                 // this second loop ensures that all deployment nodes are correctly embedded (because deployment nodes are created out of order)
-                view.elements.forEach(function (elementView) {
-                    var element = structurizr.workspace.findElementById(elementView.id);
-                    var cell = cellsByElementId[element.id];
+                view.elements.forEach(elementView => {
+                    const element = structurizr.workspace.findElementById(elementView.id);
+                    let cell = cellsByElementId[element.id];
 
                     if (element.type === structurizr.constants.DEPLOYMENT_NODE_ELEMENT_TYPE) {
-                        if (element.parentId !== undefined) {
-                            var parentBox = cellsByElementId[element.parentId];
+                        const parentBox = element.parentId && cellsByElementId[element.parentId];
 
-                            if (element.group !== undefined) {
-                                var scope = element.parentId;
-                                if (scope === undefined) {
-                                    scope = element.environment;
-                                }
-                                const rootGroup = findRootGroup(element.group, scope);
-                                if (rootGroup) {
-                                    parentBox.embed(rootGroup);
-                                } else {
-                                    parentBox.embed(cell);
-                                }
-                            } else {
-                                parentBox.embed(cell);
-                            }
+                        if (element.group) {
+                            const scope = element.parentId || element.environment;
+                            const rootGroup = findRootGroup(element.group, scope);
+                            parentBox?.embed(rootGroup || cell);
+                        } else {
+                            parentBox?.embed(cell);
                         }
                     }
                 });
 
                 // and this third loop ensures that empty deployment nodes are identified and removed from the diagram
                 view.elements.forEach(function(elementView) {
-                    var element = structurizr.workspace.findElementById(elementView.id);
-                    var cell = cellsByElementId[element.id];
+                    const element = structurizr.workspace.findElementById(elementView.id);
+                    let cell = cellsByElementId[element.id];
 
                     if (element.type === structurizr.constants.SOFTWARE_SYSTEM_INSTANCE_ELEMENT_TYPE || element.type === structurizr.constants.CONTAINER_INSTANCE_ELEMENT_TYPE || element.type === structurizr.constants.INFRASTRUCTURE_NODE_ELEMENT_TYPE) {
-                        var parentId = cell.get('parent');
+                        let parentId = cell.get('parent');
                         while (parentId) {
-                            var parentCell = graph.getCell(parentId);
+                            const parentCell = graph.getCell(parentId);
 
-                            var index = unusedDeploymentNodeCells.indexOf(parentCell);
+                            const index = unusedDeploymentNodeCells.indexOf(parentCell);
                             if (index > -1) {
                                 unusedDeploymentNodeCells.splice(index, 1);
                             }
@@ -931,27 +897,22 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
         }
 
-        var relationships = view.relationships;
-        if (relationships === undefined) {
-            relationships = [];
-        }
+        const relationships = view.relationships || [];
 
-        for (var i = 0; i < relationships.length; i++) {
-            var line = createArrow(relationships[i]);
+        for (const relationship of relationships) {
+            const line = createArrow(relationship);
             if (line !== undefined) {
                 lines.push(line);
-                linesByRelationshipId[relationships[i].id] = line;
+                linesByRelationshipId[relationship.id] = line;
             }
         }
 
         if (!editable) {
-            $('.connection-wrap').css(
-                {
-                    'pointer-events': 'visiblePainted',
-                    'cursor': 'auto'
-                }
-            );
-            $('.marker-vertices').css('display', 'none');
+            $('.connection-wrap').css({
+                'pointer-events': 'visiblePainted',
+                'cursor': 'auto'
+            });
+            $('.marker-vertices').hide();
         }
 
         diagramKey = createDiagramKey();
@@ -959,11 +920,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         repositionAllParentCells();
 
         // ensure all elements are stacked properly, front to back
-        graph.getElements().forEach(function(element) {
-            if (element.get('parent') === undefined) {
+        graph.getElements().forEach(element => {
+            if (!element.get('parent')) {
                 element.toFront();
-                const embeddedCells = element.getEmbeddedCells({ deep: true, breadthFirst: true});
-                embeddedCells.forEach(function(embeddedCell) {
+                element.getEmbeddedCells({ deep: true, breadthFirst: true }).forEach(embeddedCell => {
                     embeddedCell.toFront();
                 });
             }
@@ -980,8 +940,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         self.renderPerspectiveOrTagsFilter();
 
-        // adjust any overlapping vertices, and bring all relationships to the front
-        lines.forEach(function(line) {
+        lines.forEach(line => {
             try {
                 adjustVertices(graph, line);
                 line.toFront();
@@ -990,18 +949,17 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
         });
 
-        if (callback !== undefined) {
+        if (callback) {
             callback();
         }
-
         diagramRendered = true;
     }
 
     function repositionAllParentCells() {
         // ensure that all elements are repositioned properly (e.g. groups and deployment nodes are made large enough to fit their content)
         currentView.elements.forEach(function(elementView) {
-            var element = structurizr.workspace.findElementById(elementView.id);
-            var cell = cellsByElementId[element.id];
+            const element = structurizr.workspace.findElementById(elementView.id);
+            let cell = cellsByElementId[element.id];
 
             if (
                 element.type === structurizr.constants.CUSTOM_ELEMENT_TYPE ||
@@ -1020,7 +978,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
     function repositionParentCells(cell) {
         if (cell) {
-            var parentId = cell.get('parent');
+            let parentId = cell.get('parent');
             while (parentId) {
                 const parentCell = graph.getCell(parentId);
                 reposition(parentCell);
@@ -1038,7 +996,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         // - component diagram: components
         // - dynamic diagram: depends on scope
         // - deployment diagram: deployment nodes, infrastructure nodes, software system instances, container instances
-        var renderGroupForElement = false;
+        let renderGroupForElement = false;
 
         // have groups been forced off?
         if (view.properties && view.properties['structurizr.groups'] === 'false') {
@@ -1056,7 +1014,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             if (view.elementId === undefined) {
                 renderGroupForElement = (element.type === structurizr.constants.PERSON_ELEMENT_TYPE || element.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE || element.type === structurizr.constants.CUSTOM_ELEMENT_TYPE);
             } else {
-                var scopedElement = structurizr.workspace.findElementById(view.elementId);
+                const scopedElement = structurizr.workspace.findElementById(view.elementId);
                 if (scopedElement.type === structurizr.constants.SOFTWARE_SYSTEM_ELEMENT_TYPE) {
                     renderGroupForElement = element.type === structurizr.constants.CONTAINER_ELEMENT_TYPE;
                 } else if (scopedElement.type === structurizr.constants.CONTAINER_ELEMENT_TYPE) {
@@ -1076,9 +1034,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function addElementToBoundary(element, cell, includeParentBoundary) {
-        var boundary = boundariesByElementId[element.parentId];
+        let boundary = boundariesByElementId[element.parentId];
         if (boundary === undefined) {
-            var boundaryElement = structurizr.workspace.findElementById(element.parentId);
+            const boundaryElement = structurizr.workspace.findElementById(element.parentId);
             if (boundaryElement) {
                 boundary = createBoundary(boundaryElement.name, structurizr.ui.getMetadataForElement(boundaryElement), undefined, boundaryElement);
                 boundary.elementInView = boundaryElement;
@@ -1086,17 +1044,15 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
 
             if (includeParentBoundary && boundaryElement.parentId) {
-                var parentBoundary = boundariesByElementId[boundaryElement.parentId];
-                var parentBoundary = boundariesByElementId[boundaryElement.parentId];
+                let parentBoundary = boundariesByElementId[boundaryElement.parentId];
                 if (parentBoundary === undefined) {
-                    var parentBoundaryElement = structurizr.workspace.findElementById(boundaryElement.parentId);
+                    const parentBoundaryElement = structurizr.workspace.findElementById(boundaryElement.parentId);
                     if (parentBoundaryElement) {
                         parentBoundary = createBoundary(parentBoundaryElement.name, structurizr.ui.getMetadataForElement(parentBoundaryElement), undefined, parentBoundaryElement);
                         parentBoundary.elementInView = parentBoundaryElement;
                         boundariesByElementId[boundaryElement.parentId] = parentBoundary;
                     }
                 }
-
                 parentBoundary.embed(boundary);
             }
         }
@@ -1104,15 +1060,15 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         if (element.group !== undefined) {
             const rootGroup = findRootGroup(element.group, element.parentId);
             if (rootGroup) {
-                boundary.embed(rootGroup);
+                boundary?.embed(rootGroup);
             } else {
-                boundary.embed(cell);
+                boundary?.embed(cell);
             }
         } else {
-            boundary.embed(cell);
+            boundary?.embed(cell);
         }
 
-        boundary.toFront({ deep: true });
+        boundary?.toFront({ deep: true });
     }
 
     function findRootGroup(name, scope) {
@@ -1158,12 +1114,12 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     function findOrCreateGroup(name, scope) {
         if (useNestedGroups()) {
             const separator = getGroupSeparator();
-            var group = findGroup(name, scope);
+            let group = findGroup(name, scope);
             if (group === undefined) {
                 if (name.indexOf(separator) > -1) {
-                    var parentGroupName = name.substring(0, name.lastIndexOf(separator));
-                    var groupName = name.substring(name.lastIndexOf(separator) + separator.length);
-                    var parentGroup = findOrCreateGroup(parentGroupName, scope);
+                    const parentGroupName = name.substring(0, name.lastIndexOf(separator));
+                    const groupName = name.substring(name.lastIndexOf(separator) + separator.length);
+                    let parentGroup = findOrCreateGroup(parentGroupName, scope);
 
                     group = createBoundaryForGroup(name);
                     parentGroup.embed(group);
@@ -1178,7 +1134,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             return group;
         } else {
-            var group = findGroup(name, scope);
+            let group = findGroup(name, scope);
             if (group === undefined) {
                 group = createBoundaryForGroup(name);
                 group._name = name;
@@ -1190,11 +1146,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function addDoubleClickHandlerForElement(cellView, element) {
-        var domElement = $('#' + cellView.id);
-        var views = [];
-        var documentation = false;
-        var decisions = false;
-        var url = element.url;
+        const domElement = $('#' + cellView.id);
+        let views = [];
+        let documentation = false;
+        let decisions = false;
+        const url = element.url;
         const elementDoubleClicked = element;
 
         if (element.type === structurizr.constants.SOFTWARE_SYSTEM_INSTANCE_ELEMENT_TYPE) {
@@ -1222,11 +1178,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             domElement.attr('style', 'cursor: pointer !important');
         }
 
-        var translateX = 5;
-        var translateXDelta = 25;
+        let translateX = 20;
+        const translateXDelta = (cellView.model._computedStyle.width-80)/3;
+        const svgOpener = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 20 20">'
         if (views.length > 0) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg = svgOpener +
                 '<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>' +
                 '<path d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z"/>' +
                 '<path fill-rule="evenodd" d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z"/>' +
@@ -1234,23 +1190,21 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             $('#' + cellView.id + " .structurizrZoom").html(svg);
             $('#' + cellView.id + " .structurizrZoom").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
         }
+        translateX += translateXDelta;
 
         if (documentation) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg = svgOpener +
                 '<path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>' +
                 '</svg>';
 
             $('#' + cellView.id + " .structurizrDocumentation").html(svg);
             $('#' + cellView.id + " .structurizrDocumentation").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
         }
+        translateX += translateXDelta;
 
         if (decisions) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg =svgOpener +
                 '<path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>' +
                 '<path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>' +
                 '<path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>' +
@@ -1258,27 +1212,26 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             $('#' + cellView.id + " .structurizrDecisions").html(svg);
             $('#' + cellView.id + " .structurizrDecisions").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
         }
+        translateX += translateXDelta;
 
         if (url) {
-            const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">' +
+            const svg =svgOpener +
                 '<path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>' +
                 '<path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>' +
                 '</svg>';
 
             $('#' + cellView.id + " .structurizrLink").html(svg);
             $('#' + cellView.id + " .structurizrLink").attr('transform', 'translate(' + translateX + ' 0)');
-            translateX += translateXDelta;
         }
+        translateX += translateXDelta;
 
         if (views.length > 0 || documentation || decisions) {
             domElement.attr('style', 'cursor: zoom-in !important');
         }
 
         const width = cellView.model._computedStyle.width;
-        const navigationRefX = (((width - translateX) / 2) / width);
+        const navigationRefX = (width - translateX) / width;
         cellView.model.attr('.structurizrNavigation/ref-x', navigationRefX);
 
         domElement.dblclick(function(event) {
@@ -1295,7 +1248,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             const domElement = $('#' + linkView.id);
 
             const svg =
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="structurizrNavigation" viewBox="0 0 16 16">' +
+                '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="structurizrNavigation" viewBox="0 0 30 30">' +
                 '<path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>' +
                 '<path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>' +
                 '</svg>';
@@ -1322,7 +1275,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function getPerspectiveForElement(element) {
-        var p = undefined;
+        let p = undefined;
 
         if (element.perspectives) {
             element.perspectives.forEach(function(perspective) {
@@ -1334,7 +1287,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         if (p === undefined) {
             if (element.type === structurizr.constants.SOFTWARE_SYSTEM_INSTANCE_ELEMENT_TYPE) {
-                var softwareSystem = structurizr.workspace.findElementById(element.softwareSystemId);
+                const softwareSystem = structurizr.workspace.findElementById(element.softwareSystemId);
                 if (softwareSystem.perspectives) {
                     softwareSystem.perspectives.forEach(function (perspective) {
                         if (perspective.name === currentPerspective) {
@@ -1343,7 +1296,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     });
                 }
             } else if (element.type === structurizr.constants.CONTAINER_INSTANCE_ELEMENT_TYPE) {
-                var container = structurizr.workspace.findElementById(element.containerId);
+                const container = structurizr.workspace.findElementById(element.containerId);
                 if (container.perspectives) {
                     container.perspectives.forEach(function (perspective) {
                         if (perspective.name === currentPerspective) {
@@ -1358,7 +1311,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function relationshipHasPerspective(relationship) {
-        var result = false;
+        let result = false;
 
         if (relationship.perspectives) {
             relationship.perspectives.forEach(function(perspective) {
@@ -1378,7 +1331,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function hasTags(tags) {
-        var result = false;
+        let result = false;
 
         currentTags.forEach(function(tag) {
             result = (result || tags.indexOf(tag) > -1);
@@ -1417,7 +1370,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     showElement(element.id);
 
                     // and potentially change the background/foreground
-                    var elementStyleForPerspective = undefined;
+                    let elementStyleForPerspective = undefined;
                     const elementStyleTagForPerspective = 'Perspective:' + currentPerspective;
                     const elementStyles = structurizr.workspace.views.configuration.styles.elements;
 
@@ -1452,9 +1405,9 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     });
 
                     if (elementStyleForPerspective !== undefined) {
-                        var background = elementStyleForPerspective.background;
-                        var color = elementStyleForPerspective.color;
-                        var stroke = elementStyleForPerspective.stroke;
+                        let background = elementStyleForPerspective.background;
+                        let color = elementStyleForPerspective.color;
+                        let stroke = elementStyleForPerspective.stroke;
 
                         if (background === undefined) {
                             background = cell._computedStyle.background;
@@ -1716,16 +1669,16 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             console.log('The height of the element named "' + element.name + '" is too small to fit the content (' + Math.ceil(totalY) + 'px)');
         }
 
-        var nameRefY =          (nameY + offset) / height;
-        var metaDataRefY =      (metadataY + offset) / height;
-        var descriptionRefY =   (descriptionY + offset) / height;
-        var iconRefY =          (iconY + offset) / height;
-        var navigationRefY =    (height - 32) / height;
+        const nameRefY =          (nameY + offset) / height;
+        const metaDataRefY =      (metadataY + offset) / height;
+        const descriptionRefY =   (descriptionY + offset) / height;
+        const iconRefY =            (height  - 0.5*heightOfIcon -ICON_PADDING) / height;
+        const navigationRefY =    (height-50) / height;
 
         if (configuration.icon) {
-            var iconRatio = getImageRatio(configuration.icon);
-            var widthOfIcon = ((heightOfIcon-ICON_PADDING) * iconRatio);
-            var iconRefX = (((width - widthOfIcon) / 2) / width);
+            const iconRatio = getImageRatio(configuration.icon);
+            const widthOfIcon = ((heightOfIcon-ICON_PADDING) * iconRatio);
+            const iconRefX =  (((width - widthOfIcon) / 2) / width);
 
             cell.attributes.attrs['.structurizrIcon']['xlink:href'] = configuration.icon;
             cell.attributes.attrs['.structurizrIcon']['width'] = widthOfIcon;
@@ -1803,7 +1756,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrBox']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2009,7 +1962,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrPersonLeftArm']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2149,7 +2102,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrCylinderPath']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 15);
+        renderElementInternals(element, cell, configuration, width, width * 0.12, height, 15);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2337,7 +2290,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrComponentBlockBottom']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.12, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2420,7 +2373,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrWebBrowser']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, webBrowserPanelWidth, webBrowserPanelWidth * 0.1, webBrowserPanelHeight, 0);
+        renderElementInternals(element, cell, configuration, webBrowserPanelWidth, webBrowserPanelWidth * 0.15, webBrowserPanelHeight, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2494,7 +2447,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrWindow']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, windowPanelWidth, windowPanelWidth * 0.1, windowPanelHeight, 0);
+        renderElementInternals(element, cell, configuration, windowPanelWidth, windowPanelWidth * 0.15, windowPanelHeight, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2561,7 +2514,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrMobileDevice']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -2628,7 +2581,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             cell.attributes.attrs['.structurizrMobileDevice']['stroke-dasharray'] = borderStyles[configuration.border];
         }
 
-        renderElementInternals(element, cell, configuration, width, width * 0.1, height, 0);
+        renderElementInternals(element, cell, configuration, width, width * 0.15, height, 0);
 
         graph.addCell(cell);
         mapOfIdToBox[element.id] = cell;
@@ -3449,15 +3402,21 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             stroke = structurizr.util.shadeColor(stroke, 100 - elementStyle.opacity, darkMode);
         }
 
-        var heightOfIcon = elementStyle.fontSize;
-        if (metadata !== undefined) {
-            heightOfIcon = heightOfIcon * 2;
-            if (elementStyle !== undefined && elementStyle.metadata !== undefined && elementStyle.metadata === false) {
-                metadata = '';
-            }
-        } else {
-            metadata = '';
-        }
+        // let heightOfIcon = parseFloat(elementStyle.fontSize);
+        // if (metadata !== undefined) {
+        //     heightOfIcon = heightOfIcon * 2;
+        //     if (elementStyle !== undefined && elementStyle.metadata !== undefined && elementStyle.metadata === false) {
+        //         metadata = '';
+        //     }
+        // } else {
+        //     metadata = '';
+        // }
+
+        let heightOfIcon = parseFloat(elementStyle.fontSize);
+        let isMetadataFalse = elementStyle && elementStyle.metadata === false;
+
+        heightOfIcon *= (metadata !== undefined) ? 2 : 1;
+        metadata = (metadata !== undefined && !isMetadataFalse) ? metadata : '';
 
         var boundary = new structurizr.shapes.Boundary({
             attrs: {
@@ -3511,26 +3470,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function createDeploymentNode(element) {
-        var configuration = structurizr.ui.findElementStyle(element, darkMode);
+        const configuration = structurizr.ui.findElementStyle(element, darkMode);
 
-        var textColor = structurizr.util.shadeColor(configuration.color, 100-configuration.opacity, darkMode);
-        var stroke = structurizr.util.shadeColor(configuration.stroke, 100-configuration.opacity, darkMode);
-        var strokeWidth = configuration.strokeWidth;
-
-        var instanceCount = '';
-        if (element.instances && element.instances !== '1') {
-            instanceCount = 'x' + element.instances;
-        }
-
-        var metadata = '';
-        var heightOfIcon = configuration.fontSize;
-
-        if (configuration.metadata !== undefined && configuration.metadata === false) {
-            metadata = ''
-        } else {
-            metadata = structurizr.ui.getMetadataForElement(element, true);
-            heightOfIcon = heightOfIcon * 2;
-        }
+        const textColor = structurizr.util.shadeColor(configuration.color, 100-configuration.opacity, darkMode);
+        const stroke = structurizr.util.shadeColor(configuration.stroke, 100-configuration.opacity, darkMode);
+        const strokeWidth = configuration.strokeWidth;
+        const instanceCount = element.instances && element.instances !== '1' ? `x${element.instances}` : '';
+        const metadata = configuration.metadata === undefined || configuration.metadata ? structurizr.ui.getMetadataForElement(element, true) : '';
+        const heightOfIcon = configuration.fontSize * (configuration.metadata === undefined || configuration.metadata ? 2 : 1);
 
         var cell = new structurizr.shapes.DeploymentNode({
             attrs: {
@@ -3578,17 +3525,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         cell._computedStyle.opacity = configuration.opacity;
 
         if (configuration.icon) {
-            var iconRatio = getImageRatio(configuration.icon);
-            var widthOfIcon = (heightOfIcon * iconRatio);
-
             cell.attributes.attrs['.structurizrIcon']['xlink:href'] = configuration.icon;
-            cell.attributes.attrs['.structurizrIcon']['width'] = widthOfIcon;
+            cell.attributes.attrs['.structurizrIcon']['width'] = (heightOfIcon * getImageRatio(configuration.icon));
             cell.attributes.attrs['.structurizrIcon']['height'] = heightOfIcon;
             cell.attributes.attrs['.structurizrIcon']['opacity'] = (configuration.opacity/100);
             cell._computedStyle.icon = configuration.icon;
         }
 
-        var cellView = paper.findViewByModel(cell);
+        let cellView = paper.findViewByModel(cell);
         const domElement = $('#' + cellView.id);
         domElement.attr('style', 'cursor: ' + (editable === true ? 'move' : 'default') + ' !important');
 
@@ -3661,14 +3605,14 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         currentView.paperSize = paperSize;
         $('#pageSize option#' + paperSize).prop('selected', true);
 
-        var dimensions = new structurizr.ui.PaperSizes().getDimensions(paperSize);
+        const dimensions = new structurizr.ui.PaperSizes().getDimensions(paperSize);
         this.setPageSize(dimensions.width, dimensions.height);
     };
 
     function reposition(parentCell) {
-        var padding;
-        var metadataText;
-        var fontSize;
+        let padding;
+        let metadataText;
+        let fontSize;
 
         if (parentCell && parentCell.getEmbeddedCells().length > 0) {
             metadataText = parentCell.attr('.structurizrMetaData').text;
@@ -3676,7 +3620,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
             if (parentCell.elementInView && parentCell.positionCalculated === false) {
                 // this is an element from the model
-                var element = structurizr.workspace.findElementById(parentCell.elementInView.id);
+                const element = structurizr.workspace.findElementById(parentCell.elementInView.id);
                 if (element.type === 'DeploymentNode') {
                     padding = { top: 50, right: 50, bottom: 50, left: 50 };
                 }
@@ -3692,6 +3636,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             } else {
                 padding.bottom = padding.bottom + fontSize;
             }
+
 
             var minX = Number.MAX_VALUE;
             var maxX = Number.MIN_VALUE;
@@ -3747,12 +3692,12 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 var iconHeight = parentCell.attr('.structurizrIcon')['height'];
                 parentCell.attr({
                     '.structurizrIcon': {
-                        'x': margin,
-                        'y': newHeight - iconHeight - 10
+                        x: margin,
+                        y: newHeight - iconHeight - 10
                     }
                 });
 
-                refX = ((margin + 10 + iconWidth) / newWidth);
+                refX = (margin + 10 + iconWidth) / newWidth;
             }
 
             parentCell.position(newX, newY);
@@ -4615,10 +4560,10 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         $(".structurizrNavigation").attr('display', 'none');
 
-        var svgMarkup = getSvgOfCurrentDiagram();
+        let svgMarkup = getSvgOfCurrentDiagram();
         svgMarkup = svgMarkup.substring(svgMarkup.indexOf(">") +1 );
 
-        var font = '';
+        let font = '';
         if (includeFont === true) {
             const branding = structurizr.ui.getBranding();
             if (branding.font.url) {
@@ -4634,7 +4579,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
         svgMarkup = svgMarkup.replace(/class="[\w -]*"/g, '');
         svgMarkup = svgMarkup.replace(/data-type="[\w.]*"/g, '');
-        svgMarkup = svgMarkup.replace(/model-id="[\w\d-]*"/g, '');
+        svgMarkup = svgMarkup.replace(/model-id="[\w-]*"/g, '');
 
         svgMarkup = svgMarkup.replace(/cursor: default !important/g, '');
         svgMarkup = svgMarkup.replace(/cursor: pointer !important/g, '');
@@ -5225,7 +5170,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 var currentDistance = labels[0].position.distance;
                 var newDistance = Math.min(1, Math.max(0, currentDistance + delta));
 
-                for (i = 0; i < labels.length; i++) {
+                for (let i = 0; i < labels.length; i++) {
                     var position = labels[i].position;
                     highlightedLink.model.label(i, {
                         position: {
@@ -6298,7 +6243,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 structurizr.shapes = {};
 
 structurizr.shapes.Box = joint.dia.Element.extend({
-    markup: '<g class="structurizrElement"><rect class="structurizrBox structurizrHighlightableElement"/><text class="structurizrName"/><text class="structurizrMetaData"/><text class="structurizrDescription"/><g class="structurizrNavigation"><g class="structurizrZoom" /><g class="structurizrDocumentation" /><g class="structurizrDecisions" /><g class="structurizrLink" /></g><image class="structurizrIcon" /></g>',
+    markup: '<g class="structurizrElement"><rect class="structurizrBox structurizrHighlightableElement"/><text class="structurizrName"/><text class="structurizrMetaData"/><text class="structurizrDescription"/><image class="structurizrIcon" /><g class="structurizrNavigation"><g class="structurizrZoom" /><g class="structurizrDocumentation" /><g class="structurizrDecisions" /><g class="structurizrLink" /></g></g>',
     defaults: joint.util.deepSupplement({
         type: 'structurizr.box',
         attrs: {
@@ -6522,20 +6467,20 @@ structurizr.shapes.Person = joint.dia.Element.extend({
                 'font-weight': 'bold',
                 ref: '.structurizrPersonBody',
                 'ref-x': 0.5,
-                'ref-y': 0.25,
+                'ref-y': 0.20,
                 'text-anchor': 'middle',
                 'pointer-events': 'visible'
             },
             '.structurizrMetaData': {
                 ref: '.structurizrPersonBody',
                 'ref-x': 0.5,
-                'ref-y': 0.40,
+                'ref-y': 0.35,
                 'text-anchor': 'middle'
             },
             '.structurizrDescription': {
                 ref: '.structurizrPersonBody',
                 'ref-x': 0.5,
-                'ref-y': 0.60,
+                'ref-y': 0.55,
                 'text-anchor': 'middle'
             },
             '.structurizrNavigation': {

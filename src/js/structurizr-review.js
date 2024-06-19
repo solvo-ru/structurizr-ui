@@ -422,8 +422,8 @@ structurizr.Review = function(json, reviewer, canComment) {
 
         html += '<div class="embeddedControls">';
         html += '<div class="btn-group">';
-        html += '<button id="diagram' + diagramId + 'ZoomOutButton" class="btn btn-default" title="Zoom out"><img src="/static/bootstrap-icons/zoom-out.svg" class="icon-btn" /></button>';
-        html += '<button id="diagram' + diagramId + 'ZoomInButton" class="btn btn-default" title="Zoom in"><img src="/static/bootstrap-icons/zoom-in.svg" class="icon-btn" /></button>';
+        html += '<button id="diagram' + diagramId + 'ZoomOutButton" class="btn btn-primary" title="Zoom out"><img src="/static/bootstrap-icons/zoom-out.svg" class="icon-btn" /></button>';
+        html += '<button id="diagram' + diagramId + 'ZoomInButton" class="btn btn-primary" title="Zoom in"><img src="/static/bootstrap-icons/zoom-in.svg" class="icon-btn" /></button>';
         html += '</div>';
 
         html += '  </div>';
@@ -674,7 +674,10 @@ structurizr.Review = function(json, reviewer, canComment) {
             commentBeingEdited = comment;
             $('#commentDescription').val(comment.description);
             $('#commentModalContent').css('background-color', comment.color);
-            $('#commentModal').modal();
+            var modalElement = document.getElementById('commentModal');
+            var modal = new bootstrap.Modal(modalElement);
+            modal.show();
+            //$('#commentModal').modal();
         } else {
             // the comment cannot be edited
             commentBeingEdited = undefined;
@@ -682,7 +685,10 @@ structurizr.Review = function(json, reviewer, canComment) {
     }
 
     function closeCommentModal() {
-        $('#commentModal').modal('hide');
+        var modalElement = document.getElementById('commentModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.hide();
+        //$('#commentModal').modal('hide');
     }
 
     function dragElement(element, comment) {

@@ -37,7 +37,7 @@
 </style>
 
 <div class="section">
-    <div class="container centered">
+    <div class="container d-flex justify-content-center">
         <h1><c:out value="${workspace.name}" escapeXml="true" /></h1>
         <p>
             <c:out value="${workspace.description}" escapeXml="true" />

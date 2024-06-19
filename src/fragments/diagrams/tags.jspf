@@ -1,9 +1,10 @@
-<div class="modal fade" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="tagsModalLabel" aria-hidden="true">
+<div class="modal fade" id="tagsModal" tabindex="-1" aria-labelledby="tagsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2 class="modal-title">Tags</h2>
+            <div class="modal-header" >
+                <h5 class="modal-title" id="tagsModalLabel">Tags</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
             </div>
             <div class="modal-body">
                 <p>
@@ -18,8 +19,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="clearTagsButton" type="button" class="btn btn-default">Clear tags</button>
-                <button id="viewTagsButton" type="button" class="btn btn-default">View tags</button>
+                <button id="clearTagsButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Clear tags</button>
+                <button id="viewTagsButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">View tags</button>
             </div>
         </div>
     </div>
@@ -46,15 +47,17 @@
     }
 
     function openTagsModal() {
-        $('#tagsModal').modal();
+        var modalElement = document.getElementById('tagsModal');
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        //$('#tagsModal').modal();
     }
 
     function clearTags(render) {
         structurizr.diagram.clearTags();
 
-        $('#tagsModal').modal('hide');
-        $('#tagsOnButton').removeClass('hidden');
-        $('#tagsOffButton').addClass('hidden');
+        $('#tagsOnButton').removeClass('d-none');
+        $('#tagsOffButton').addClass('d-none');
         $('#tagsOffButton').attr('title', 'Tags');
 
         if (render === true) {
@@ -67,10 +70,8 @@
         var tags = $('#tagsList').val();
         structurizr.diagram.changeTags(tags);
         structurizr.diagram.renderPerspectiveOrTagsFilter();
-
-        $('#tagsModal').modal('hide');
-        $('#tagsOnButton').addClass('hidden');
-        $('#tagsOffButton').removeClass('hidden');
+        $('#tagsOnButton').addClass('d-none');
+        $('#tagsOffButton').removeClass('d-none');
         $('#tagsOffButton').attr('title', 'Tags (' + tags + ')');
     }
 </script>
