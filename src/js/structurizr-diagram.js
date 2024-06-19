@@ -154,7 +154,8 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
             }
         }),
         linkConnectionPoint: (editable ? undefined : shapePerimeterConnectionPoint),
-        clickThreshold: 1
+        clickThreshold: 1,
+        sorting: joint.dia.Paper.sorting.APPROX
     });
 
     addPaperEventHandlers();
@@ -3627,6 +3628,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 // this is a boundary box
                 padding = { top: 20, right: 20, bottom: 50, left: 20 };
             }
+
             let metaDataWidth=0;
             if (metadataText && metadataText.length > 0) {
                 metaDataWidth = calculateWidth(metadataText, fontSize);
@@ -3635,45 +3637,59 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 padding.bottom = padding.bottom + fontSize;
             }
 
-            let minX = Number.MAX_VALUE;
-            let maxX = Number.MIN_VALUE;
-            let minY = Number.MAX_VALUE;
-            let maxY = Number.MIN_VALUE;
 
-            const embeddedCells = parentCell.getEmbeddedCells();
-            for (const cell of embeddedCells) {
-                const { x, y } = cell.get('position');
-                const { width, height } = cell.get('size');
+            var minX = Number.MAX_VALUE;
+            var maxX = Number.MIN_VALUE;
+            var minY = Number.MAX_VALUE;
+            var maxY = Number.MIN_VALUE;
 
-                minX = Math.min(minX, x);
-                maxX = Math.max(maxX, x + width);
-                minY = Math.min(minY, y);
-                maxY = Math.max(maxY, y + height);
+            var embeddedCells = parentCell.getEmbeddedCells();
+            for (var i = 0; i < embeddedCells.length; i++) {
+                var cell = embeddedCells[i];
+                var x = cell.get('position').x;
+                var y = cell.get('position').y;
+                var width = cell.get('size').width;
+                var height = cell.get('size').height;
+
+                // if (cell.elementInView) {
+                    minX = Math.min(minX, x);
+                    maxX = Math.max(maxX, x + width);
+                    minY = Math.min(minY, y);
+                    maxY = Math.max(maxY, y + height);
+                // }
             }
 
+            padding = {
+                top: padding.top,
+                right: padding.right,
+                bottom: padding.bottom,
+                left: padding.left
+            };
+            
+            //find the width of title, i.e. icon+name/metadata
             const iconWidth = parentCell._computedStyle.icon ? parentCell.attr('.structurizrIcon')['width'] : 0;
             const nameWidth =  calculateWidth(parentCell.attr('.structurizrName').text,fontSize);
             const titleWidth = Math.max(nameWidth, metaDataWidth) + iconWidth;
-            const childrenWidth = maxX - minX
-            let newWidth=padding.left + padding.right;
+            const childrenWidth = maxX - minX;
 
+            let newWidth=padding.left + padding.right;
             if (titleWidth > childrenWidth) {
+                //position so that children are centered
                 newWidth += titleWidth;
                 minX = minX - (titleWidth - childrenWidth)/2
             } else {
                 newWidth+= childrenWidth;
             }
 
-            const newHeight = maxY - minY + padding.top + padding.bottom;
-            const newX = minX - padding.left;
-            const newY = minY - padding.top;
+            var newHeight = maxY - minY + padding.top + padding.bottom;
+            var newX = minX - padding.left;
+            var newY = minY - padding.top;
 
-            const margin = 15;
-            let refX = margin / newWidth;
-
-            // Only need to calculate iconHeight if there's an icon
+            var margin = 15;
+            var refX = (margin / newWidth);
+            
             if (iconWidth > 0) {
-                const iconHeight = parentCell.attr('.structurizrIcon')['height'];
+                var iconHeight = parentCell.attr('.structurizrIcon')['height'];
                 parentCell.attr({
                     '.structurizrIcon': {
                         x: margin,
