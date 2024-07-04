@@ -7,6 +7,8 @@
     <div class="container d-flex justify-content-center">
         <h1>Explore</h1>
 
+        <a href="${urlPrefix}/explore/model">Model</a>
+        <br />
         <br />
 
         <div id="views" class="d-flex justify-content-center">

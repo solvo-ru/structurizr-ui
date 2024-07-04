@@ -1039,7 +1039,7 @@
     function elementDoubleClicked(evt, elementId) {
         const element = structurizr.workspace.findElementById(elementId);
         if (element) {
-            var elementUrl = processWorkspaceLink(element.url);
+            const elementUrl = processWorkspaceLink(element.url);
 
             if (evt.altKey === true && elementUrl !== undefined) {
                 navigateTo(elementUrl);
@@ -1105,6 +1105,18 @@
                 });
             }
 
+            if (element.properties) {
+                Object.keys(element.properties).forEach(function(name) {
+                    const value = element.properties[name];
+                    if (value.indexOf('http://') === 0 || value.indexOf('https://') === 0) {
+                        options.push({
+                            url: value,
+                            label: name
+                        })
+                    }
+                });
+            }
+
             if (options.length === 1) {
                 navigateTo(options[0].url);
             } else {
@@ -1129,9 +1141,34 @@
 
     function relationshipDoubleClicked(evt, relationshipId) {
         const relationship = structurizr.workspace.findRelationshipById(relationshipId);
-        if (relationship && relationship.url) {
-            const relationshipUrl = processWorkspaceLink(relationship.url);
-            navigateTo(relationshipUrl);
+        if (relationship) {
+            const options = [];
+            const relationshipUrl = relationship.url;
+
+            if (relationshipUrl !== undefined) {
+                options.push({
+                    url: processWorkspaceLink(relationshipUrl),
+                    label: relationshipUrl
+                });
+            }
+
+            if (relationship.properties) {
+                Object.keys(relationship.properties).forEach(function(name) {
+                    const value = relationship.properties[name];
+                    if (value.indexOf('http://') === 0 || value.indexOf('https://') === 0) {
+                        options.push({
+                            url: value,
+                            label: name
+                        })
+                    }
+                });
+            }
+
+            if (options.length === 1) {
+                navigateTo(options[0].url);
+            } else {
+                openNavigationModal(options);
+            }
         }
     }
 
