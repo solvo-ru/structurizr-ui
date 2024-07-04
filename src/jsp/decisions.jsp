@@ -6,8 +6,7 @@
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/mermaid-10.min.js"></script>
 <script>mermaid.initialize({startOnLoad:true});</script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.1.0.min.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-github-alerts.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-deflist.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-container.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/lib/deflate.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-textual-uml.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/katex-0.16.4.min.js"></script>

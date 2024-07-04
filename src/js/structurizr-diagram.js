@@ -1,4 +1,3 @@
-
 structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCallback) {
 
     const self = this;
@@ -1150,7 +1149,17 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         let views = [];
         let documentation = false;
         let decisions = false;
-        const url = element.url;
+        let url = false;
+
+        url = element.url !== undefined;
+        if (element.properties) {
+            Object.keys(element.properties).forEach(function(name) {
+                const value = element.properties[name];
+                if (value.indexOf('http://') === 0 || value.indexOf('https://') === 0) {
+                    url = true;
+                }
+            });
+        }
         const elementDoubleClicked = element;
 
         if (element.type === structurizr.constants.SOFTWARE_SYSTEM_INSTANCE_ELEMENT_TYPE) {
@@ -1242,7 +1251,17 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
     }
 
     function addDoubleClickHandlerForRelationship(linkView, relationship) {
-        const url = relationship.url;
+        let url = false;
+
+        url = relationship.url !== undefined;
+        if (relationship.properties) {
+            Object.keys(relationship.properties).forEach(function(name) {
+                const value = relationship.properties[name];
+                if (value.indexOf('http://') === 0 || value.indexOf('https://') === 0) {
+                    url = true;
+                }
+            });
+        }
 
         if (url) {
             const domElement = $('#' + linkView.id);
@@ -3637,59 +3656,44 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                 padding.bottom = padding.bottom + fontSize;
             }
 
+            let minX = Number.MAX_VALUE;
+            let maxX = Number.MIN_VALUE;
+            let minY = Number.MAX_VALUE;
+            let maxY = Number.MIN_VALUE;
 
-            var minX = Number.MAX_VALUE;
-            var maxX = Number.MIN_VALUE;
-            var minY = Number.MAX_VALUE;
-            var maxY = Number.MIN_VALUE;
-
-            var embeddedCells = parentCell.getEmbeddedCells();
-            for (var i = 0; i < embeddedCells.length; i++) {
-                var cell = embeddedCells[i];
-                var x = cell.get('position').x;
-                var y = cell.get('position').y;
-                var width = cell.get('size').width;
-                var height = cell.get('size').height;
-
-                // if (cell.elementInView) {
-                    minX = Math.min(minX, x);
-                    maxX = Math.max(maxX, x + width);
-                    minY = Math.min(minY, y);
-                    maxY = Math.max(maxY, y + height);
-                // }
+            const embeddedCells = parentCell.getEmbeddedCells();
+            for (const cell of embeddedCells) {
+                const { x, y } = cell.get('position');
+                const { width, height } = cell.get('size');
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x + width);
+                minY = Math.min(minY, y);
+                maxY = Math.max(maxY, y + height);
             }
 
-            padding = {
-                top: padding.top,
-                right: padding.right,
-                bottom: padding.bottom,
-                left: padding.left
-            };
-            
-            //find the width of title, i.e. icon+name/metadata
             const iconWidth = parentCell._computedStyle.icon ? parentCell.attr('.structurizrIcon')['width'] : 0;
             const nameWidth =  calculateWidth(parentCell.attr('.structurizrName').text,fontSize);
             const titleWidth = Math.max(nameWidth, metaDataWidth) + iconWidth;
-            const childrenWidth = maxX - minX;
-
+            const childrenWidth = maxX - minX
             let newWidth=padding.left + padding.right;
+
             if (titleWidth > childrenWidth) {
-                //position so that children are centered
                 newWidth += titleWidth;
                 minX = minX - (titleWidth - childrenWidth)/2
             } else {
                 newWidth+= childrenWidth;
             }
 
-            var newHeight = maxY - minY + padding.top + padding.bottom;
-            var newX = minX - padding.left;
-            var newY = minY - padding.top;
+            const newHeight = maxY - minY + padding.top + padding.bottom;
+            const newX = minX - padding.left;
+            const newY = minY - padding.top;
 
-            var margin = 15;
-            var refX = (margin / newWidth);
-            
+            const margin = 15;
+            let refX = margin / newWidth;
+
+            // Only need to calculate iconHeight if there's an icon
             if (iconWidth > 0) {
-                var iconHeight = parentCell.attr('.structurizrIcon')['height'];
+                const iconHeight = parentCell.attr('.structurizrIcon')['height'];
                 parentCell.attr({
                     '.structurizrIcon': {
                         x: margin,

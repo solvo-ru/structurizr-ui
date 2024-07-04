@@ -4,12 +4,11 @@
 <link href="${structurizrConfiguration.cdnUrl}/css/joint-3.6.5.css" rel="stylesheet" media="screen" />
 <script src="${structurizrConfiguration.cdnUrl}/js/lodash-4.17.21.js"></script>
 <script src="${structurizrConfiguration.cdnUrl}/js/backbone-1.4.1.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/joint-4.0.3.min.js"></script>
-<%--<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/dagre-0.7.3.min.js"></script>--%>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/joint-3.6.5.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/graphlib-2.1.3.min.js"></script>
 
 
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/dagre-1.0.4.min.js"></script>
+<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/dagre-0.7.3.min.js"></script>
 
 
 <%-- PNG export --%>
