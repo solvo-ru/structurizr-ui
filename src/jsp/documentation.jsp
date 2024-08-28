@@ -3,7 +3,6 @@
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-embed.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-content${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-documentation${structurizrConfiguration.versionSuffix}.js"></script>
-<script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/structurizr-ui${structurizrConfiguration.versionSuffix}.js"></script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/mermaid-10.min.js"></script>
 <script>mermaid.initialize({startOnLoad:true});</script>
 <script type="text/javascript" src="${structurizrConfiguration.cdnUrl}/js/markdown-it-14.1.0.min.js"></script>
@@ -16,11 +15,6 @@
 <link href="${structurizrConfiguration.cdnUrl}/css/katex-0.16.4.min.css" rel="stylesheet" media="screen" />
 <link href="${structurizrConfiguration.cdnUrl}/css/structurizr-asciidoctor.css" rel="stylesheet" media="screen" />
 <link href="${structurizrConfiguration.cdnUrl}/css/structurizr-documentation.css" rel="stylesheet" media="screen" />
-<link href="${structurizrConfiguration.cdnUrl}/css/github-base.css" rel="stylesheet" media="screen" />
-<link href="${structurizrConfiguration.cdnUrl}/css/github-colors-dark-media.css" rel="stylesheet" media="screen" />
-<link href="${structurizrConfiguration.cdnUrl}/css/github-colors-light.css" rel="stylesheet" media="screen" />
-
-
 
 <%@ include file="/WEB-INF/fragments/graphviz.jspf" %>
 <%@ include file="/WEB-INF/fragments/progress-message.jspf" %>
@@ -59,6 +53,13 @@
                 <a id="exportLink" href="" class="d-none"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/filetype-html.svg" class="icon-sm" /> Export to offline HTML page</a>
             </div>
 
+            <div class="navigationItem">
+                <img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/moon.svg" class="icon-sm" />
+                <a id="renderingModeLightLink" href="">Light</a> |
+                <a id="renderingModeDarkLink" href="">Dark</a> |
+                <a id="renderingModeSystemLink" href="">System</a>
+            </div>
+
             <div id="documentationMetadata">
                 <c:if test="${not empty param.version}">
                 <div style="margin-bottom: 10px">
@@ -93,6 +94,7 @@
         </div>
     </div>
 </div>
+
 <script nonce="${scriptNonce}">
     const requestedScope = structurizr.util.atob('<c:out value="${scope}" />');
     structurizr.ui.DEFAULT_FONT_NAME = "Open Sans";
@@ -343,6 +345,24 @@
         assignSectionNumbers();
         renderNavigation();
 
+        $('#renderingModeLightLink').click(function(event) {
+            event.preventDefault();
+            structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_LIGHT);
+            setDarkModeOnEmbeddedDiagrams();
+        });
+
+        $('#renderingModeDarkLink').click(function(event) {
+            event.preventDefault();
+            structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_DARK);
+            setDarkModeOnEmbeddedDiagrams();
+        });
+
+        $('#renderingModeSystemLink').click(function(event) {
+            event.preventDefault();
+            structurizr.ui.setRenderingMode(structurizr.ui.RENDERING_MODE_SYSTEM);
+            setDarkModeOnEmbeddedDiagrams();
+        });
+
         if (window.location.hash !== undefined) {
             scrollToHash();
         }
@@ -381,6 +401,16 @@
         rendered = false;
 
         setTimeout(checkDiagramsRendered, 500);
+    }
+
+    function setDarkModeOnEmbeddedDiagrams() {
+        const embeddedDiagrams = $('#documentationContent iframe.structurizrEmbed');
+        embeddedDiagrams.each(function (index) {
+            var iframe = embeddedDiagrams[index];
+            if (iframe.contentWindow.structurizr && iframe.contentWindow.structurizr.diagram) {
+                iframe.contentWindow.structurizr.diagram.setDarkMode(structurizr.ui.isDarkMode());
+            }
+        });
     }
 
     function renderNavigation() {
