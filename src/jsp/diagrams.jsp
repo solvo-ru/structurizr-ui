@@ -1187,6 +1187,8 @@
     }
 
     function saveWorkspace() {
+        $('#saveButton').prop('disabled', true);
+
         if (structurizr.autoSave === false) {
             progressMessage.show('<p>Saving workspace...</p>');
         }
@@ -1202,6 +1204,7 @@
 
                 refreshThumbnail();
             } else {
+                $('#saveButton').prop('disabled', false);
                 if (response.message) {
                     console.log(response.message);
                     if (progressMessage) {
