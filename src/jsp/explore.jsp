@@ -5,7 +5,7 @@
     <div class="container d-flex justify-content-center">
         <h1>Explore</h1>
 
-        <a href="${urlPrefix}/explore/model">Model</a>
+        <a href="${urlPrefix}/explore/model<c:out value="${urlSuffix}" />">Model</a>
         <br />
         <br />
 

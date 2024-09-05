@@ -63,7 +63,12 @@
 </c:choose>
 
 <div class="row" style="padding: 0; margin: 0">
-    <div id="diagramNavigationPanel" class="col-sm-2 <c:if test="${embed eq true}">d-none</c:if>">
+    <div id="diagramNavigationPanel" class="col-sm-2 hidden-xs hidden-sm <c:if test="${embed eq true}">hidden</c:if>">
+        <c:if test="${not empty workspace.branch}">
+           <div class="d-flex" style="margin-top: 10px;">
+                <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/bezier2.svg" class="icon-sm icon-white" /> ${workspace.branch}</span>
+            </div>
+        </c:if>
         <c:if test="${not empty param.version}">
         <div class="d-flex" style="margin-top: 10px;">
             <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
@@ -592,7 +597,7 @@
                 html += '  <img src="' + view.content + '" class="img-thumbnail viewThumbnail" style="margin-bottom: 10px;" /><br />';
             } else {
             <c:choose>
-            <c:when test="${not empty param.version or embed eq true}">
+            <c:when test="${not empty workspace.branch or not empty param.version or embed eq true}">
             html += '  <img src="/static/img/thumbnail-not-available.png" class="img-thumbnail" style="margin-bottom: 10px" /></a>';
             </c:when>
             <c:otherwise>
@@ -601,9 +606,10 @@
             </c:choose>
             }
 
+            html += '<div>';
             html += '<span class="small mb-2">' + title + '</span>' ;
             html += '<span class="small mb-2">#' + structurizr.util.escapeHtml(view.key) + '</span>';
-            html += '</div>';
+            html += '</div></div>';
 
             index++;
         });

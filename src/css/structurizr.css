@@ -1,4 +1,5 @@
 body {
+    font-family: "Fira Sans", sans-serif;
     padding-left: 0;
     padding-right: 0;
     line-height: 1.5;
@@ -203,7 +204,7 @@ label {
     background: #0b5889;
 }
 .label-version {
-    background: #62B1E7;
+    background: #85BBF0;
 }
 
 th {
