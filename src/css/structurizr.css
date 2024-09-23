@@ -203,8 +203,13 @@ label {
 .label-primary {
     background: #0b5889;
 }
+.label-branch {
+    background: #08427B;
+    font-size: 12px;
+}
 .label-version {
     background: #85BBF0;
+    font-size: 12px;
 }
 
 th {

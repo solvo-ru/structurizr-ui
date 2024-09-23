@@ -28,6 +28,21 @@
     <div class="col-sm-3" style="padding-left: 30px">
         <div id="documentationNavigationPanel" class="d-none d-sm-block scrollable">
 
+            <c:if test="${not empty workspace.branch || not empty param.version}">
+                <div style="margin-top: 20px">
+                    <c:if test="${not empty workspace.branch}">
+                        <div style="margin-bottom: 10px;">
+                            <span class="badge badge-branch"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/bezier2.svg" class="icon-xs icon-white" /> ${workspace.branch}</span>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty param.version}">
+                        <div style="margin-bottom: 10px;">
+                            <span class="badge badge-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
+                        </div>
+                    </c:if>
+                </div>
+            </c:if>
+
             <div id="documentationNavigation"></div>
 
             <div class="navigationItemSeparator"></div>
@@ -40,11 +55,6 @@
             </div>
 
             <div id="documentationMetadata">
-                <c:if test="${not empty param.version}">
-                    <div style="margin-bottom: 10px">
-                        <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
-                    </div>
-                </c:if>
                 <span id="lastModifiedDate"></span>
                 <c:if test="${not empty workspace.version}">
                     <br />
@@ -119,7 +129,6 @@
                 structurizr.workspace,
                 '${structurizrConfiguration.cdnUrl}',
                 '<c:out value="${urlPrefix}" />',
-                '<c:out value="${urlSuffix}" />',
                 ${structurizrConfiguration.safeMode});
 
             initDecisionScopeAndOrder();
@@ -164,7 +173,7 @@
         }
 
         structurizr.ui.applyBranding();
-        $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" />');
+        $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" /><c:out value="${urSuffix}" />');
         progressMessage.hide();
     }
 
@@ -261,7 +270,7 @@
 
             if (elementId === '*') {
                 scope = '*';
-                const uri = '<c:out value="${urlPrefix}" />/decisions<c:out value="${urlSuffix}" />';
+                const uri = '<c:out value="${urlPrefix}" />/decisions<c:out value="${urlSuffix}" escapeXml="false" />';
                 documentationNavigation.append('<div class="decisionNavigationLink decisionNavigationHeading"><a href="' + uri + '">' + structurizr.util.escapeHtml(structurizr.workspace.name) + '</a></div>');
                 decisionLogNavigationDropDown.append(
                     $('<option></option>').val(uri).html('Workspace] ' + structurizr.util.escapeHtml(structurizr.workspace.name))
@@ -270,7 +279,7 @@
             } else {
                 var element = structurizr.workspace.findElementById(elementId);
                 scope = toScope(element);
-                const uri = '<c:out value="${urlPrefix}" />/decisions/' + encodeURI(scope) + '<c:out value="${urlSuffix}" />';
+                const uri = '<c:out value="${urlPrefix}" />/decisions/' + encodeURI(scope) + '<c:out value="${urlSuffix}" escapeXml="false" />';
 
                 documentationNavigation.append('<div class="decisionNavigationLink decisionNavigationHeading"><a href="' + uri + '">' + structurizr.util.escapeHtml(element.name) + '</a></div>');
                 decisionLogNavigationDropDown.append(
@@ -384,7 +393,7 @@
                 const elementId = elementsWithDecisions[0];
                 const element = structurizr.workspace.findElementById(elementId);
                 const scope = toScope(element);
-                window.location.href = '<c:out value="${urlPrefix}" />/decisions/' + encodeURI(scope) + '<c:out value="${urlSuffix}" />';
+                window.location.href = '<c:out value="${urlPrefix}" />/decisions/' + encodeURI(scope) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                 return;
             } else {
                 showNoDecisionsPage();
@@ -481,7 +490,7 @@
             href = decodeURIComponent(href);
             if (href.indexOf(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX) === 0) {
                 // convert {workspace}/doc... to /workspace/1234/doc...
-                href = '<c:out value="${urlPrefix}" />' + href.substring(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX.length) + '<c:out value="${urlSuffix}" />';
+                href = '<c:out value="${urlPrefix}" />' + href.substring(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX.length) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                 $(this).attr('href', href)
             }
         });

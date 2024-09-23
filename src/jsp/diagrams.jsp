@@ -48,7 +48,7 @@
                     <div id="banner"></div>
                     <div class="row">
                         <div class="col-sm-2" style="padding: 18px 20px 10px 20px">
-                            <a href="<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" />"><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner.png" alt="Structurizr" class="structurizrBannerLight img-responsive brandingLogo" /><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner-dark.png" alt="Structurizr" class="structurizrBannerDark img-responsive brandingLogo" /></a>
+                            <a href="<c:out value="${urlPrefix}" /><c:out value="${urlSuffix}" escapeXml="false" />"><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner.png" alt="Structurizr" class="structurizrBannerLight img-responsive brandingLogo" /><img src="${structurizrConfiguration.cdnUrl}/img/structurizr-banner-dark.png" alt="Structurizr" class="structurizrBannerDark img-responsive brandingLogo" /></a>
                         </div>
                         <div class="col-sm-10 d-flex justify-content-center" style="padding: 20px 30px 0px 30px">
                             <div class="d-flex flex-column align-items-center">
@@ -64,14 +64,18 @@
 
 <div class="row" style="padding: 0; margin: 0">
     <div id="diagramNavigationPanel" class="col-sm-2 hidden-xs hidden-sm <c:if test="${embed eq true}">hidden</c:if>">
-        <c:if test="${not empty workspace.branch}">
-           <div class="d-flex" style="margin-top: 10px;">
-                <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/bezier2.svg" class="icon-sm icon-white" /> ${workspace.branch}</span>
+        <c:if test="${not empty workspace.branch || not empty param.version}">
+        <div style="margin-top: 20px">
+            <c:if test="${not empty workspace.branch}">
+            <div class="d-flex" style="margin-bottom: 10px;">
+                <span class="badge label-branch"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/bezier2.svg" class="icon-sm icon-white" /> ${workspace.branch}</span>
             </div>
-        </c:if>
-        <c:if test="${not empty param.version}">
-        <div class="d-flex" style="margin-top: 10px;">
-            <span class="badge label-version" style="font-size: 11px"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
+            </c:if>
+            <c:if test="${not empty param.version}">
+            <div class="d-flex" style="margin-bottom: 10px;">
+                <span class="badge label-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-sm icon-white" /> ${workspace.internalVersion}</span>
+            </div>
+            </c:if>
         </div>
         </c:if>
 
@@ -453,7 +457,7 @@
             if (view.type === structurizr.constants.CUSTOM_VIEW_TYPE || view.type === structurizr.constants.SYSTEM_LANDSCAPE_VIEW_TYPE || view.type === structurizr.constants.SYSTEM_CONTEXT_VIEW_TYPE || view.type === structurizr.constants.CONTAINER_VIEW_TYPE || view.type === structurizr.constants.COMPONENT_VIEW_TYPE) {
                 explorationsButton.onclick = function () {
                     const urlPrefix = '<c:out value="${urlPrefix}" />';
-                    const urlSuffix = '<c:out value="${urlSuffix}" />';
+                    const urlSuffix = '<c:out value="${urlSuffix}" escapeXml="false" />';
                     window.open(urlPrefix + '/explore/graph' + urlSuffix + '#' + encodeURIComponent(view.key));
                 };
 
@@ -461,7 +465,7 @@
             } else if (view.type === structurizr.constants.DEPLOYMENT_VIEW_TYPE) {
                 explorationsButton.onclick = function () {
                     const urlPrefix = '<c:out value="${urlPrefix}" />';
-                    const urlSuffix = '<c:out value="${urlSuffix}" />';
+                    const urlSuffix = '<c:out value="${urlSuffix}" escapeXml="false" />';
                     window.open(urlPrefix + '/explore/tree' + urlSuffix + '#' + encodeURIComponent(view.key));
                 };
 
@@ -643,12 +647,26 @@
     }
 
     function openCurrentDiagramInNewWindow() {
-        var hash = window.location.hash;
+        const hash = window.location.hash;
+        var url = '<c:out value="${urlPrefix}" />/diagrams<c:out value="${urlSuffix}" escapeXml="false" />';
+        var diagramIdentifier = '';
+        const perspective = '<c:out value="${perspective}" />';
+
         if (hash === undefined || hash.trim().length === 0) {
-            window.open('<c:out value="${urlPrefix}" />/diagrams<c:out value="${urlSuffix}" />#<c:out value="${diagramIdentifier}" />');
+            diagramIdentifier = '<c:out value="${diagramIdentifier}" />';
         } else {
-            window.open('<c:out value="${urlPrefix}" />/diagrams<c:out value="${urlSuffix}" />#' + window.location.hash.substring(1))
+            diagramIdentifier = window.location.hash.substring(1);
         }
+
+        if (perspective.length > 0) {
+            if (url.indexOf('?') === -1) {
+                url = url + '?perspective=' + perspective;
+            } else {
+                url = url + '&perspective=' + perspective;
+            }
+        }
+
+        window.open(url + '#' + diagramIdentifier);
     }
 
     function initSizing() {
@@ -1010,7 +1028,7 @@
     function initQuickNavigation() {
         views.forEach(function(view) {
             const title = structurizr.util.escapeHtml(structurizr.ui.getTitleForView(view));
-            quickNavigation.addItem(title + ' (#' + structurizr.util.escapeHtml(view.key) + ')', '<c:out value="${urlPrefix}" />/${quickNavigationPath}<c:out value="${urlSuffix}" />#' + structurizr.util.escapeHtml(view.key));
+            quickNavigation.addItem(title + ' (#' + structurizr.util.escapeHtml(view.key) + ')', '<c:out value="${urlPrefix}" />/${quickNavigationPath}<c:out value="${urlSuffix}" escapeXml="false" />#' + structurizr.util.escapeHtml(view.key));
         });
 
         quickNavigation.onOpen(function() {
@@ -1036,7 +1054,7 @@
                 url = url.substring((structurizr.constants.INTRA_WORKSPACE_URL_PREFIX + '/diagrams').length);
             } else if (url.indexOf(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX) === 0) {
                 // convert {workspace}/doc... to /workspace/1234/doc... (where 1234 is the current workspace ID)
-                url = '<c:out value="${urlPrefix}" />' + url.substring(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX.length) + '<c:out value="${urlSuffix}" />';
+                url = '<c:out value="${urlPrefix}" />' + url.substring(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX.length) + '<c:out value="${urlSuffix}" escapeXml="false" />';
             } else if (url.indexOf(structurizr.constants.INTER_WORKSPACE_URL_PREFIX) === 0) {
                 // convert {workspace:123456}/doc... to /workspace/123456/doc...
                 const targetWorkspaceId = url.substring(url.indexOf(structurizr.constants.INTER_WORKSPACE_URL_SEPARATOR) + 1, url.indexOf(structurizr.constants.INTER_WORKSPACE_URL_SUFFIX));
@@ -1087,7 +1105,7 @@
             });
 
             if (element.documentation && element.documentation.sections && element.documentation.sections.length > 0) {
-                const documentationUrl = '<c:out value="${urlPrefix}" />/documentation/' + encodeURI(toScope(element)) + '<c:out value="${urlSuffix}" />';
+                const documentationUrl = '<c:out value="${urlPrefix}" />/documentation/' + encodeURI(toScope(element)) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                 options.push({
                     url: documentationUrl,
                     label: 'Documentation'
@@ -1095,7 +1113,7 @@
             }
 
             if (element.documentation && element.documentation.decisions && element.documentation.decisions.length > 0) {
-                const decisionsUrl = '<c:out value="${urlPrefix}" />/decisions/' + encodeURI(toScope(element)) + '<c:out value="${urlSuffix}" />';
+                const decisionsUrl = '<c:out value="${urlPrefix}" />/decisions/' + encodeURI(toScope(element)) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                 options.push({
                     url: decisionsUrl,
                     label: 'Decisions'
@@ -1280,9 +1298,9 @@
                     var softwareSystem = element;
 
                     if (fn(softwareSystem)) {
-                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '/' + structurizr.util.escapeHtml(softwareSystem.name) + '<c:out value="${urlSuffix}" />';
+                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '/' + structurizr.util.escapeHtml(softwareSystem.name) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                     } else {
-                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '<c:out value="${urlSuffix}" />';
+                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '<c:out value="${urlSuffix}" escapeXml="false" />';
                     }
 
                     return;
@@ -1291,11 +1309,11 @@
                     var softwareSystem = structurizr.workspace.findElementById(container.parentId);
 
                     if (fn(container)) {
-                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '/' + structurizr.util.escapeHtml(softwareSystem.name) + '/' + structurizr.util.escapeHtml(container.name) + '<c:out value="${urlSuffix}" />';
+                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '/' + structurizr.util.escapeHtml(softwareSystem.name) + '/' + structurizr.util.escapeHtml(container.name) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                     } else if (fn(softwareSystem)) {
-                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '/' + structurizr.util.escapeHtml(softwareSystem.name) + '<c:out value="${urlSuffix}" />';
+                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '/' + structurizr.util.escapeHtml(softwareSystem.name) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                     } else {
-                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '<c:out value="${urlSuffix}" />';
+                        window.location.href='<c:out value="${urlPrefix}" />/' + path + '<c:out value="${urlSuffix}" escapeXml="false" />';
                     }
 
                     return;
@@ -1303,7 +1321,7 @@
             }
         }
 
-        window.location.href='<c:out value="${urlPrefix}" />/' + path + '<c:out value="${urlSuffix}" />';
+        window.location.href='<c:out value="${urlPrefix}" />/' + path + '<c:out value="${urlSuffix}" escapeXml="false" />';
     }
 
     function hasDocumentation(element) {

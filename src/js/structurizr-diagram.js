@@ -700,7 +700,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
                     fireWorkspaceChangedEvent();
                 });
 
-                if (includeGroup(element, view) === true) {
+                if (includeGroup(element, view, currentFilter) === true) {
                     if (element.group !== undefined) {
                         var scope = element.parentId;
                         if (scope === undefined) {
@@ -780,7 +780,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
 
                         cellsByElementId[element.id] = deploymentNodeCell;
 
-                        if (includeGroup(element, view) === true) {
+                        if (includeGroup(element, view, currentFilter) === true) {
                             if (element.group !== undefined) {
                                 var scope = element.parentId;
                                 if (scope === undefined) {
@@ -987,7 +987,7 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         }
     }
 
-    function includeGroup(element, view) {
+    function includeGroup(element, view, filter) {
         // for rendering groups, we only want to do this as follows:
         // - system landscape diagram: people, software systems, custom elements
         // - system context diagram: people, software systems, custom elements
@@ -996,6 +996,11 @@ structurizr.ui.Diagram = function(id, diagramIsEditable, constructionCompleteCal
         // - dynamic diagram: depends on scope
         // - deployment diagram: deployment nodes, infrastructure nodes, software system instances, container instances
         let renderGroupForElement = false;
+
+        // first check the filter
+        if (filter && filter.properties && filter.properties['structurizr.groups'] === 'false') {
+            return false;
+        }
 
         // have groups been forced off?
         if (view.properties && view.properties['structurizr.groups'] === 'false') {

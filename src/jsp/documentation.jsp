@@ -26,6 +26,21 @@
     <div class="col-sm-2" style="padding-left: 30px">
         <div id="documentationNavigationPanel" class="d-none d-sm-block scrollable">
 
+            <c:if test="${not empty workspace.branch || not empty param.version}">
+                <div style="margin-top: 20px">
+                    <c:if test="${not empty workspace.branch}">
+                        <div style="margin-bottom: 10px;">
+                            <span class="label label-branch"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/bezier2.svg" class="icon-sm icon-white" /> ${workspace.branch}</span>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty param.version}">
+                        <div style="margin-bottom: 10px;">
+                            <span class="label label-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-sm icon-white" /> ${workspace.internalVersion}</span>
+                        </div>
+                    </c:if>
+                </div>
+            </c:if>
+
             <div id="documentationNavigation"></div>
 
             <div class="navigationItemSeparator"></div>
@@ -61,11 +76,6 @@
             </div>
 
             <div id="documentationMetadata">
-                <c:if test="${not empty param.version}">
-                <div style="margin-bottom: 10px">
-                    <span class="badge label-version"><img src="${structurizrConfiguration.cdnUrl}/bootstrap-icons/clock-history.svg" class="icon-xs icon-white" /> ${workspace.internalVersion}</span>
-                </div>
-                </c:if>
                 <span id="lastModifiedDate"></span>
                 <c:if test="${not empty workspace.version}">
                     <br />
@@ -133,7 +143,6 @@
                 structurizr.workspace,
                 '${structurizrConfiguration.cdnUrl}',
                 '<c:out value="${urlPrefix}" />',
-                '<c:out value="${urlSuffix}" />',
                 ${structurizrConfiguration.safeMode});
 
             structurizr.scripting = new function() {
@@ -199,7 +208,7 @@
         }
 
         structurizr.ui.applyBranding();
-        $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" />');
+        $('#brandingLogoAnchor').attr('href', '<c:out value="${urlPrefix}" /><c:out value="${urSuffix}" />');
         progressMessage.hide();
     }
 
@@ -332,7 +341,7 @@
                 const elementId = elementsWithDocumentation[0];
                 const element = structurizr.workspace.findElementById(elementId);
                 const scope = toScope(element);
-                window.location.href = '<c:out value="${urlPrefix}" />/documentation/' + encodeURI(scope) + '<c:out value="${urlSuffix}" />';
+                window.location.href = '<c:out value="${urlPrefix}" />/documentation/' + encodeURI(scope) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                 return;
             }
         } else {
@@ -419,7 +428,7 @@
 
             if (elementId === WORKSPACE_SCOPE) {
                 scope = WORKSPACE_SCOPE;
-                const uri = '<c:out value="${urlPrefix}" />/documentation<c:out value="${urlSuffix}" />';
+                const uri = '<c:out value="${urlPrefix}" />/documentation<c:out value="${urlSuffix}" escapeXml="false" />';
 
                 documentationNavigation.append('<div class="documentationNavigationLink documentationNavigationHeading"><a href="' + uri + '">' + structurizr.util.escapeHtml(structurizr.workspace.name) + '</a></div>');
                 documentationNavigationDropDown.append(
@@ -430,7 +439,7 @@
                 var element = structurizr.workspace.findElementById(elementId);
                 if (element !== undefined) {
                     scope = toScope(element);
-                    var uri = '<c:out value="${urlPrefix}" />/documentation/' + encodeURI(scope) + '<c:out value="${urlSuffix}" />';
+                    var uri = '<c:out value="${urlPrefix}" />/documentation/' + encodeURI(scope) + '<c:out value="${urlSuffix}" escapeXml="false" />';
 
                     documentationNavigation.append('<div class="documentationNavigationLink documentationNavigationHeading"><a href="' + uri + '">' + structurizr.util.escapeHtml(element.name) + '</a></div>');
                     documentationNavigationDropDown.append(
@@ -556,7 +565,7 @@
             href = decodeURIComponent(href);
             if (href.indexOf(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX) === 0) {
                 // convert {workspace}/doc... to /workspace/1234/doc...
-                href = '<c:out value="${urlPrefix}" />' + href.substring(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX.length) + '<c:out value="${urlSuffix}" />';
+                href = '<c:out value="${urlPrefix}" />' + href.substring(structurizr.constants.INTRA_WORKSPACE_URL_PREFIX.length) + '<c:out value="${urlSuffix}" escapeXml="false" />';
                 $(this).attr('href', href)
             }
         });
